@@ -1,3 +1,5 @@
+from typing import Tuple
+
 import cfpq_data
 import networkx as nx
 
@@ -36,7 +38,7 @@ def get_description(graph: nx.MultiDiGraph):
 
 
 def generate_two_cycles_graph(
-    first_cycle: int, second_cycle: int, edge_labels: tuple[str, str]
+    first_cycle: int, second_cycle: int, edge_labels: Tuple[str, str]
 ):
     """
     Writes a graph with two cycles which generates with specified parameters to the file
