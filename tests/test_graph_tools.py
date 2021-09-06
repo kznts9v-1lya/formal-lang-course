@@ -1,8 +1,9 @@
+import os
 from random import randint
 
 import cfpq_data
 
-from project import graph_tools
+from project import graph_tools, console_commands
 
 
 def test_graph_info():
@@ -11,14 +12,19 @@ def test_graph_info():
     )
     desc = graph_tools.get_description(graph)
 
-    assert desc["nodes"] == graph.number_of_nodes()
-    assert desc["edges"] == graph.number_of_edges()
-    assert desc["labels"] == cfpq_data.get_labels(graph)
+    assert desc.nodes == graph.number_of_nodes()
+    assert desc.edges == graph.number_of_edges()
+    assert desc.edge_labels == cfpq_data.get_labels(graph)
 
 
-def test_generate_two_cycles_graph_to_file():
-    file = "data/two_cycles_graph.dot"
+def test_generate_two_cycles_graph():
+    path = "data/two_cycles_graph.dot"
 
-    graph_tools.generate_two_cycles_graph_to_file(
-        randint(25, 49), randint(1, 24), ("a", "b"), file
+    if os.path.exists(path):
+        os.remove(path)
+
+    console_commands.generate_and_save_two_cycles_graph(
+        path, randint(25, 49), randint(1, 24), "one", "two"
     )
+
+    assert os.path.exists(path)

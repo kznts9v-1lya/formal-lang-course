@@ -3,6 +3,6 @@ black
 cfpq-data
 networkx~=2.6.2
 pre-commit
-pydot
+pydot~=1.4.2
 pytest~=6.2.5
 scipy
