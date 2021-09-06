@@ -15,11 +15,18 @@ __all__ = [
 
 class GraphDescription:
     """
-    Class that stores description of graph:
-    - name: str
-    - nodes: int,
-    - edges: int,
-    - edge_labels: Set[str]
+    Encapsulates description of graph: name, number of nodes, number of edges, set of edge labels.
+
+    Attributes
+    ----------
+    name: str
+        Name of graph
+    nodes: int
+        Number of graph nodes
+    edges: int
+        Number of graph edges
+    edge_labels: Set[str]
+        Graph edge labels set
     """
 
     def __init__(self, name, nodes: int, edges: int, edge_labels: Set[str]):
@@ -38,9 +45,14 @@ class GraphDescription:
 
 class Graph:
     """
-    Class that stores graph and it's description:
-    - graph: MultiDiGraph,
-    - description: GraphDescription
+    Encapsulates graph: graph object and it's description.
+
+    Attributes
+    ----------
+    graph: MultiDiGraph
+        Graph object
+    description: GraphDescription
+        Description of graph object
     """
 
     def __init__(self, graph: MultiDiGraph):
@@ -67,7 +79,22 @@ current_graph: Graph
 
 def get_description(name: str) -> GraphDescription:
     """
-    Returns GraphDescription of real graph from dataset with number of nodes, edges and set of edge labels
+    Gets a description of real dataset graph encapsulated in GraphDescription.
+
+    Parameters
+    ----------
+    name: str
+        Name of the graph from https://jetbrains-research.github.io/CFPQ_Data/dataset/index.html
+
+    Returns
+    -------
+    GraphDescription
+        Description of graph
+
+    Raises
+    ------
+    NameError
+        If name not in https://jetbrains-research.github.io/CFPQ_Data/dataset/index.html
     """
 
     graph = cfpq_data.graph_from_dataset(name, verbose=False)
@@ -86,7 +113,21 @@ def two_cycles_graph(
     first_cycle: int, second_cycle: int, edge_labels: Tuple[str, str]
 ) -> Graph:
     """
-    Generates a MultiDiGraph with two cycles and specified parameters
+    Generates two cycles graph specified by parameters.
+
+    Parameters
+    ----------
+    first_cycle: int
+        Number of nodes in the first cycle
+    second_cycle: int
+        Number of nodes in the second cycle
+    edge_labels: Tuple[str, str]
+        Labels for edges on the first and second cycles
+
+    Returns
+    -------
+    Graph
+        Class encapsulates graph
     """
 
     graph = cfpq_data.labeled_two_cycles_graph(
@@ -102,7 +143,19 @@ def two_cycles_graph(
 
 def save_to_dot(path: str, graph: MultiDiGraph = None) -> GraphDescription:
     """
-    Saves a MultiDiGraph or last used graph to ".dot" file
+    Saves last used graph (or passed graph) to "*.dot" file specified by path.
+
+    Parameters
+    ----------
+    path: str
+        Path to save the graph, extension ".dot" required
+    graph: networkx.MultiDiGraph, default = None
+        Graph to save
+
+    Returns
+    -------
+    GraphDescription
+        Description of graph
     """
 
     global current_graph

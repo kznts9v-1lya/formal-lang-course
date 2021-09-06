@@ -2,6 +2,14 @@ import project.console_app as app
 
 
 def main():
+    """
+    Main function, application entry point.
+
+    Returns
+    -------
+    None
+    """
+
     app.repl()
 
 

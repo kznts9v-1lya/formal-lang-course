@@ -15,7 +15,7 @@ command_names_commands = {
     command_names[0]: commands.exit_repl,
     command_names[1]: commands.get_graph_description,
     command_names[2]: commands.generate_two_cycles_graph,
-    command_names[3]: commands.save_current_graph_to_dot,
+    command_names[3]: commands.save_graph_to_dot,
 }
 
 description = f"""
@@ -28,6 +28,26 @@ Available commands:
 
 
 def analyse_input(inputs: List[str]) -> None:
+    """
+    Analyze whether list of input strings matches to application commands.
+
+    Parameters
+    ----------
+    inputs: List[str]
+       List of input strings
+
+    Returns
+    -------
+    None
+
+    Raises
+    ------
+    SyntaxError
+        If number of command parameters was wrong
+    TypeError
+        If command parameter has wrong type
+    """
+
     command_name = inputs[0]
 
     if command_name not in command_names:
@@ -60,6 +80,14 @@ def analyse_input(inputs: List[str]) -> None:
 
 
 def repl() -> None:
+    """
+    Runs a console application.
+
+    Returns
+    -------
+    None
+    """
+
     print(description)
 
     while True:

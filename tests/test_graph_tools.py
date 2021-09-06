@@ -46,7 +46,7 @@ def test_generate_two_cycles_graph():
     ).graph
     expected_graph_pydot = str(nx.drawing.nx_pydot.to_pydot(expected_graph))
 
-    console_commands.save_current_graph_to_dot(path)
+    console_commands.save_graph_to_dot(path)
 
     assert os.path.exists(path)
     with open(path, "r") as file:
