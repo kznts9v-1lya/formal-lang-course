@@ -1,4 +1,4 @@
-import console_app as app
+import project.console_app as app
 
 
 def main():
