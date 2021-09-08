@@ -24,8 +24,8 @@ def test_graph_info():
 
     assert (
         actual_desc.nodes == expected_desc.nodes
-        or actual_desc.edges == expected_desc.edges
-        or str(actual_desc.edge_labels) == str(expected_desc.edge_labels)
+        and actual_desc.edges == expected_desc.edges
+        and actual_desc.edge_labels == expected_desc.edge_labels
     )
 
 
