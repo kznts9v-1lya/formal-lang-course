@@ -2,9 +2,15 @@ import os
 import sys
 from pathlib import Path
 
-import project.graph_tools as tools
+from project.graph_tools import *
 
-__all__ = []
+__all__ = [
+    "exit_repl",
+    "get_graph_description",
+    "get_two_cycles_graph",
+    "save_graph_to_dot",
+    "get_graph_names",
+]
 
 
 def exit_repl() -> None:
@@ -17,6 +23,7 @@ def exit_repl() -> None:
     -------
     None
     """
+
     sys.exit(0)
 
 
@@ -36,7 +43,7 @@ def get_graph_description(name: str) -> None:
     None
     """
 
-    description = tools.get_description(name)
+    description = get_description(name)
 
     print(
         f"""
@@ -66,7 +73,7 @@ def get_two_cycles_graph(first_cycle: int, second_cycle: int, *edge_labels) -> N
     None
     """
 
-    description = tools.get_two_cycles(
+    description = get_two_cycles(
         first_cycle, second_cycle, (edge_labels[0], edge_labels[1])
     ).description
 
@@ -112,7 +119,7 @@ def save_graph_to_dot(path: str, name: str) -> None:
     if not file.exists() or not file.is_file():
         open(path, "w+")
 
-    description = tools.save_to_dot(path, name)
+    description = save_to_dot(path, name)
 
     print(
         f"""
@@ -133,7 +140,7 @@ def get_graph_names() -> None:
     None
     """
 
-    names = tools.get_names()
+    names = get_names()
 
     print("\n\tGraph names have ever been used:")
     if len(names) == 0:

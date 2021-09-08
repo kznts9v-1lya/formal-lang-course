@@ -1,6 +1,6 @@
 from typing import List
 
-import project.console_commands as commands
+from project.console_commands import *
 
 __all__ = ["repl"]
 
@@ -13,11 +13,11 @@ command_names = (
 )
 
 command_names_commands = {
-    command_names[0]: commands.exit_repl,
-    command_names[1]: commands.get_graph_description,
-    command_names[2]: commands.get_two_cycles_graph,
-    command_names[3]: commands.save_graph_to_dot,
-    command_names[4]: commands.get_graph_names,
+    command_names[0]: exit_repl,
+    command_names[1]: get_graph_description,
+    command_names[2]: get_two_cycles_graph,
+    command_names[3]: save_graph_to_dot,
+    command_names[4]: get_graph_names,
 }
 
 description = f"""

@@ -2,7 +2,6 @@ from typing import Tuple, Set, List
 
 import cfpq_data
 import networkx as nx
-from networkx import MultiDiGraph
 
 __all__ = [
     "Graph",
@@ -56,7 +55,7 @@ class Graph:
         Description of graph object
     """
 
-    def __init__(self, graph: MultiDiGraph):
+    def __init__(self, graph: nx.MultiDiGraph):
         self.graph = graph
         self.description = GraphDescription(
             graph.name,
@@ -149,7 +148,7 @@ def get_two_cycles(
 
 
 def save_to_dot(
-    path: str, name: str = None, graph: MultiDiGraph = None
+    path: str, name: str = None, graph: nx.MultiDiGraph = None
 ) -> GraphDescription:
     """
     Saves graph by name or passed graph to "*.dot" file specified by path.
