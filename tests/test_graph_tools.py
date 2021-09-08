@@ -30,7 +30,7 @@ def test_graph_info():
 
 
 def test_generate_two_cycles_graph():
-    path = "tests/data/two_cycles_graph.dot"
+    path = "tests/data/two_cycles.dot"
 
     if os.path.exists(path):
         os.remove(path)
@@ -41,12 +41,12 @@ def test_generate_two_cycles_graph():
         "edge_labels": ("one", "two"),
     }
 
-    expected_graph = graph_tools.two_cycles_graph(
+    expected_graph = graph_tools.get_two_cycles(
         desc["first_cycle"], desc["second_cycle"], desc["edge_labels"]
     ).graph
     expected_graph_pydot = str(nx.drawing.nx_pydot.to_pydot(expected_graph))
 
-    console_commands.save_graph_to_dot(path)
+    console_commands.save_graph_to_dot(path, "two_cycles")
 
     assert os.path.exists(path)
     with open(path, "r") as file:

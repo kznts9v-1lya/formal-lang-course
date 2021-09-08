@@ -1,4 +1,4 @@
-from typing import Tuple, Set
+from typing import Tuple, Set, List
 
 import cfpq_data
 import networkx as nx
@@ -8,8 +8,9 @@ __all__ = [
     "Graph",
     "GraphDescription",
     "get_description",
-    "two_cycles_graph",
+    "get_two_cycles",
     "save_to_dot",
+    "get_names",
 ]
 
 
@@ -74,7 +75,7 @@ class Graph:
         self.description.name = name
 
 
-current_graph: Graph
+pool = list()
 
 
 def get_description(name: str) -> GraphDescription:
@@ -100,16 +101,20 @@ def get_description(name: str) -> GraphDescription:
     graph = cfpq_data.graph_from_dataset(name, verbose=False)
 
     if graph is None:
-        raise NameError("Wrong dataset graph name, please specify it")
+        raise NameError(
+            f'Wrong dataset graph name "{name}", please specify it by real dataset name'
+        )
 
-    global current_graph
-    current_graph = Graph(graph)
-    current_graph.set_name(name)
+    current = Graph(graph)
+    current.set_name(name)
 
-    return current_graph.description
+    global pool
+    pool.append(current)
+
+    return current.description
 
 
-def two_cycles_graph(
+def get_two_cycles(
     first_cycle: int, second_cycle: int, edge_labels: Tuple[str, str]
 ) -> Graph:
     """
@@ -134,21 +139,32 @@ def two_cycles_graph(
         first_cycle, second_cycle, edge_labels=edge_labels, verbose=False
     )
 
-    global current_graph
-    current_graph = Graph(graph)
-    current_graph.set_name("tcg")
+    current = Graph(graph)
+    current.set_name("two_cycles")
 
-    return current_graph
+    global pool
+    pool.append(current)
+
+    return current
 
 
-def save_to_dot(path: str, graph: MultiDiGraph = None) -> GraphDescription:
+def save_to_dot(
+    path: str, name: str = None, graph: MultiDiGraph = None
+) -> GraphDescription:
     """
-    Saves last used graph (or passed graph) to "*.dot" file specified by path.
+    Saves graph by name or passed graph to "*.dot" file specified by path.
+
+    If all optional parameters specified, name has higher priority.
+
+    If no optional parameters specified, the last used graph saves.
+    But if list of graphs is empty, it raises an exception.
 
     Parameters
     ----------
     path: str
         Path to save the graph, extension ".dot" required
+    name: str, default = None
+        Name one of the used graphs
     graph: networkx.MultiDiGraph, default = None
         Graph to save
 
@@ -156,13 +172,61 @@ def save_to_dot(path: str, graph: MultiDiGraph = None) -> GraphDescription:
     -------
     GraphDescription
         Description of graph
+
+    Raises
+    ------
+    IndexError
+        If it's no graphs in list to save
+    NameError
+        If name specified with wrong value
     """
 
-    global current_graph
-    if graph is None:
-        nx.drawing.nx_pydot.write_dot(current_graph.graph, path)
-    else:
-        current_graph = Graph(graph)
-        nx.drawing.nx_pydot.write_dot(current_graph.graph, path)
+    global pool
+    current = None
 
-    return current_graph.description
+    if name is None:
+        if graph is None:
+            if len(pool) > 0:
+                current = pool[0]
+                nx.drawing.nx_pydot.write_dot(current.graph, path)
+            else:
+                raise IndexError("No graphs in list to save: add something to it")
+        else:
+            current = Graph(graph)
+            # graph_pool.append(current)
+            nx.drawing.nx_pydot.write_dot(current.graph, path)
+    else:
+        for g in pool:
+            if g.description.name == name:
+                current = g
+
+        if current is None:
+            if graph is None:
+                raise NameError(
+                    f'Wrong graph name: make sure that "{name}" graph has been used'
+                )
+            else:
+                current = Graph(graph)
+                # graph_pool.append(current)
+                nx.drawing.nx_pydot.write_dot(current.graph, path)
+
+        nx.drawing.nx_pydot.write_dot(current.graph, path)
+
+    return current.description
+
+
+def get_names() -> List[str]:
+    """
+    Gets names list of ever used graphs
+
+    Returns
+    -------
+    List[str]
+        Names of ever used graphs
+    """
+
+    names = []
+    for g in pool:
+        names.append(g.description.name)
+
+    return names

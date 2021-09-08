@@ -2,8 +2,6 @@ import os
 import sys
 from pathlib import Path
 
-from networkx import MultiDiGraph
-
 import project.graph_tools as tools
 
 __all__ = []
@@ -48,9 +46,7 @@ def get_graph_description(name: str) -> None:
     )
 
 
-def generate_two_cycles_graph(
-    first_cycle: int, second_cycle: int, *edge_labels
-) -> None:
+def get_two_cycles_graph(first_cycle: int, second_cycle: int, *edge_labels) -> None:
     """
     Implementation of generate_two_cycles_graph application command.
 
@@ -70,7 +66,7 @@ def generate_two_cycles_graph(
     None
     """
 
-    description = tools.two_cycles_graph(
+    description = tools.get_two_cycles(
         first_cycle, second_cycle, (edge_labels[0], edge_labels[1])
     ).description
 
@@ -83,18 +79,18 @@ def generate_two_cycles_graph(
     )
 
 
-def save_graph_to_dot(path: str, graph: MultiDiGraph = None) -> None:
+def save_graph_to_dot(path: str, name: str) -> None:
     """
     Implementation of save_current_graph_to_dot application command.
 
-    Saves last used graph (or passed graph) to "*.dot" file specified by path and prints it's description.
+    Saves graph by name to "*.dot" file specified by path and prints it's description.
 
     Parameters
     ----------
     path: str
         Path to save the graph, extension ".dot" required
-    graph: networkx.MultiDiGraph, default = None
-        Graph to save
+    name: str
+        Name of graph to save from ever used graphs
 
     Returns
     -------
@@ -116,10 +112,7 @@ def save_graph_to_dot(path: str, graph: MultiDiGraph = None) -> None:
     if not file.exists() or not file.is_file():
         open(path, "w+")
 
-    if graph is None:
-        description = tools.save_to_dot(path)
-    else:
-        description = tools.save_to_dot(path, graph)
+    description = tools.save_to_dot(path, name)
 
     print(
         f"""
@@ -129,3 +122,23 @@ def save_graph_to_dot(path: str, graph: MultiDiGraph = None) -> None:
         {str(file)}
         """
     )
+
+
+def get_graph_names() -> None:
+    """
+    Gets names list of ever used graphs and prints it
+
+    Returns
+    -------
+    None
+    """
+
+    names = tools.get_names()
+
+    print("\n\tGraph names have ever been used:")
+    if len(names) == 0:
+        print("\tempty")
+    else:
+        for n in names:
+            print(f"\t- {n}")
+    print()
