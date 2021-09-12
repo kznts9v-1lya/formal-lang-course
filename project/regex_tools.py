@@ -1,6 +1,8 @@
 from pyformlang.finite_automaton import DeterministicFiniteAutomaton
 from pyformlang.regular_expression import Regex
 
+__all__ = ["get_dfa"]
+
 
 def get_dfa(regex: str) -> DeterministicFiniteAutomaton:
     """
