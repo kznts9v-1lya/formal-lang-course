@@ -10,7 +10,7 @@ from project import graph_tools, console_commands
 random.seed(19)
 
 
-def test_get_description():
+def test_get_description() -> None:
     name = "generations"
 
     expected_desc = graph_tools.GraphDescription(
@@ -29,7 +29,7 @@ def test_get_description():
     )
 
 
-def test_get_two_cycles():
+def test_get_two_cycles() -> None:
     path = "tests/data/two_cycles.dot"
 
     if os.path.exists(path):
