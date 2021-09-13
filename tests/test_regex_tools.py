@@ -8,12 +8,8 @@ from project.regex_tools import get_min_dfa
 
 
 def test_wrong_regex() -> None:
-    try:
+    with pytest.raises(MisformedRegexError):
         get_min_dfa("*|wrong_regex|*")
-    except MisformedRegexError:
-        assert True
-    else:
-        assert False
 
 
 def test_dfa() -> None:
