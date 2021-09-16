@@ -22,9 +22,9 @@ def test_min_dfa() -> None:
     actual_dfa = get_min_dfa("i* l* y* a* | 1901")
     expected_min_dfa = actual_dfa.minimize()
 
-    assert actual_dfa == expected_min_dfa and len(actual_dfa.states) == len(
-        expected_min_dfa.states
-    )
+    assert actual_dfa.is_equivalent_to(expected_min_dfa) and len(
+        actual_dfa.states
+    ) == len(expected_min_dfa.states)
 
 
 @pytest.mark.parametrize(
@@ -94,6 +94,6 @@ def test_get_min_dfa() -> None:
 
     actual_min_dfa = get_min_dfa("i* l* y* a*")
 
-    assert actual_min_dfa == expected_min_dfa and len(actual_min_dfa.states) == len(
-        expected_min_dfa.states
-    )
+    assert actual_min_dfa.is_equivalent_to(expected_min_dfa) and len(
+        actual_min_dfa.states
+    ) == len(expected_min_dfa.states)
