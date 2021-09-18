@@ -79,6 +79,7 @@ def get_nfa(graph: nx.MultiDiGraph, start_nodes: Set[int] = None, final_nodes: S
             if start_node not in range(graph.number_of_nodes()):
                 raise ValueError(f"Node {start_node} does not exists in specified graph")
 
+        # Does not spoil the original states
         for node in start_nodes:
             state = list(nfa.states)[node]
             nfa.add_start_state(state)
@@ -88,6 +89,7 @@ def get_nfa(graph: nx.MultiDiGraph, start_nodes: Set[int] = None, final_nodes: S
             if final_node not in range(graph.number_of_nodes()):
                 raise ValueError(f"Node {final_node} does not exists in specified graph")
 
+        # Does not spoil the original states
         for node in final_nodes:
             state = list(nfa.states)[node]
             nfa.add_final_state(state)
