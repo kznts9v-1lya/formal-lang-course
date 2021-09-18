@@ -160,7 +160,7 @@ def get_description(name: str) -> GraphDescription:
 
 
 def get_two_cycles(
-        first_cycle: int, second_cycle: int, edge_labels: Tuple[str, str] = None
+    first_cycle: int, second_cycle: int, edge_labels: Tuple[str, str] = None
 ) -> Graph:
     """
     Generates two cycles graph specified by parameters.
@@ -200,7 +200,7 @@ def get_two_cycles(
 
 
 def save_to_dot(
-        path: str, name: str = None, graph: nx.MultiDiGraph = None
+    path: str, name: str = None, graph: nx.MultiDiGraph = None
 ) -> GraphDescription:
     """
     Saves graph by name or passed graph to "*.dot" file specified by path.

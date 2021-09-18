@@ -1,7 +1,12 @@
 from typing import Iterable
 
 import pytest
-from pyformlang.finite_automaton import Symbol, State, DeterministicFiniteAutomaton, NondeterministicFiniteAutomaton
+from pyformlang.finite_automaton import (
+    Symbol,
+    State,
+    DeterministicFiniteAutomaton,
+    NondeterministicFiniteAutomaton,
+)
 from pyformlang.regular_expression import MisformedRegexError
 
 from project import get_two_cycles, Graph
@@ -23,9 +28,9 @@ def test_min_dfa() -> None:
     actual_dfa = get_min_dfa("i* l* y* a* | 1901")
     expected_min_dfa = actual_dfa.minimize()
 
-    assert actual_dfa.is_equivalent_to(expected_min_dfa) and len(actual_dfa.states) == len(
-        expected_min_dfa.states
-    )
+    assert actual_dfa.is_equivalent_to(expected_min_dfa) and len(
+        actual_dfa.states
+    ) == len(expected_min_dfa.states)
 
 
 @pytest.mark.parametrize(
@@ -33,21 +38,21 @@ def test_min_dfa() -> None:
     [
         ("", [], [Symbol("*")]),
         (
-                "i* l* y* a* | 1901",
-                [Symbol("i"), Symbol("l"), Symbol("y"), Symbol("a")],
-                [Symbol("i"), Symbol("l"), Symbol("y"), Symbol("a"), Symbol("1901")],
+            "i* l* y* a* | 1901",
+            [Symbol("i"), Symbol("l"), Symbol("y"), Symbol("a")],
+            [Symbol("i"), Symbol("l"), Symbol("y"), Symbol("a"), Symbol("1901")],
         ),
         (
-                "(a | b)* 00* | 11*",
-                [Symbol("a"), Symbol("a"), Symbol("00"), Symbol("00"), Symbol("00")],
-                [Symbol("a"), Symbol("b"), Symbol("11")],
+            "(a | b)* 00* | 11*",
+            [Symbol("a"), Symbol("a"), Symbol("00"), Symbol("00"), Symbol("00")],
+            [Symbol("a"), Symbol("b"), Symbol("11")],
         ),
     ],
 )
 def test_min_dfa_accepts(
-        actual_regex: str,
-        expected_word: Iterable[Symbol],
-        not_expected_word: Iterable[Symbol],
+    actual_regex: str,
+    expected_word: Iterable[Symbol],
+    not_expected_word: Iterable[Symbol],
 ) -> None:
     actual_min_dfa = get_min_dfa(actual_regex)
 
@@ -95,9 +100,9 @@ def test_get_min_dfa() -> None:
 
     actual_min_dfa = get_min_dfa("i* l* y* a*")
 
-    assert actual_min_dfa.is_equivalent_to(expected_min_dfa) and len(actual_min_dfa.states) == len(
-        expected_min_dfa.states
-    )
+    assert actual_min_dfa.is_equivalent_to(expected_min_dfa) and len(
+        actual_min_dfa.states
+    ) == len(expected_min_dfa.states)
 
 
 @pytest.fixture
@@ -108,7 +113,9 @@ def two_cycles_graph() -> Graph:
 @pytest.fixture
 def expected_nfa() -> NondeterministicFiniteAutomaton:
     nfa = NondeterministicFiniteAutomaton()
-    nfa.add_transitions([(0, 'a', 1), (1, 'a', 2), (2, 'a', 0), (0, 'b', 3), (3, 'b', 4), (4, 'b', 0)])
+    nfa.add_transitions(
+        [(0, "a", 1), (1, "a", 2), (2, "a", 0), (0, "b", 3), (3, "b", 4), (4, "b", 0)]
+    )
 
     return nfa
 
@@ -127,12 +134,12 @@ def test_nfa(two_cycles_graph) -> None:
 @pytest.mark.parametrize(
     "expected_word, not_expected_word",
     [
-        ('', "epsilon"),
+        ("", "epsilon"),
         ("aaa", "bb"),
-        ("bbb", ' '),
+        ("bbb", " "),
         ("bbbbbb", "aaabb"),
-        ("aaabbbaaa", 'b')
-    ]
+        ("aaabbbaaa", "b"),
+    ],
 )
 def test_nfa_accepts(two_cycles_graph, expected_word, not_expected_word) -> None:
     actual_nfa = get_nfa(two_cycles_graph.graph, {0}, {0})
@@ -144,16 +151,9 @@ def test_nfa_accepts(two_cycles_graph, expected_word, not_expected_word) -> None
 
 @pytest.mark.parametrize(
     "start_states, final_states",
-    [
-        ({0}, {3}),
-        ({0}, {1, 4}),
-        ({2, 3}, {0}),
-        ({0, 1, 2}, {0, 3, 4}),
-        (None, None)
-    ]
+    [({0}, {3}), ({0}, {1, 4}), ({2, 3}, {0}), ({0, 1, 2}, {0, 3, 4}), (None, None)],
 )
-def test_get_nfa(two_cycles_graph, expected_nfa,
-                 start_states, final_states) -> None:
+def test_get_nfa(two_cycles_graph, expected_nfa, start_states, final_states) -> None:
     if not start_states:
         start_states = {0, 1, 2, 3, 4}
 

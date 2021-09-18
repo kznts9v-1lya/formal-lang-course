@@ -1,9 +1,11 @@
 from typing import Set
 
 import networkx as nx
-from pyformlang.finite_automaton import \
-    DeterministicFiniteAutomaton, \
-    EpsilonNFA, NondeterministicFiniteAutomaton
+from pyformlang.finite_automaton import (
+    DeterministicFiniteAutomaton,
+    EpsilonNFA,
+    NondeterministicFiniteAutomaton,
+)
 from pyformlang.regular_expression import Regex
 
 __all__ = ["get_min_dfa", "get_nfa"]
@@ -36,8 +38,9 @@ def get_min_dfa(regex: str) -> DeterministicFiniteAutomaton:
     return min_dfa
 
 
-def get_nfa(graph: nx.MultiDiGraph, start_nodes: Set[int] = None, final_nodes: Set[int] = None) \
-        -> NondeterministicFiniteAutomaton:
+def get_nfa(
+    graph: nx.MultiDiGraph, start_nodes: Set[int] = None, final_nodes: Set[int] = None
+) -> NondeterministicFiniteAutomaton:
     """
     Generates an Epsilon Nondeterministic Finite Automaton for a specified graph and start or end nodes.
 
@@ -77,7 +80,9 @@ def get_nfa(graph: nx.MultiDiGraph, start_nodes: Set[int] = None, final_nodes: S
     if start_nodes:
         for start_node in start_nodes:
             if start_node not in range(graph.number_of_nodes()):
-                raise ValueError(f"Node {start_node} does not exists in specified graph")
+                raise ValueError(
+                    f"Node {start_node} does not exists in specified graph"
+                )
 
         # Does not spoil the original states
         for node in start_nodes:
@@ -87,7 +92,9 @@ def get_nfa(graph: nx.MultiDiGraph, start_nodes: Set[int] = None, final_nodes: S
     if final_nodes:
         for final_node in final_nodes:
             if final_node not in range(graph.number_of_nodes()):
-                raise ValueError(f"Node {final_node} does not exists in specified graph")
+                raise ValueError(
+                    f"Node {final_node} does not exists in specified graph"
+                )
 
         # Does not spoil the original states
         for node in final_nodes:

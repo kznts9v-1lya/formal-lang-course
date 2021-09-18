@@ -53,7 +53,9 @@ def get_graph_description(name: str) -> None:
     )
 
 
-def get_two_cycles_graph(first_cycle: int, second_cycle: int, *edge_labels: str) -> None:
+def get_two_cycles_graph(
+    first_cycle: int, second_cycle: int, *edge_labels: str
+) -> None:
     """
     Implementation of generate_two_cycles_graph application command.
 
