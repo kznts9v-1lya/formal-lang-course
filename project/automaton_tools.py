@@ -3,8 +3,8 @@ from typing import Set
 import networkx as nx
 from pyformlang.finite_automaton import (
     DeterministicFiniteAutomaton,
-    EpsilonNFA,
     NondeterministicFiniteAutomaton,
+    State,
 )
 from pyformlang.regular_expression import Regex
 
@@ -42,23 +42,25 @@ def get_nfa(
     graph: nx.MultiDiGraph, start_nodes: Set[int] = None, final_nodes: Set[int] = None
 ) -> NondeterministicFiniteAutomaton:
     """
-    Generates an Epsilon Nondeterministic Finite Automaton for a specified graph and start or end nodes.
+    Generates an Nondeterministic Finite Automaton for a specified graph and start or final nodes.
 
-    If start_nodes and final_nodes are not specified, all nodes are considered start and end.
+    If start_nodes and final_nodes are not specified, all nodes are considered start and final.
 
     Parameters
     ----------
     graph: nx.MultiDiGraph
-        Graph to generating an Epsilon Nondeterministic Finite Automaton from it
+        Graph to generating an Nondeterministic Finite Automaton from it
     start_nodes: Set[int], default = None
-        Set of start nodes to configure Epsilon Nondeterministic Finite Automaton
+        Set of start nodes to configure Nondeterministic Finite Automaton,
+        which must exist in the graph
     final_nodes: Set[int], default = None
-        Set of final nodes to configure Epsilon Nondeterministic Finite Automaton
+        Set of final nodes to configure Nondeterministic Finite Automaton,
+        which must exist in the graph
 
     Returns
     -------
-    EpsilonNFA
-        Epsilon Nondeterministic Finite Automaton equivalent to a specified graph
+    NondeterministicFiniteAutomaton
+        Nondeterministic Finite Automaton equivalent to a specified graph
 
     Raises
     ------
@@ -68,37 +70,43 @@ def get_nfa(
 
     nfa = NondeterministicFiniteAutomaton()
 
+    for node in graph.nodes:
+        nfa.states.add(State(node))
+
     for node_from, node_to in graph.edges():
         edge_label = graph.get_edge_data(node_from, node_to)[0]["label"]
         nfa.add_transition(node_from, edge_label, node_to)
 
-    if not start_nodes and not final_nodes:
-        for state in nfa.states:
-            nfa.add_start_state(state)
-            nfa.add_final_state(state)
+    if len(nfa.states) == 0:
+        if start_nodes or final_nodes:
+            raise ValueError(
+                "The resulting empty Nondeterministic Finite Automaton"
+                + "cannot have start or final states equivalent to the specified nodes"
+            )
+    else:
+        if not start_nodes and not final_nodes:
+            for state in nfa.states:
+                nfa.add_start_state(state)
+                nfa.add_final_state(state)
 
-    if start_nodes:
-        for start_node in start_nodes:
-            if start_node not in range(graph.number_of_nodes()):
-                raise ValueError(
-                    f"Node {start_node} does not exists in specified graph"
-                )
+        if start_nodes:
+            for start_node in start_nodes:
+                if start_node not in range(graph.number_of_nodes()):
+                    raise ValueError(
+                        f"Node {start_node} does not exists in specified graph"
+                    )
 
-        # Does not spoil the original states
-        for node in start_nodes:
-            state = list(nfa.states)[node]
-            nfa.add_start_state(state)
+                state = list(nfa.states)[start_node]
+                nfa.add_start_state(state)
 
-    if final_nodes:
-        for final_node in final_nodes:
-            if final_node not in range(graph.number_of_nodes()):
-                raise ValueError(
-                    f"Node {final_node} does not exists in specified graph"
-                )
+        if final_nodes:
+            for final_node in final_nodes:
+                if final_node not in range(graph.number_of_nodes()):
+                    raise ValueError(
+                        f"Node {final_node} does not exists in specified graph"
+                    )
 
-        # Does not spoil the original states
-        for node in final_nodes:
-            state = list(nfa.states)[node]
-            nfa.add_final_state(state)
+                state = list(nfa.states)[final_node]
+                nfa.add_final_state(state)
 
     return nfa

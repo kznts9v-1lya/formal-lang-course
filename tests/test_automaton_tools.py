@@ -105,13 +105,36 @@ def test_get_min_dfa() -> None:
     ) == len(expected_min_dfa.states)
 
 
-@pytest.fixture
 def two_cycles_graph() -> Graph:
     return get_two_cycles(2, 2)
 
 
-@pytest.fixture
-def expected_nfa() -> NondeterministicFiniteAutomaton:
+def without_nodes_graph() -> Graph:
+    without_nodes = two_cycles_graph()
+    without_nodes.graph.remove_nodes_from(list(without_nodes.graph.nodes))
+    without_nodes.description.set_name("without_nodes")
+
+    return without_nodes
+
+
+def without_edges_graph() -> Graph:
+    without_edges = two_cycles_graph()
+    without_edges.graph.remove_edges_from(list(without_edges.graph.edges))
+    without_edges.description.set_name("without_edges")
+
+    return without_edges
+
+
+def one_node_graph() -> Graph:
+    one_node = two_cycles_graph()
+    [one_node.graph.remove_node(node) for node in range(1, one_node.description.nodes)]
+    one_node.graph.add_edge(0, 0, label="x")
+    one_node.description.set_name("one_node")
+
+    return one_node
+
+
+def two_cycles_expected_nfa() -> NondeterministicFiniteAutomaton:
     nfa = NondeterministicFiniteAutomaton()
     nfa.add_transitions(
         [(0, "a", 1), (1, "a", 2), (2, "a", 0), (0, "b", 3), (3, "b", 4), (4, "b", 0)]
@@ -120,52 +143,112 @@ def expected_nfa() -> NondeterministicFiniteAutomaton:
     return nfa
 
 
-def test_wrong_states(two_cycles_graph) -> None:
-    with pytest.raises(ValueError):
-        get_nfa(two_cycles_graph.graph, {0, 4, 199}, {-9, 3, 19})
+def without_nodes_expected_nfa() -> NondeterministicFiniteAutomaton:
+    nfa = NondeterministicFiniteAutomaton()
+
+    return nfa
 
 
-def test_nfa(two_cycles_graph) -> None:
-    nfa = get_nfa(two_cycles_graph.graph)
+def without_edges_expected_nfa() -> NondeterministicFiniteAutomaton:
+    nfa = NondeterministicFiniteAutomaton()
+    [nfa.states.add(State(node)) for node in without_edges_graph().graph.nodes]
 
-    assert not nfa.is_deterministic()
+    return nfa
+
+
+def one_node_expected_nfa() -> NondeterministicFiniteAutomaton:
+    nfa = NondeterministicFiniteAutomaton()
+    state = State(0)
+    symbol = Symbol("x")
+    nfa.add_transition(state, symbol, state)
+
+    return nfa
 
 
 @pytest.mark.parametrize(
-    "expected_word, not_expected_word",
+    "graph",
     [
-        ("", "epsilon"),
-        ("aaa", "bb"),
-        ("bbb", " "),
-        ("bbbbbb", "aaabb"),
-        ("aaabbbaaa", "b"),
+        two_cycles_graph(),
+        without_nodes_graph(),
+        without_edges_graph(),
+        one_node_graph(),
     ],
 )
-def test_nfa_accepts(two_cycles_graph, expected_word, not_expected_word) -> None:
-    actual_nfa = get_nfa(two_cycles_graph.graph, {0}, {0})
-
-    assert actual_nfa.accepts(expected_word) and not actual_nfa.accepts(
-        not_expected_word
-    )
+def test_wrong_states(graph) -> None:
+    with pytest.raises(ValueError):
+        get_nfa(graph.graph, {0, 4, 199}, {-9, 3, 19})
 
 
 @pytest.mark.parametrize(
-    "start_states, final_states",
-    [({0}, {3}), ({0}, {1, 4}), ({2, 3}, {0}), ({0, 1, 2}, {0, 3, 4}), (None, None)],
+    "graph",
+    [
+        two_cycles_graph(),
+        without_nodes_graph(),
+        without_edges_graph(),
+        one_node_graph(),
+    ],
 )
-def test_get_nfa(two_cycles_graph, expected_nfa, start_states, final_states) -> None:
-    if not start_states:
-        start_states = {0, 1, 2, 3, 4}
+def test_nfa(graph) -> None:
+    nfa = get_nfa(graph.graph)
 
-    for state in start_states:
-        expected_nfa.add_start_state(State(state))
+    assert isinstance(nfa, NondeterministicFiniteAutomaton)
 
-    if not final_states:
-        final_states = {0, 1, 2, 3, 4}
 
-    for state in final_states:
-        expected_nfa.add_final_state(State(state))
+@pytest.mark.parametrize(
+    "graph, expected_word, not_expected_word",
+    [
+        (two_cycles_graph(), "", "epsilon"),
+        (two_cycles_graph(), "aaa", "baba"),
+        (two_cycles_graph(), "bbb", " "),
+        (two_cycles_graph(), "bbbbbb", "aaababa"),
+        (two_cycles_graph(), "aaabbbaaa", " ab "),
+        (without_nodes_graph(), "", "epsilon"),
+        (without_edges_graph(), "", "epsilon"),
+        (one_node_graph(), "xxx", "epsilon"),
+    ],
+)
+def test_nfa_accepts(graph, expected_word, not_expected_word) -> None:
+    actual_nfa = get_nfa(graph.graph)
 
-    actual_nfa = get_nfa(two_cycles_graph.graph, start_states, final_states)
+    if graph.graph.number_of_nodes() == 0:
+        assert actual_nfa.is_empty()
+    else:
+        assert actual_nfa.accepts(expected_word) and not actual_nfa.accepts(
+            not_expected_word
+        )
 
-    assert actual_nfa.is_equivalent_to(expected_nfa)
+
+@pytest.mark.parametrize(
+    "graph, expected_ndfa, start_states, final_states",
+    [
+        (two_cycles_graph(), two_cycles_expected_nfa(), {0}, {3}),
+        (two_cycles_graph(), two_cycles_expected_nfa(), {0}, {1, 4}),
+        (two_cycles_graph(), two_cycles_expected_nfa(), {2, 3}, {0}),
+        (two_cycles_graph(), two_cycles_expected_nfa(), {0, 1, 2}, {0, 3, 4}),
+        (two_cycles_graph(), two_cycles_expected_nfa(), None, None),
+        (without_nodes_graph(), without_nodes_expected_nfa(), None, None),
+        (without_edges_graph(), without_edges_expected_nfa(), {3}, None),
+        (one_node_graph(), one_node_expected_nfa(), {0}, {0}),
+    ],
+)
+def test_get_nfa(graph, expected_ndfa, start_states, final_states) -> None:
+    if graph.graph.number_of_nodes() == 0:
+        actual_nfa = get_nfa(graph.graph, start_states, final_states)
+
+        assert actual_nfa.is_empty() == expected_ndfa.is_empty()
+    else:
+        if not start_states:
+            start_states = set(range(graph.graph.number_of_nodes()))
+
+        for state in start_states:
+            expected_ndfa.add_start_state(State(state))
+
+        if not final_states:
+            final_states = set(range(graph.graph.number_of_nodes()))
+
+        for state in final_states:
+            expected_ndfa.add_final_state(State(state))
+
+        actual_nfa = get_nfa(graph.graph, start_states, final_states)
+
+        assert actual_nfa.is_equivalent_to(expected_ndfa)

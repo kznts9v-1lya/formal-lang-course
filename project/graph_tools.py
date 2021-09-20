@@ -43,6 +43,9 @@ class GraphDescription:
             + f"\t- edge labels: {str(self.edge_labels)}"
         )
 
+    def set_name(self, name):
+        self.name = name
+
 
 class Graph:
     """
@@ -70,9 +73,6 @@ class Graph:
             Graph {self.description.name}:
             {str(self.description)}
             """
-
-    def set_name(self, name):
-        self.description.name = name
 
 
 pool = list()
@@ -123,7 +123,7 @@ def get_from_dataset(name: str) -> Graph:
         )
 
     graph = Graph(dataset_graph)
-    graph.set_name(name)
+    graph.description.set_name(name)
 
     # global pool
     # pool.append(graph)
@@ -191,7 +191,7 @@ def get_two_cycles(
         )
 
     current = Graph(graph)
-    current.set_name("two_cycles")
+    current.description.set_name("two_cycles")
 
     global pool
     pool.append(current)
