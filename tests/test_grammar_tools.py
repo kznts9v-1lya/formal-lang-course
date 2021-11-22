@@ -453,65 +453,14 @@ def test_cyk_not_accept_from_text(cfg, words):
     assert all(cyk(word, cfg) == cfg.contains(word) for word in words)
 
 
-@pytest.mark.parametrize(
-    "cfg, graph, expected",
-    [
-        (
-            """
-                S -> epsilon
-                """,
-            Graph(labeled_cycle_graph(3, "a", verbose=False)),
-            {(1, "S", 1), (2, "S", 2), (0, "S", 0)},
-        ),
-        (
-            """
-                S -> b | epsilon
-                """,
-            Graph(labeled_cycle_graph(4, "b", verbose=False)),
-            {
-                (1, "S", 1),
-                (2, "S", 2),
-                (0, "S", 0),
-                (3, "S", 3),
-                (0, "S", 1),
-                (1, "S", 2),
-                (2, "S", 3),
-                (3, "S", 0),
-            },
-        ),
-        (
-            """
-                S -> A B
-                S -> A S1
-                S1 -> S B
-                A -> a
-                B -> b
-                """,
-            get_two_cycles(2, 1, ("a", "b")),
-            {
-                (0, "S1", 3),
-                (2, "S1", 0),
-                (2, "S", 3),
-                (2, "S1", 3),
-                (3, "B", 0),
-                (1, "S", 0),
-                (0, "S", 0),
-                (1, "S", 3),
-                (1, "A", 2),
-                (0, "S", 3),
-                (0, "B", 3),
-                (1, "S1", 3),
-                (2, "A", 0),
-                (1, "S1", 0),
-                (0, "S1", 0),
-                (0, "A", 1),
-                (2, "S", 0),
-            },
-        ),
-    ],
+@pytest.fixture(
+    params=[
+        hellings_cfpq,
+        matrix_cfpq,
+    ]
 )
-def test_hellings_cfpq(cfg, graph, expected):
-    assert hellings_cfpq(graph.graph, CFG.from_text(cfg)) == expected
+def cfpq(request):
+    return request.param
 
 
 @pytest.mark.parametrize(
@@ -569,7 +518,71 @@ def test_hellings_cfpq(cfg, graph, expected):
                 (2, "S", 0),
             },
         ),
+        (
+            """
+            S -> epsilon
+            """,
+            Graph(labeled_cycle_graph(5, "a", verbose=False)),
+            {(0, "S", 0), (1, "S", 1), (2, "S", 2), (3, "S", 3), (4, "S", 4)},
+        ),
+        (
+            """
+                S -> a | epsilon
+                """,
+            Graph(labeled_cycle_graph(3, "a", verbose=False)),
+            {
+                (0, "S", 0),
+                (1, "S", 1),
+                (2, "S", 2),
+                (0, "S", 1),
+                (1, "S", 2),
+                (2, "S", 0),
+            },
+        ),
+        (
+            """
+            S -> A B
+            S -> A C
+            C -> S B
+            A -> a
+            B -> b
+            """,
+            get_two_cycles(3, 2, ("a", "b")),
+            {
+                (0, "A", 1),
+                (1, "A", 2),
+                (2, "A", 3),
+                (3, "A", 0),
+                (0, "B", 4),
+                (4, "B", 5),
+                (5, "B", 0),
+                (3, "S", 4),
+                (2, "S", 5),
+                (1, "S", 0),
+                (0, "S", 4),
+                (3, "S", 5),
+                (2, "S", 0),
+                (1, "S", 4),
+                (0, "S", 5),
+                (3, "S", 0),
+                (2, "S", 4),
+                (1, "S", 5),
+                (0, "S", 0),
+                (3, "C", 5),
+                (2, "C", 0),
+                (1, "C", 4),
+                (0, "C", 5),
+                (3, "C", 0),
+                (2, "C", 4),
+                (1, "C", 5),
+                (0, "C", 0),
+                (3, "C", 4),
+                (2, "C", 5),
+                (1, "C", 0),
+                (0, "C", 4),
+            },
+        ),
     ],
 )
-def test_matrix_cfpq(cfg, graph, expected):
-    assert matrix_cfpq(graph.graph, CFG.from_text(cfg)) == expected
+def test_cfpq(cfpq, cfg, graph, expected):
+    assert cfpq(graph.graph, CFG.from_text(cfg)) == expected
