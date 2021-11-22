@@ -13,7 +13,8 @@ from project.grammar_tools import (
     ECFG,
     get_ecfg_from_cfg,
     cyk,
-    hellings_cfpq, matrix_cfpq,
+    hellings_cfpq,
+    matrix_cfpq,
 )
 
 
