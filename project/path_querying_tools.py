@@ -1,17 +1,18 @@
-from typing import Set, Tuple
+from typing import Set, Tuple, Callable
 
 import networkx as nx
 from pyformlang.cfg import CFG, Variable
 from pyformlang.regular_expression import Regex
 
+from project import grammar_tools
 from project.automaton_tools import get_min_dfa_from_regex, get_nfa_from_graph
-from project.grammar_tools import hellings
 from project.matrix_tools import BooleanAdjacencies
 
 __all__ = [
     "regular_path_querying",
     "regular_str_path_querying",
-    "context_free_path_querying",
+    "hellings_context_free_path_querying",
+    "matrix_context_free_path_querying",
 ]
 
 
@@ -123,15 +124,18 @@ def regular_path_querying(
     return reachable_state_nums
 
 
-def context_free_path_querying(
+def _context_free_path_querying(
     graph: nx.MultiDiGraph,
     cfg: CFG,
-    start_symbol: str = Variable("S"),
+    start_symbol: str = "S",
     start_node_nums: Set[int] = None,
     final_node_nums: Set[int] = None,
+    algorithm: Callable = grammar_tools.hellings_cfpq,
 ) -> Set[Tuple[int, int]]:
     """
-    Using the specified graph and a context free query,
+    Basic Context Free Path Querying function.
+
+    Using the specified graph, context free query and parameters
     finds all pairs of reachable node numbers.
 
     Parameters
@@ -139,13 +143,15 @@ def context_free_path_querying(
     graph: nx.MultiDiGraph
         Graph for queries
     cfg: CFG
-         Query to graph as context free grammar
-    start_symbol: str
+        Query to graph as context free grammar
+    start_symbol: str, default = 'S'
         Start symbol for context free grammar
     start_node_nums: Set[int], default = None
         Set of start node numbers in the graph
     final_node_nums: Set[int], default = None
         Set of final node numbers in the graph
+    algorithm: Callable, default = grammar_tools.hellings
+        Context Free Path Querying function algorithm function
 
     Returns
     -------
@@ -157,7 +163,7 @@ def context_free_path_querying(
 
     reachable_node_nums = {
         (node_num_l, node_num_r)
-        for node_num_l, head, node_num_r in hellings(graph, cfg)
+        for node_num_l, head, node_num_r in algorithm(graph, cfg)
         if head == cfg.start_symbol
     }
 
@@ -176,3 +182,87 @@ def context_free_path_querying(
         }
 
     return reachable_node_nums
+
+
+def hellings_context_free_path_querying(
+    graph: nx.MultiDiGraph,
+    cfg: CFG,
+    start_symbol: str = "S",
+    start_node_nums: Set[int] = None,
+    final_node_nums: Set[int] = None,
+) -> Set[Tuple[int, int]]:
+    """
+    Context Free Path Querying based on Hellings.
+
+    Using the specified graph, context free query and parameters
+    finds all pairs of reachable node numbers.
+
+    Parameters
+    ----------
+    graph: nx.MultiDiGraph
+        Graph for queries
+    cfg: CFG
+         Query to graph as context free grammar
+    start_symbol: str, default = 'S'
+        Start symbol for context free grammar
+    start_node_nums: Set[int], default = None
+        Set of start node numbers in the graph
+    final_node_nums: Set[int], default = None
+        Set of final node numbers in the graph
+
+    Returns
+    -------
+    Set[Tuple[int, int]]
+        Set of all pairs of reachable node numbers
+    """
+
+    return _context_free_path_querying(
+        graph,
+        cfg,
+        start_symbol,
+        start_node_nums,
+        final_node_nums,
+        algorithm=grammar_tools.hellings_cfpq,
+    )
+
+
+def matrix_context_free_path_querying(
+    graph: nx.MultiDiGraph,
+    cfg: CFG,
+    start_symbol: str = "S",
+    start_node_nums: Set[int] = None,
+    final_node_nums: Set[int] = None,
+) -> Set[Tuple[int, int]]:
+    """
+    Context Free Path Querying based on boolean matrices multiplication.
+
+    Using the specified graph, context free query and parameters
+    finds all pairs of reachable node numbers.
+
+    Parameters
+    ----------
+    graph: nx.MultiDiGraph
+        Graph for queries
+    cfg: CFG
+        Query to graph as context free grammar
+    start_symbol: str, default = 'S'
+        Start symbol for context free grammar
+    start_node_nums: Set[int], default = None
+        Set of start node numbers in the graph
+    final_node_nums: Set[int], default = None
+        Set of final node numbers in the graph
+
+    Returns
+    -------
+    Set[Tuple[int, int]]
+        Set of all pairs of reachable node numbers
+    """
+
+    return _context_free_path_querying(
+        graph,
+        cfg,
+        start_symbol,
+        start_node_nums,
+        final_node_nums,
+        algorithm=grammar_tools.matrix_cfpq,
+    )
