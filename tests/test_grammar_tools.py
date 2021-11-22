@@ -15,6 +15,7 @@ from project.grammar_tools import (
     cyk,
     hellings_cfpq,
     tensor_cfpq,
+    matrix_cfpq,
 )
 
 
@@ -453,6 +454,17 @@ def test_cyk_not_accept_from_text(cfg, words):
     assert all(cyk(word, cfg) == cfg.contains(word) for word in words)
 
 
+@pytest.fixture(
+    params=[
+        hellings_cfpq,
+        matrix_cfpq,
+        tensor_cfpq,
+    ]
+)
+def cfpq(request):
+    return request.param
+
+
 @pytest.mark.parametrize(
     "cfg, graph, expected",
     [
@@ -508,27 +520,18 @@ def test_cyk_not_accept_from_text(cfg, words):
                 (2, "S", 0),
             },
         ),
-    ],
-)
-def test_hellings_cfpq(cfg, graph, expected):
-    assert hellings_cfpq(graph.graph, CFG.from_text(cfg)) == expected
-
-
-@pytest.mark.parametrize(
-    "cfg, graph, expected",
-    [
         (
             """
             S -> epsilon
             """,
-            labeled_cycle_graph(5, "a"),
+            Graph(labeled_cycle_graph(5, "a", verbose=False)),
             {(0, "S", 0), (1, "S", 1), (2, "S", 2), (3, "S", 3), (4, "S", 4)},
         ),
         (
             """
                 S -> a | epsilon
                 """,
-            labeled_cycle_graph(3, "a"),
+            Graph(labeled_cycle_graph(3, "a", verbose=False)),
             {
                 (0, "S", 0),
                 (1, "S", 1),
@@ -546,7 +549,7 @@ def test_hellings_cfpq(cfg, graph, expected):
             A -> a
             B -> b
             """,
-            get_two_cycles(3, 2, ("a", "b")).graph,
+            get_two_cycles(3, 2),
             {
                 (0, "A", 1),
                 (1, "A", 2),
@@ -583,5 +586,5 @@ def test_hellings_cfpq(cfg, graph, expected):
         ),
     ],
 )
-def test_tensor(cfg, graph, expected):
-    assert tensor_cfpq(graph, CFG.from_text(cfg)) == expected
+def test_cfpq(cfpq, cfg, graph, expected):
+    assert cfpq(graph.graph, CFG.from_text(cfg)) == expected
