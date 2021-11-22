@@ -11,6 +11,7 @@ from project.path_querying_tools import (
     regular_str_path_querying,
     hellings_context_free_path_querying,
     matrix_context_free_path_querying,
+    tensor_context_free_path_querying,
 )
 
 
@@ -83,7 +84,11 @@ def test_querying(
 
 
 @pytest.fixture(
-    params=[hellings_context_free_path_querying, matrix_context_free_path_querying]
+    params=[
+        hellings_context_free_path_querying,
+        matrix_context_free_path_querying,
+        tensor_context_free_path_querying,
+    ]
 )
 def cfpq(request):
     return request.param
@@ -99,9 +104,9 @@ Option = namedtuple(
     [
         (
             """
-                A -> a A | epsilon
-                B -> b B | b
-                """,
+                    A -> a A | epsilon
+                    B -> b B | b
+                    """,
             Graph(labeled_cycle_graph(3, "a", verbose=False)),
             [
                 Option("A", {0}, {0}, {(0, 0)}),
@@ -111,8 +116,8 @@ Option = namedtuple(
         ),
         (
             """
-                S -> epsilon
-                """,
+                    S -> epsilon
+                    """,
             Graph(labeled_cycle_graph(4, "b", verbose=False)),
             [
                 Option("S", {0, 1}, {0, 1}, {(0, 0), (1, 1)}),
@@ -122,12 +127,12 @@ Option = namedtuple(
         ),
         (
             """
-                S -> A B
-                S -> A S1
-                S1 -> S B
-                A -> a
-                B -> b
-                """,
+                    S -> A B
+                    S -> A S1
+                    S1 -> S B
+                    A -> a
+                    B -> b
+                    """,
             get_two_cycles(2, 1),
             [
                 Option(

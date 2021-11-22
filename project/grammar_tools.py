@@ -17,10 +17,16 @@ __all__ = [
     "ECFG",
     "get_ecfg_from_cfg",
     "cyk",
-    "hellings",
+    "hellings_cfpq",
+    "matrix_cfpq",
+    "tensor_cfpq",
 ]
 
 from pyformlang.regular_expression import Regex
+from scipy.sparse import identity, dok_matrix
+
+from project import automaton_tools
+from project.matrix_tools import BooleanAdjacencies
 
 
 def _check_path(path: str) -> None:
@@ -683,7 +689,7 @@ def cyk(word: str, cfg: CFG) -> bool:
     return cnf.start_symbol.value in matrix[0][word_len - 1]
 
 
-def hellings(graph: nx.MultiDiGraph, cfg: CFG) -> Set[Tuple[int, str, int]]:
+def hellings_cfpq(graph: nx.MultiDiGraph, cfg: CFG) -> Set[Tuple[int, str, int]]:
     """
     Hellings Context Free Grammar algorithm implementation.
 
@@ -697,7 +703,7 @@ def hellings(graph: nx.MultiDiGraph, cfg: CFG) -> Set[Tuple[int, str, int]]:
     Returns
     -------
     Set[Tuple[int, str, int]]
-        Set of all tuples of reachable node numbers by CFG variable
+        Set of all reachable node numbers by CFG variable
     """
 
     wcnf = get_wcnf_from_cfg(cfg)
@@ -738,10 +744,10 @@ def hellings(graph: nx.MultiDiGraph, cfg: CFG) -> Set[Tuple[int, str, int]]:
                     and production.body[1].value == variable_i
                     and (node_num_ll, production.head.value, node_num_r) not in result
                 }
-                working |= trio
                 pre_result |= trio
 
         result |= pre_result
+        working |= pre_result
         pre_result.clear()
 
         for node_num_ll, variable_j, node_num_rr in result:
@@ -753,10 +759,180 @@ def hellings(graph: nx.MultiDiGraph, cfg: CFG) -> Set[Tuple[int, str, int]]:
                     and production.body[1].value == variable_j
                     and (node_num_l, production.head.value, node_num_rr) not in result
                 }
-                working |= trio
                 pre_result |= trio
 
         result |= pre_result
+        working |= pre_result
         pre_result.clear()
 
     return result
+
+
+def matrix_cfpq(graph: nx.MultiDiGraph, cfg: CFG) -> Set[Tuple[int, str, int]]:
+    """
+    Context Free Path Querying algorithm based on boolean matrices multiplication.
+
+    Using the specified graph and context free query,
+    find all pairs of reachable node numbers.
+
+    Parameters
+    ----------
+    graph: nx.MultiDiGraph
+        Graph for queries
+    cfg: CFG
+        Query to graph as context free grammar
+
+    Returns
+    -------
+    Set[Tuple[int, str, int]]
+        Set of all pairs of reachable node numbers by CFG variables
+    """
+
+    wcnf = get_wcnf_from_cfg(cfg)
+
+    epsilon_heads = [
+        production.head.value for production in wcnf.productions if not production.body
+    ]
+    terminal_productions = {
+        production for production in wcnf.productions if len(production.body) == 1
+    }
+    variable_productions = {
+        production for production in wcnf.productions if len(production.body) == 2
+    }
+    nodes_num = graph.number_of_nodes()
+
+    boolean_matrices = {
+        variable.value: dok_matrix((nodes_num, nodes_num), dtype=bool)
+        for variable in wcnf.variables
+    }
+
+    for u, v, data in graph.edges(data=True):
+        edge_label = data["label"]
+        for variable in {
+            terminal_production.head.value
+            for terminal_production in terminal_productions
+            if terminal_production.body[0].value == edge_label
+        }:
+            boolean_matrices[variable][u, v] = True
+
+    for node_num in range(nodes_num):
+        for variable in epsilon_heads:
+            boolean_matrices[variable][node_num, node_num] = True
+
+    changing = True
+    while changing:
+        changing = False
+
+        for variable_production in variable_productions:
+            current_nnz = boolean_matrices[variable_production.head.value].nnz
+            boolean_matrices[variable_production.head.value] += (
+                boolean_matrices[variable_production.body[0].value]
+                @ boolean_matrices[variable_production.body[1].value]
+            )
+            next_nnz = boolean_matrices[variable_production.head.value].nnz
+            changing = changing or current_nnz != next_nnz
+
+    return {
+        (u, variable, v)
+        for variable, boolean_matrix in boolean_matrices.items()
+        for u, v in zip(*boolean_matrix.nonzero())
+    }
+
+
+def tensor_cfpq(graph: nx.MultiDiGraph, cfg: CFG) -> Set[Tuple[int, str, int]]:
+    """
+    Context Free Path Querying algorithm based on boolean matrices multiplication.
+
+    Using the specified graph and context free query,
+    find all pairs of reachable node numbers.
+
+    Parameters
+    ----------
+    graph: nx.MultiDiGraph
+        Graph for queries
+    cfg: CFG
+        Query to graph as context free grammar
+
+    Returns
+    -------
+    Set[Tuple[int, str, int]]
+        Set of all pairs of reachable node numbers by CFG variables
+    """
+
+    wcnf = get_wcnf_from_cfg(cfg)
+
+    num = sum(len(production.body) + 1 for production in wcnf.productions)
+    rsm_heads = dict()
+    variables = set()
+    boxes = dict()
+    start_states = set()
+    final_states = set()
+
+    i = 0
+    for production in wcnf.productions:
+        variables.add(production.head.value)
+        start_states.add(i)
+        final_states.add(i + len(production.body))
+        rsm_heads[(i, i + len(production.body))] = production.head.value
+
+        for body in production.body:
+            boolean_adjacency = boxes.get(
+                body.value, dok_matrix((num, num), dtype=bool)
+            )
+            boolean_adjacency[i, i + 1] = True
+            boxes[body.value] = boolean_adjacency
+            i += 1
+        i += 1
+
+    boolean_adjacencies = BooleanAdjacencies(automaton_tools.get_nfa_from_graph(graph))
+
+    for production in wcnf.productions:
+        if len(production.body) == 0:
+            boolean_adjacencies.boolean_adjacencies[production.head.value] = identity(
+                boolean_adjacencies.states_num, dtype=bool
+            ).todok()
+
+    ba = BooleanAdjacencies()
+    ba.start_states = start_states
+    ba.final_states = final_states
+    ba.boolean_adjacencies = boxes
+    ba.number_of_states = num
+
+    changing = True
+    while changing:
+        changing = False
+
+        transitive_closure = ba.intersect(boolean_adjacencies).get_transitive_closure()
+        x, y = transitive_closure.nonzero()
+
+        for (i, j) in zip(x, y):
+            rfa_from = i // boolean_adjacencies.states_num
+            rfa_to = j // boolean_adjacencies.states_num
+            graph_from = i % boolean_adjacencies.states_num
+            graph_to = j % boolean_adjacencies.states_num
+
+            if (rfa_from, rfa_to) not in rsm_heads:
+                continue
+
+            variable = rsm_heads[(rfa_from, rfa_to)]
+            boolean_adjacency = boolean_adjacencies.boolean_adjacencies.get(
+                variable,
+                dok_matrix(
+                    (boolean_adjacencies.states_num, boolean_adjacencies.states_num),
+                    dtype=bool,
+                ),
+            )
+
+            if not boolean_adjacency[graph_from, graph_to]:
+                changing = True
+                boolean_adjacency[graph_from, graph_to] = True
+                boolean_adjacencies.boolean_adjacencies[variable] = boolean_adjacency
+
+    trio = set()
+    for variable, boolean_adjacency in boolean_adjacencies.boolean_adjacencies.items():
+        if variable not in variables:
+            continue
+        for (u, v), _ in boolean_adjacency.items():
+            trio.add((u, variable, v))
+
+    return trio
