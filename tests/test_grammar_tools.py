@@ -13,7 +13,7 @@ from project.grammar_tools import (
     ECFG,
     get_ecfg_from_cfg,
     cyk,
-    hellings_cfpq,
+    hellings_cfpq, matrix_cfpq,
 )
 
 
@@ -509,5 +509,66 @@ def test_cyk_not_accept_from_text(cfg, words):
         ),
     ],
 )
-def test_hellings(cfg, graph, expected):
+def test_hellings_cfpq(cfg, graph, expected):
     assert hellings_cfpq(graph.graph, CFG.from_text(cfg)) == expected
+
+
+@pytest.mark.parametrize(
+    "cfg, graph, expected",
+    [
+        (
+            """
+                S -> epsilon
+                """,
+            Graph(labeled_cycle_graph(3, "a", verbose=False)),
+            {(1, "S", 1), (2, "S", 2), (0, "S", 0)},
+        ),
+        (
+            """
+                S -> b | epsilon
+                """,
+            Graph(labeled_cycle_graph(4, "b", verbose=False)),
+            {
+                (1, "S", 1),
+                (2, "S", 2),
+                (0, "S", 0),
+                (3, "S", 3),
+                (0, "S", 1),
+                (1, "S", 2),
+                (2, "S", 3),
+                (3, "S", 0),
+            },
+        ),
+        (
+            """
+                S -> A B
+                S -> A S1
+                S1 -> S B
+                A -> a
+                B -> b
+                """,
+            get_two_cycles(2, 1, ("a", "b")),
+            {
+                (0, "S1", 3),
+                (2, "S1", 0),
+                (2, "S", 3),
+                (2, "S1", 3),
+                (3, "B", 0),
+                (1, "S", 0),
+                (0, "S", 0),
+                (1, "S", 3),
+                (1, "A", 2),
+                (0, "S", 3),
+                (0, "B", 3),
+                (1, "S1", 3),
+                (2, "A", 0),
+                (1, "S1", 0),
+                (0, "S1", 0),
+                (0, "A", 1),
+                (2, "S", 0),
+            },
+        ),
+    ],
+)
+def test_matrix_cfpq(cfg, graph, expected):
+    assert matrix_cfpq(graph.graph, CFG.from_text(cfg)) == expected
