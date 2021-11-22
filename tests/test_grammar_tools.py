@@ -13,7 +13,7 @@ from project.grammar_tools import (
     ECFG,
     get_ecfg_from_cfg,
     cyk,
-    hellings,
+    hellings_cfpq,
 )
 
 
@@ -510,4 +510,4 @@ def test_cyk_not_accept_from_text(cfg, words):
     ],
 )
 def test_hellings(cfg, graph, expected):
-    assert hellings(graph.graph, CFG.from_text(cfg)) == expected
+    assert hellings_cfpq(graph.graph, CFG.from_text(cfg)) == expected
