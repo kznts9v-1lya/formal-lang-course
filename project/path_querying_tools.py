@@ -13,6 +13,7 @@ __all__ = [
     "regular_str_path_querying",
     "hellings_context_free_path_querying",
     "matrix_context_free_path_querying",
+    "tensor_context_free_path_querying",
 ]
 
 
@@ -265,4 +266,46 @@ def matrix_context_free_path_querying(
         start_node_nums,
         final_node_nums,
         algorithm=grammar_tools.matrix_cfpq,
+    )
+
+
+def tensor_context_free_path_querying(
+    graph: nx.MultiDiGraph,
+    cfg: CFG,
+    start_symbol: str = "S",
+    start_node_nums: Set[int] = None,
+    final_node_nums: Set[int] = None,
+) -> Set[Tuple[int, int]]:
+    """
+    Context Free Path Querying based on tensor (Kronecker's) multiplication.
+
+    Using the specified graph, context free query and parameters
+    finds all pairs of reachable node numbers.
+
+    Parameters
+    ----------
+    graph: nx.MultiDiGraph
+        Graph for queries
+    cfg: CFG
+        Query to graph as context free grammar
+    start_symbol: str, default = 'S'
+        Start symbol for context free grammar
+    start_node_nums: Set[int], default = None
+        Set of start node numbers in the graph
+    final_node_nums: Set[int], default = None
+        Set of final node numbers in the graph
+
+    Returns
+    -------
+    Set[Tuple[int, int]]
+        Set of all pairs of reachable node numbers
+    """
+
+    return _context_free_path_querying(
+        graph,
+        cfg,
+        start_symbol,
+        start_node_nums,
+        final_node_nums,
+        algorithm=grammar_tools.tensor_cfpq,
     )

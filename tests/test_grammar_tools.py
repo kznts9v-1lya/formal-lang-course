@@ -14,6 +14,7 @@ from project.grammar_tools import (
     get_ecfg_from_cfg,
     cyk,
     hellings_cfpq,
+    tensor_cfpq,
     matrix_cfpq,
 )
 
@@ -457,6 +458,7 @@ def test_cyk_not_accept_from_text(cfg, words):
     params=[
         hellings_cfpq,
         matrix_cfpq,
+        tensor_cfpq,
     ]
 )
 def cfpq(request):
@@ -547,7 +549,7 @@ def cfpq(request):
             A -> a
             B -> b
             """,
-            get_two_cycles(3, 2, ("a", "b")),
+            get_two_cycles(3, 2),
             {
                 (0, "A", 1),
                 (1, "A", 2),

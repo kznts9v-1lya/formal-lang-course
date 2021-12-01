@@ -19,10 +19,14 @@ __all__ = [
     "cyk",
     "hellings_cfpq",
     "matrix_cfpq",
+    "tensor_cfpq",
 ]
 
 from pyformlang.regular_expression import Regex
-from scipy import sparse
+from scipy.sparse import identity, dok_matrix
+
+from project import automaton_tools
+from project.matrix_tools import BooleanAdjacencies
 
 
 def _check_path(path: str) -> None:
@@ -798,7 +802,7 @@ def matrix_cfpq(graph: nx.MultiDiGraph, cfg: CFG) -> Set[Tuple[int, str, int]]:
     nodes_num = graph.number_of_nodes()
 
     boolean_matrices = {
-        variable.value: sparse.dok_matrix((nodes_num, nodes_num), dtype=bool)
+        variable.value: dok_matrix((nodes_num, nodes_num), dtype=bool)
         for variable in wcnf.variables
     }
 
@@ -833,3 +837,102 @@ def matrix_cfpq(graph: nx.MultiDiGraph, cfg: CFG) -> Set[Tuple[int, str, int]]:
         for variable, boolean_matrix in boolean_matrices.items()
         for u, v in zip(*boolean_matrix.nonzero())
     }
+
+
+def tensor_cfpq(graph: nx.MultiDiGraph, cfg: CFG) -> Set[Tuple[int, str, int]]:
+    """
+    Context Free Path Querying algorithm based on boolean matrices multiplication.
+
+    Using the specified graph and context free query,
+    find all pairs of reachable node numbers.
+
+    Parameters
+    ----------
+    graph: nx.MultiDiGraph
+        Graph for queries
+    cfg: CFG
+        Query to graph as context free grammar
+
+    Returns
+    -------
+    Set[Tuple[int, str, int]]
+        Set of all pairs of reachable node numbers by CFG variables
+    """
+
+    wcnf = get_wcnf_from_cfg(cfg)
+
+    num = sum(len(production.body) + 1 for production in wcnf.productions)
+    rsm_heads = dict()
+    variables = set()
+    boxes = dict()
+    start_states = set()
+    final_states = set()
+
+    i = 0
+    for production in wcnf.productions:
+        variables.add(production.head.value)
+        start_states.add(i)
+        final_states.add(i + len(production.body))
+        rsm_heads[(i, i + len(production.body))] = production.head.value
+
+        for body in production.body:
+            boolean_adjacency = boxes.get(
+                body.value, dok_matrix((num, num), dtype=bool)
+            )
+            boolean_adjacency[i, i + 1] = True
+            boxes[body.value] = boolean_adjacency
+            i += 1
+        i += 1
+
+    boolean_adjacencies = BooleanAdjacencies(automaton_tools.get_nfa_from_graph(graph))
+
+    for production in wcnf.productions:
+        if len(production.body) == 0:
+            boolean_adjacencies.boolean_adjacencies[production.head.value] = identity(
+                boolean_adjacencies.states_num, dtype=bool
+            ).todok()
+
+    ba = BooleanAdjacencies()
+    ba.start_states = start_states
+    ba.final_states = final_states
+    ba.boolean_adjacencies = boxes
+    ba.number_of_states = num
+
+    changing = True
+    while changing:
+        changing = False
+
+        transitive_closure = ba.intersect(boolean_adjacencies).get_transitive_closure()
+        x, y = transitive_closure.nonzero()
+
+        for (i, j) in zip(x, y):
+            rfa_from = i // boolean_adjacencies.states_num
+            rfa_to = j // boolean_adjacencies.states_num
+            graph_from = i % boolean_adjacencies.states_num
+            graph_to = j % boolean_adjacencies.states_num
+
+            if (rfa_from, rfa_to) not in rsm_heads:
+                continue
+
+            variable = rsm_heads[(rfa_from, rfa_to)]
+            boolean_adjacency = boolean_adjacencies.boolean_adjacencies.get(
+                variable,
+                dok_matrix(
+                    (boolean_adjacencies.states_num, boolean_adjacencies.states_num),
+                    dtype=bool,
+                ),
+            )
+
+            if not boolean_adjacency[graph_from, graph_to]:
+                changing = True
+                boolean_adjacency[graph_from, graph_to] = True
+                boolean_adjacencies.boolean_adjacencies[variable] = boolean_adjacency
+
+    trio = set()
+    for variable, boolean_adjacency in boolean_adjacencies.boolean_adjacencies.items():
+        if variable not in variables:
+            continue
+        for (u, v), _ in boolean_adjacency.items():
+            trio.add((u, variable, v))
+
+    return trio

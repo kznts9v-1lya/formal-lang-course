@@ -1,9 +1,10 @@
 from typing import Set, Dict, Union
 
-import scipy.sparse as sps
 from pyformlang.finite_automaton import NondeterministicFiniteAutomaton, Symbol, State
 
 __all__ = ["BooleanAdjacencies"]
+
+from scipy.sparse import dok_matrix, kron, csr_matrix
 
 
 class BooleanAdjacencies:
@@ -64,7 +65,7 @@ class BooleanAdjacencies:
 
     def _get_boolean_adjacencies(
         self, transition_func: Dict[State, Dict[Symbol, Union[State, Set[State]]]]
-    ) -> Dict[Symbol, sps.dok_matrix]:
+    ) -> Dict[Symbol, dok_matrix]:
         """
         Construct a Nondeterministic Finite Automaton boolean adjacency
         matrices by symbols.
@@ -93,7 +94,7 @@ class BooleanAdjacencies:
                     state_to_num = self.states_nums[state_to]
 
                     if symbol not in boolean_adjacencies:
-                        boolean_adjacencies[symbol]: sps.dok_matrix = sps.dok_matrix(
+                        boolean_adjacencies[symbol]: dok_matrix = dok_matrix(
                             self.shape, dtype=bool
                         )
 
@@ -133,7 +134,7 @@ class BooleanAdjacencies:
         )
 
         for symbol in intersection_symbols:
-            intersection.boolean_adjacencies[symbol] = sps.kron(
+            intersection.boolean_adjacencies[symbol] = kron(
                 self.boolean_adjacencies[symbol],
                 other.boolean_adjacencies[symbol],
                 format="dok",
@@ -163,7 +164,7 @@ class BooleanAdjacencies:
 
         return intersection
 
-    def get_transitive_closure(self) -> sps.dok_matrix:
+    def get_transitive_closure(self) -> dok_matrix:
         """
         Makes the transitive closure of Nondeterministic Finite Automaton
         presented as boolean adjacency matrices by symbols.
@@ -174,8 +175,8 @@ class BooleanAdjacencies:
         Nondeterministic Finite Automaton transitive closure
         """
 
-        transitive_closure: sps.dok_matrix = sps.dok_matrix(
-            sps.csr_matrix(
+        transitive_closure: dok_matrix = dok_matrix(
+            csr_matrix(
                 sum(
                     boolean_adjacency
                     for boolean_adjacency in self.boolean_adjacencies.values()
@@ -209,7 +210,7 @@ class BooleanAdjacencies:
         nfa = NondeterministicFiniteAutomaton()
 
         for symbol, boolean_adjacency in self.boolean_adjacencies.items():
-            boolean_adjacency_indices = sps.dok_matrix(
+            boolean_adjacency_indices = dok_matrix(
                 boolean_adjacency, dtype=bool
             ).nonzero()
 
