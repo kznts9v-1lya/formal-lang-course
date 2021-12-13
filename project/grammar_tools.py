@@ -225,6 +225,41 @@ def get_cnf_from_text(cfg_text: str, start_symbol: str = None) -> (CFG, CFG):
     return chomsky_cnf, hopcroft_cnf
 
 
+def get_cnf_from_cfg(cfg: CFG) -> (CFG, CFG):
+    """
+    Makes Context Free Grammars (with epsilon by Chomsky, no epsilon by Hopcroft) in Chomsky Normal Form
+    equivalent to given CFG. Both versions are equal if CNF doesn't contain epsilon productions.
+
+    The Chomsky Normal Form is a more strict case of the Weak Chomsky Normal Form,
+    which can be weakened to it through product changes.
+
+    Parameters
+    ----------
+    cfg: CFG
+        Context Free Grammar
+
+    Returns
+    -------
+    Tuple[CFG, CFG]:
+        Context Free Grammars (with epsilon by Chomsky, no epsilon by Hopcroft) in Chomsky Normal Form
+        equivalent to text representation of CFG
+    """
+
+    is_gen_eps = cfg.generate_epsilon()
+    hopcroft_cnf = cfg.to_normal_form()
+
+    chomsky_cnf = None
+    if is_gen_eps:
+        chomsky_cnf = CFG(
+            hopcroft_cnf.variables,
+            hopcroft_cnf.terminals,
+            hopcroft_cnf.start_symbol,
+            hopcroft_cnf.productions | {Production(hopcroft_cnf.start_symbol, [])},
+        )
+
+    return chomsky_cnf, hopcroft_cnf
+
+
 def get_wcnf_from_file(path: str, start_symbol: str = None) -> CFG:
     """
     Makes Context Free Grammar in Weak Chomsky Normal Form equivalent to

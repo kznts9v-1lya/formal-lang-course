@@ -100,7 +100,7 @@ def get_from_dataset(name: str, verbose: bool = False) -> Graph:
     ----------
     name: str
         Name of the graph from https://jetbrains-research.github.io/CFPQ_Data/dataset/index.html
-    verbose:
+    verbose: bool
         If true, more information will be printed
 
     Returns
