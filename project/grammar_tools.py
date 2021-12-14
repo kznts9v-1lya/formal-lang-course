@@ -245,11 +245,10 @@ def get_cnf_from_cfg(cfg: CFG) -> (CFG, CFG):
         equivalent to text representation of CFG
     """
 
-    is_gen_eps = cfg.generate_epsilon()
     hopcroft_cnf = cfg.to_normal_form()
 
     chomsky_cnf = None
-    if is_gen_eps:
+    if cfg.generate_epsilon():
         chomsky_cnf = CFG(
             hopcroft_cnf.variables,
             hopcroft_cnf.terminals,
@@ -933,11 +932,11 @@ def tensor_cfpq(graph: nx.MultiDiGraph, cfg: CFG) -> Set[Tuple[int, str, int]]:
     ba.boolean_adjacencies = boxes
     ba.number_of_states = num
 
-    changing = True
-    while changing:
-        changing = False
-
+    prev_nnz = -2
+    new_nnz = -1
+    while prev_nnz != new_nnz:
         transitive_closure = ba.intersect(boolean_adjacencies).get_transitive_closure()
+        prev_nnz, new_nnz = new_nnz, transitive_closure.nnz
         x, y = transitive_closure.nonzero()
 
         for (i, j) in zip(x, y):
@@ -958,10 +957,8 @@ def tensor_cfpq(graph: nx.MultiDiGraph, cfg: CFG) -> Set[Tuple[int, str, int]]:
                 ),
             )
 
-            if not boolean_adjacency[graph_from, graph_to]:
-                changing = True
-                boolean_adjacency[graph_from, graph_to] = True
-                boolean_adjacencies.boolean_adjacencies[variable] = boolean_adjacency
+            boolean_adjacency[graph_from, graph_to] = True
+            boolean_adjacencies.boolean_adjacencies[variable] = boolean_adjacency
 
     trio = set()
     for variable, boolean_adjacency in boolean_adjacencies.boolean_adjacencies.items():
