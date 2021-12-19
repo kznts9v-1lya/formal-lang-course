@@ -8,7 +8,7 @@ prog = List<stmt>
 stmt =
     Bind of var * expr
   | Print of expr
-  
+
 val =
     String of string
   | Int of int
@@ -17,7 +17,7 @@ val =
   | List of string
   | List of int
   | List of bool
-  
+
 expr =
     Var of var                   // переменные
   | Val of val                   // константы
@@ -39,7 +39,7 @@ expr =
   | Union of expr * expr         // объединение языков
   | Star of expr                 // замыкание языков (звезда Клини)
   | Smb of expr                  // единичный переход
-  
+
 lambda =
     Lambda of List<var> * expr
 ```
@@ -250,7 +250,7 @@ val ->
     | path
     | list<int>
     | list<" string ">
-    | list<bool> 
+    | list<bool>
 set ->
     set<int>
     | set<" string ">
@@ -272,13 +272,13 @@ vertices -> GET_START ( graph )
 vertices -> GET_FINAL ( set , graph )
 
 expr -> vertices_pair
-vertices_pair -> set<(int, int)>                    
+vertices_pair -> set<(int, int)>
 vertices_pair -> GET_REACHABLE ( graph )
 
 vertices -> GET_VERTICES ( graph )
 
 expr -> edge | edges
-edge -> (int, " string ", int) | (int, int, int)    
+edge -> (int, " string ", int) | (int, int, int)
 edges -> set<edge>
 edges -> GET_EDGES ( graph )
 
@@ -289,7 +289,7 @@ labels -> GET_LABELS ( graph )
 expr -> MAP ( lambda , expr )
 expr -> FILTER ( lambda , expr )
 graph -> LOAD ( path )
-graph -> INTERSECT ( graph , graph ) 
+graph -> INTERSECT ( graph , graph )
 graph -> CONCAT ( graph , graph )
 graph -> UNION ( graph , graph )
 graph -> STAR ( graph , graph )
@@ -304,7 +304,7 @@ bool_expr ->
     | IS_START ( vertex )
     | IS_FINAL ( vertex )
     | x IN set<x>
-    
+
 list<x> -> LIST ( x [, x]* ) | LIST ( )
 set<x> -> SET ( x [, x]* ) | SET ( )
 ```
