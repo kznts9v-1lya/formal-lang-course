@@ -92,7 +92,7 @@ def get_names() -> List[str]:
     return names
 
 
-def get_from_dataset(name: str) -> Graph:
+def get_from_dataset(name: str, verbose: bool = False) -> Graph:
     """
     Gets a real dataset graph encapsulated in Graph.
 
@@ -100,6 +100,8 @@ def get_from_dataset(name: str) -> Graph:
     ----------
     name: str
         Name of the graph from https://jetbrains-research.github.io/CFPQ_Data/dataset/index.html
+    verbose: bool
+        If true, more information will be printed
 
     Returns
     -------
@@ -112,7 +114,7 @@ def get_from_dataset(name: str) -> Graph:
         If name not in https://jetbrains-research.github.io/CFPQ_Data/dataset/index.html
     """
 
-    dataset_graph = cfpq_data.graph_from_dataset(name, verbose=False)
+    dataset_graph = cfpq_data.graph_from_dataset(name, verbose=verbose)
 
     if not dataset_graph:
         raise NameError(
