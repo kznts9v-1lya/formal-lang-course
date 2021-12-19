@@ -232,7 +232,6 @@ _____________________________________
 program -> stmt ; program | eps
 stmt -> var = expr | PRINT ( expr )
 
-space -> [ ]            // символ пробела
 lower_symbol -> [a-z]
 upper_symbol -> [A-Z]
 digit -> [0-9]
