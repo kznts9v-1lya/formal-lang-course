@@ -328,5 +328,5 @@ result1 = INTERSECT(graph1, query1)
 result2 = INTERSECT(graph2, query2)
 
 PRINT(result1)
-PRINT(result2)
+PRINT(result2);
 ```
