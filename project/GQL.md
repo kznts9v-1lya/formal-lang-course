@@ -310,22 +310,23 @@ set<x> -> SET ( x [, x]* ) | SET ( )
 
 ## Пример программы
 
+Данный скрипт загружает граф "core" и создаёт его копию с заданными стартовыми и финальными вершинами.
+Затем создает два запроса на метках графа. Наконец, выполняет пересечение исходного графа (все вершины
+тогда будут стартовыми и финальными по умолчанию) с первым запросом и его копии со вторым запросом,
+печатая результат.
+
 ```
 graph1 = LOAD("core")
-graph2 = SET_START(SET_FINAL(GET_VERTICES(graph), graph)), RANGE(1, 100))
+graph2 = SET_START(RANGE(1, 10), SET_FINAL(GET_VERTICES(graph), graph)))
 
-lu = UNION("label1", "label2")
+query_part = UNION("label1", "label2")
 
-query1 = STAR(UNION("type_of", lu))
-query2 = CONCAT("sub_class_of", lu)
+query1 = STAR(UNION("type_of", query_part))
+query2 = CONCAT("sub_class_of", query_part)
 
 result1 = INTERSECT(graph1, query1)
 result2 = INTERSECT(graph2, query2)
 
 PRINT(result1)
 PRINT(result2)
-
-start1 = GET_START(graph1)
-vertices1 = FILTER((LIST(vertex) -> vertex in start1), GET_EDGES(result1))
-PRINT(vertices1);
 ```
