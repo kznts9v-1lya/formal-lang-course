@@ -5,6 +5,7 @@ from io import StringIO
 from typing.io import TextIO
 import sys
 
+
 def serializedATN():
     with StringIO() as buf:
         buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\63")
@@ -13,7 +14,7 @@ def serializedATN():
         buf.write("\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22\4\23\t\23")
         buf.write("\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31")
         buf.write("\t\31\4\32\t\32\4\33\t\33\4\34\t\34\4\35\t\35\4\36\t\36")
-        buf.write("\4\37\t\37\4 \t \4!\t!\4\"\t\"\4#\t#\4$\t$\4%\t%\3\2\5")
+        buf.write('\4\37\t\37\4 \t \4!\t!\4"\t"\4#\t#\4$\t$\4%\t%\3\2\5')
         buf.write("\2L\n\2\3\2\5\2O\n\2\3\2\3\2\3\2\5\2T\n\2\6\2V\n\2\r\2")
         buf.write("\16\2W\3\2\3\2\3\3\3\3\3\3\3\3\5\3`\n\3\3\3\3\3\5\3d\n")
         buf.write("\3\3\3\3\3\5\3h\n\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3")
@@ -41,18 +42,18 @@ def serializedATN():
         buf.write("\5\36\u014b\n\36\3\36\3\36\5\36\u014f\n\36\3\37\3\37\3")
         buf.write("\37\7\37\u0154\n\37\f\37\16\37\u0157\13\37\3\37\5\37\u015a")
         buf.write("\n\37\3\37\3\37\3 \3 \3 \3 \7 \u0162\n \f \16 \u0165\13")
-        buf.write(" \3 \5 \u0168\n \3 \3 \3!\3!\3\"\3\"\3\"\3\"\3\"\3\"\3")
-        buf.write("\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"")
-        buf.write("\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\5\"\u018c\n\"")
+        buf.write(' \3 \5 \u0168\n \3 \3 \3!\3!\3"\3"\3"\3"\3"\3"\3')
+        buf.write('"\3"\3"\3"\3"\3"\3"\3"\3"\3"\3"\3"\3"\3"')
+        buf.write('\3"\3"\3"\3"\3"\3"\3"\3"\3"\3"\5"\u018c\n"')
         buf.write("\3#\3#\3#\7#\u0191\n#\f#\16#\u0194\13#\3#\5#\u0197\n#")
         buf.write("\3#\5#\u019a\n#\3$\3$\3$\3$\3$\5$\u01a1\n$\3%\3%\3%\2")
-        buf.write("\3\6&\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.")
+        buf.write('\3\6&\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 "$&(*,.')
         buf.write("\60\62\64\668:<>@BDFH\2\2\2\u01c4\2U\3\2\2\2\4g\3\2\2")
         buf.write("\2\6u\3\2\2\2\b\u0095\3\2\2\2\n\u0097\3\2\2\2\f\u009a")
         buf.write("\3\2\2\2\16\u00a6\3\2\2\2\20\u00b2\3\2\2\2\22\u00be\3")
         buf.write("\2\2\2\24\u00d5\3\2\2\2\26\u00d7\3\2\2\2\30\u00dc\3\2")
         buf.write("\2\2\32\u00ec\3\2\2\2\34\u00f1\3\2\2\2\36\u00f3\3\2\2")
-        buf.write("\2 \u00fe\3\2\2\2\"\u0100\3\2\2\2$\u0104\3\2\2\2&\u0108")
+        buf.write('\2 \u00fe\3\2\2\2"\u0100\3\2\2\2$\u0104\3\2\2\2&\u0108')
         buf.write("\3\2\2\2(\u010f\3\2\2\2*\u0116\3\2\2\2,\u011e\3\2\2\2")
         buf.write(".\u0126\3\2\2\2\60\u012e\3\2\2\2\62\u0135\3\2\2\2\64\u013b")
         buf.write("\3\2\2\2\66\u013d\3\2\2\28\u013f\3\2\2\2:\u014e\3\2\2")
@@ -65,8 +66,8 @@ def serializedATN():
         buf.write("\2[\\\7\23\2\2\\h\5\6\4\2]_\5@!\2^`\7\62\2\2_^\3\2\2\2")
         buf.write("_`\3\2\2\2`a\3\2\2\2ac\7\27\2\2bd\7\62\2\2cb\3\2\2\2c")
         buf.write("d\3\2\2\2de\3\2\2\2ef\5\6\4\2fh\3\2\2\2g[\3\2\2\2g]\3")
-        buf.write("\2\2\2h\5\3\2\2\2ij\b\4\1\2jk\7\"\2\2kl\5\6\4\2lm\7#\2")
-        buf.write("\2mv\3\2\2\2nv\5 \21\2ov\5\"\22\2pv\5$\23\2qv\5@!\2rv")
+        buf.write('\2\2\2h\5\3\2\2\2ij\b\4\1\2jk\7"\2\2kl\5\6\4\2lm\7#\2')
+        buf.write('\2mv\3\2\2\2nv\5 \21\2ov\5"\22\2pv\5$\23\2qv\5@!\2rv')
         buf.write("\5F$\2st\7\32\2\2tv\5\6\4\bui\3\2\2\2un\3\2\2\2uo\3\2")
         buf.write("\2\2up\3\2\2\2uq\3\2\2\2ur\3\2\2\2us\3\2\2\2v\u0087\3")
         buf.write("\2\2\2wx\f\7\2\2xy\7\33\2\2y\u0086\5\6\4\bz{\f\6\2\2{")
@@ -79,7 +80,7 @@ def serializedATN():
         buf.write("\3\2\2\2\u0089\u0087\3\2\2\2\u008a\u0096\5\n\6\2\u008b")
         buf.write("\u0096\5\64\33\2\u008c\u0096\5\66\34\2\u008d\u0096\5\f")
         buf.write("\7\2\u008e\u0096\5\16\b\2\u008f\u0096\5\20\t\2\u0090\u0096")
-        buf.write("\5\22\n\2\u0091\u0092\7\"\2\2\u0092\u0093\5\b\5\2\u0093")
+        buf.write('\5\22\n\2\u0091\u0092\7"\2\2\u0092\u0093\5\b\5\2\u0093')
         buf.write("\u0094\7#\2\2\u0094\u0096\3\2\2\2\u0095\u008a\3\2\2\2")
         buf.write("\u0095\u008b\3\2\2\2\u0095\u008c\3\2\2\2\u0095\u008d\3")
         buf.write("\2\2\2\u0095\u008e\3\2\2\2\u0095\u008f\3\2\2\2\u0095\u0090")
@@ -107,7 +108,7 @@ def serializedATN():
         buf.write("\2\2\2\u00c8\u00c7\3\2\2\2\u00c9\23\3\2\2\2\u00ca\u00d6")
         buf.write("\5\26\f\2\u00cb\u00d6\5\62\32\2\u00cc\u00d6\5:\36\2\u00cd")
         buf.write("\u00d6\5*\26\2\u00ce\u00d6\5,\27\2\u00cf\u00d6\5.\30\2")
-        buf.write("\u00d0\u00d6\5\60\31\2\u00d1\u00d2\7\"\2\2\u00d2\u00d3")
+        buf.write('\u00d0\u00d6\5\60\31\2\u00d1\u00d2\7"\2\2\u00d2\u00d3')
         buf.write("\5\24\13\2\u00d3\u00d4\7#\2\2\u00d4\u00d6\3\2\2\2\u00d5")
         buf.write("\u00ca\3\2\2\2\u00d5\u00cb\3\2\2\2\u00d5\u00cc\3\2\2\2")
         buf.write("\u00d5\u00cd\3\2\2\2\u00d5\u00ce\3\2\2\2\u00d5\u00cf\3")
@@ -115,18 +116,18 @@ def serializedATN():
         buf.write("\3\2\2\2\u00d7\u00d8\7*\2\2\u00d8\27\3\2\2\2\u00d9\u00dd")
         buf.write("\5\32\16\2\u00da\u00dd\5> \2\u00db\u00dd\5&\24\2\u00dc")
         buf.write("\u00d9\3\2\2\2\u00dc\u00da\3\2\2\2\u00dc\u00db\3\2\2\2")
-        buf.write("\u00dd\31\3\2\2\2\u00de\u00df\7\"\2\2\u00df\u00e0\5\26")
+        buf.write('\u00dd\31\3\2\2\2\u00de\u00df\7"\2\2\u00df\u00e0\5\26')
         buf.write("\f\2\u00e0\u00e1\7\36\2\2\u00e1\u00e2\5\36\20\2\u00e2")
         buf.write("\u00e3\7\36\2\2\u00e3\u00e4\5\26\f\2\u00e4\u00e5\7#\2")
-        buf.write("\2\u00e5\u00ed\3\2\2\2\u00e6\u00e7\7\"\2\2\u00e7\u00e8")
+        buf.write('\2\u00e5\u00ed\3\2\2\2\u00e6\u00e7\7"\2\2\u00e7\u00e8')
         buf.write("\5\26\f\2\u00e8\u00e9\7\36\2\2\u00e9\u00ea\5\26\f\2\u00ea")
         buf.write("\u00eb\7#\2\2\u00eb\u00ed\3\2\2\2\u00ec\u00de\3\2\2\2")
         buf.write("\u00ec\u00e6\3\2\2\2\u00ed\33\3\2\2\2\u00ee\u00f2\5\36")
         buf.write("\20\2\u00ef\u00f2\5<\37\2\u00f0\u00f2\5(\25\2\u00f1\u00ee")
         buf.write("\3\2\2\2\u00f1\u00ef\3\2\2\2\u00f1\u00f0\3\2\2\2\u00f2")
         buf.write("\35\3\2\2\2\u00f3\u00f4\5\66\34\2\u00f4\37\3\2\2\2\u00f5")
-        buf.write("\u00f6\7\3\2\2\u00f6\u00f7\5D#\2\u00f7\u00f8\7\'\2\2\u00f8")
-        buf.write("\u00f9\5\6\4\2\u00f9\u00ff\3\2\2\2\u00fa\u00fb\7\"\2\2")
+        buf.write("\u00f6\7\3\2\2\u00f6\u00f7\5D#\2\u00f7\u00f8\7'\2\2\u00f8")
+        buf.write('\u00f9\5\6\4\2\u00f9\u00ff\3\2\2\2\u00fa\u00fb\7"\2\2')
         buf.write("\u00fb\u00fc\5 \21\2\u00fc\u00fd\7#\2\2\u00fd\u00ff\3")
         buf.write("\2\2\2\u00fe\u00f5\3\2\2\2\u00fe\u00fa\3\2\2\2\u00ff!")
         buf.write("\3\2\2\2\u0100\u0101\7\22\2\2\u0101\u0102\5 \21\2\u0102")
@@ -134,7 +135,7 @@ def serializedATN():
         buf.write("\u0106\5 \21\2\u0106\u0107\5\6\4\2\u0107%\3\2\2\2\u0108")
         buf.write("\u0109\7\13\2\2\u0109\u010a\7\f\2\2\u010a\u010d\7\20\2")
         buf.write("\2\u010b\u010e\5\b\5\2\u010c\u010e\5@!\2\u010d\u010b\3")
-        buf.write("\2\2\2\u010d\u010c\3\2\2\2\u010e\'\3\2\2\2\u010f\u0110")
+        buf.write("\2\2\2\u010d\u010c\3\2\2\2\u010e'\3\2\2\2\u010f\u0110")
         buf.write("\7\13\2\2\u0110\u0111\7\n\2\2\u0111\u0114\7\20\2\2\u0112")
         buf.write("\u0115\5\b\5\2\u0113\u0115\5@!\2\u0114\u0112\3\2\2\2\u0114")
         buf.write("\u0113\3\2\2\2\u0115)\3\2\2\2\u0116\u0117\7\13\2\2\u0117")
@@ -172,15 +173,15 @@ def serializedATN():
         buf.write("\u0167\3\2\2\2\u0165\u0163\3\2\2\2\u0166\u0168\5\32\16")
         buf.write("\2\u0167\u0166\3\2\2\2\u0167\u0168\3\2\2\2\u0168\u0169")
         buf.write("\3\2\2\2\u0169\u016a\7!\2\2\u016a?\3\2\2\2\u016b\u016c")
-        buf.write("\7)\2\2\u016cA\3\2\2\2\u016d\u016e\7\"\2\2\u016e\u016f")
+        buf.write('\7)\2\2\u016cA\3\2\2\2\u016d\u016e\7"\2\2\u016e\u016f')
         buf.write("\5@!\2\u016f\u0170\7\36\2\2\u0170\u0171\5@!\2\u0171\u0172")
-        buf.write("\7#\2\2\u0172\u018c\3\2\2\2\u0173\u0174\7\"\2\2\u0174")
+        buf.write('\7#\2\2\u0172\u018c\3\2\2\2\u0173\u0174\7"\2\2\u0174')
         buf.write("\u0175\5@!\2\u0175\u0176\7\36\2\2\u0176\u0177\5@!\2\u0177")
         buf.write("\u0178\7\36\2\2\u0178\u0179\5@!\2\u0179\u017a\7#\2\2\u017a")
-        buf.write("\u018c\3\2\2\2\u017b\u017c\7\"\2\2\u017c\u017d\7\"\2\2")
+        buf.write('\u018c\3\2\2\2\u017b\u017c\7"\2\2\u017c\u017d\7"\2\2')
         buf.write("\u017d\u017e\5@!\2\u017e\u017f\7\36\2\2\u017f\u0180\5")
         buf.write("@!\2\u0180\u0181\7#\2\2\u0181\u0182\7\36\2\2\u0182\u0183")
-        buf.write("\5@!\2\u0183\u0184\7\36\2\2\u0184\u0185\7\"\2\2\u0185")
+        buf.write('\5@!\2\u0183\u0184\7\36\2\2\u0184\u0185\7"\2\2\u0185')
         buf.write("\u0186\5@!\2\u0186\u0187\7\36\2\2\u0187\u0188\5@!\2\u0188")
         buf.write("\u0189\7#\2\2\u0189\u018a\7#\2\2\u018a\u018c\3\2\2\2\u018b")
         buf.write("\u016d\3\2\2\2\u018b\u0173\3\2\2\2\u018b\u017b\3\2\2\2")
@@ -189,7 +190,7 @@ def serializedATN():
         buf.write("\2\2\2\u0192\u0190\3\2\2\2\u0192\u0193\3\2\2\2\u0193\u0196")
         buf.write("\3\2\2\2\u0194\u0192\3\2\2\2\u0195\u0197\5@!\2\u0196\u0195")
         buf.write("\3\2\2\2\u0196\u0197\3\2\2\2\u0197\u019a\3\2\2\2\u0198")
-        buf.write("\u019a\5B\"\2\u0199\u0192\3\2\2\2\u0199\u0198\3\2\2\2")
+        buf.write('\u019a\5B"\2\u0199\u0192\3\2\2\2\u0199\u0198\3\2\2\2')
         buf.write("\u019aE\3\2\2\2\u019b\u01a1\5H%\2\u019c\u01a1\5\b\5\2")
         buf.write("\u019d\u01a1\5\30\r\2\u019e\u01a1\5\34\17\2\u019f\u01a1")
         buf.write("\5\24\13\2\u01a0\u019b\3\2\2\2\u01a0\u019c\3\2\2\2\u01a0")
@@ -202,35 +203,110 @@ def serializedATN():
         return buf.getvalue()
 
 
-class GraphQueryLanguageParser ( Parser ):
+class GraphQueryLanguageParser(Parser):
 
     grammarFileName = "GraphQueryLanguage.g4"
 
     atn = ATNDeserializer().deserialize(serializedATN())
 
-    decisionsToDFA = [ DFA(ds, i) for i, ds in enumerate(atn.decisionToState) ]
+    decisionsToDFA = [DFA(ds, i) for i, ds in enumerate(atn.decisionToState)]
 
     sharedContextCache = PredictionContextCache()
 
-    literalNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "'TRUE'", "'FALSE'", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "'\"'", "'\"\"\"'", "':'", "'=>'", "'->'" ]
+    literalNames = [
+        "<INVALID>",
+        "<INVALID>",
+        "<INVALID>",
+        "<INVALID>",
+        "<INVALID>",
+        "<INVALID>",
+        "<INVALID>",
+        "<INVALID>",
+        "<INVALID>",
+        "<INVALID>",
+        "<INVALID>",
+        "<INVALID>",
+        "<INVALID>",
+        "<INVALID>",
+        "<INVALID>",
+        "<INVALID>",
+        "<INVALID>",
+        "<INVALID>",
+        "<INVALID>",
+        "'TRUE'",
+        "'FALSE'",
+        "<INVALID>",
+        "<INVALID>",
+        "<INVALID>",
+        "<INVALID>",
+        "<INVALID>",
+        "<INVALID>",
+        "<INVALID>",
+        "<INVALID>",
+        "<INVALID>",
+        "<INVALID>",
+        "<INVALID>",
+        "<INVALID>",
+        "<INVALID>",
+        "'\"'",
+        '\'"""\'',
+        "':'",
+        "'=>'",
+        "'->'",
+    ]
 
-    symbolicNames = [ "<INVALID>", "FUN", "LOAD", "SET", "ADD", "OF", "TO", 
-                      "VERTICES", "LABELS", "SELECT", "EDGES", "REACHABLE", 
-                      "START", "FINAL", "FROM", "FILTER", "MAP", "PRINT", 
-                      "BOOL", "TRUE", "FALSE", "ASSIGN", "AND", "OR", "NOT", 
-                      "IN", "KLEENE", "DOT", "COMMA", "SEMICOLON", "LCB", 
-                      "RCB", "LP", "RP", "QUOT", "TRIPLE_QUOT", "COLON", 
-                      "DOUBLE_ARROW", "ARROW", "VAR", "INT", "CFG", "STRING", 
-                      "PATH", "ID_CHAR", "CHAR", "NONZERO_DIGIT", "DIGIT", 
-                      "WS", "EOL" ]
+    symbolicNames = [
+        "<INVALID>",
+        "FUN",
+        "LOAD",
+        "SET",
+        "ADD",
+        "OF",
+        "TO",
+        "VERTICES",
+        "LABELS",
+        "SELECT",
+        "EDGES",
+        "REACHABLE",
+        "START",
+        "FINAL",
+        "FROM",
+        "FILTER",
+        "MAP",
+        "PRINT",
+        "BOOL",
+        "TRUE",
+        "FALSE",
+        "ASSIGN",
+        "AND",
+        "OR",
+        "NOT",
+        "IN",
+        "KLEENE",
+        "DOT",
+        "COMMA",
+        "SEMICOLON",
+        "LCB",
+        "RCB",
+        "LP",
+        "RP",
+        "QUOT",
+        "TRIPLE_QUOT",
+        "COLON",
+        "DOUBLE_ARROW",
+        "ARROW",
+        "VAR",
+        "INT",
+        "CFG",
+        "STRING",
+        "PATH",
+        "ID_CHAR",
+        "CHAR",
+        "NONZERO_DIGIT",
+        "DIGIT",
+        "WS",
+        "EOL",
+    ]
 
     RULE_prog = 0
     RULE_stmt = 1
@@ -269,102 +345,133 @@ class GraphQueryLanguageParser ( Parser ):
     RULE_val = 34
     RULE_boolean = 35
 
-    ruleNames =  [ "prog", "stmt", "expr", "graph", "load_graph", "set_start", 
-                   "set_final", "add_start", "add_final", "vertices", "vertex", 
-                   "edges", "edge", "labels", "label", "anfunc", "mapping", 
-                   "filtering", "select_edges", "select_labels", "select_reachable", 
-                   "select_final", "select_start", "select_vertices", "vertices_range", 
-                   "cfg", "string", "path", "vertices_set", "labels_set", 
-                   "edges_set", "var", "var_edge", "variables", "val", "boolean" ]
+    ruleNames = [
+        "prog",
+        "stmt",
+        "expr",
+        "graph",
+        "load_graph",
+        "set_start",
+        "set_final",
+        "add_start",
+        "add_final",
+        "vertices",
+        "vertex",
+        "edges",
+        "edge",
+        "labels",
+        "label",
+        "anfunc",
+        "mapping",
+        "filtering",
+        "select_edges",
+        "select_labels",
+        "select_reachable",
+        "select_final",
+        "select_start",
+        "select_vertices",
+        "vertices_range",
+        "cfg",
+        "string",
+        "path",
+        "vertices_set",
+        "labels_set",
+        "edges_set",
+        "var",
+        "var_edge",
+        "variables",
+        "val",
+        "boolean",
+    ]
 
     EOF = Token.EOF
-    FUN=1
-    LOAD=2
-    SET=3
-    ADD=4
-    OF=5
-    TO=6
-    VERTICES=7
-    LABELS=8
-    SELECT=9
-    EDGES=10
-    REACHABLE=11
-    START=12
-    FINAL=13
-    FROM=14
-    FILTER=15
-    MAP=16
-    PRINT=17
-    BOOL=18
-    TRUE=19
-    FALSE=20
-    ASSIGN=21
-    AND=22
-    OR=23
-    NOT=24
-    IN=25
-    KLEENE=26
-    DOT=27
-    COMMA=28
-    SEMICOLON=29
-    LCB=30
-    RCB=31
-    LP=32
-    RP=33
-    QUOT=34
-    TRIPLE_QUOT=35
-    COLON=36
-    DOUBLE_ARROW=37
-    ARROW=38
-    VAR=39
-    INT=40
-    CFG=41
-    STRING=42
-    PATH=43
-    ID_CHAR=44
-    CHAR=45
-    NONZERO_DIGIT=46
-    DIGIT=47
-    WS=48
-    EOL=49
+    FUN = 1
+    LOAD = 2
+    SET = 3
+    ADD = 4
+    OF = 5
+    TO = 6
+    VERTICES = 7
+    LABELS = 8
+    SELECT = 9
+    EDGES = 10
+    REACHABLE = 11
+    START = 12
+    FINAL = 13
+    FROM = 14
+    FILTER = 15
+    MAP = 16
+    PRINT = 17
+    BOOL = 18
+    TRUE = 19
+    FALSE = 20
+    ASSIGN = 21
+    AND = 22
+    OR = 23
+    NOT = 24
+    IN = 25
+    KLEENE = 26
+    DOT = 27
+    COMMA = 28
+    SEMICOLON = 29
+    LCB = 30
+    RCB = 31
+    LP = 32
+    RP = 33
+    QUOT = 34
+    TRIPLE_QUOT = 35
+    COLON = 36
+    DOUBLE_ARROW = 37
+    ARROW = 38
+    VAR = 39
+    INT = 40
+    CFG = 41
+    STRING = 42
+    PATH = 43
+    ID_CHAR = 44
+    CHAR = 45
+    NONZERO_DIGIT = 46
+    DIGIT = 47
+    WS = 48
+    EOL = 49
 
-    def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
+    def __init__(self, input: TokenStream, output: TextIO = sys.stdout):
         super().__init__(input, output)
         self.checkVersion("4.7.2")
-        self._interp = ParserATNSimulator(self, self.atn, self.decisionsToDFA, self.sharedContextCache)
+        self._interp = ParserATNSimulator(
+            self, self.atn, self.decisionsToDFA, self.sharedContextCache
+        )
         self._predicates = None
 
-
-
     class ProgContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def EOF(self):
             return self.getToken(GraphQueryLanguageParser.EOF, 0)
 
-        def stmt(self, i:int=None):
+        def stmt(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(GraphQueryLanguageParser.StmtContext)
             else:
-                return self.getTypedRuleContext(GraphQueryLanguageParser.StmtContext,i)
+                return self.getTypedRuleContext(GraphQueryLanguageParser.StmtContext, i)
 
-
-        def SEMICOLON(self, i:int=None):
+        def SEMICOLON(self, i: int = None):
             if i is None:
                 return self.getTokens(GraphQueryLanguageParser.SEMICOLON)
             else:
                 return self.getToken(GraphQueryLanguageParser.SEMICOLON, i)
 
-        def EOL(self, i:int=None):
+        def EOL(self, i: int = None):
             if i is None:
                 return self.getTokens(GraphQueryLanguageParser.EOL)
             else:
                 return self.getToken(GraphQueryLanguageParser.EOL, i)
 
-        def WS(self, i:int=None):
+        def WS(self, i: int = None):
             if i is None:
                 return self.getTokens(GraphQueryLanguageParser.WS)
             else:
@@ -373,43 +480,38 @@ class GraphQueryLanguageParser ( Parser ):
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_prog
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterProg" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterProg"):
                 listener.enterProg(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitProg" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitProg"):
                 listener.exitProg(self)
-
-
-
 
     def prog(self):
 
         localctx = GraphQueryLanguageParser.ProgContext(self, self._ctx, self.state)
         self.enterRule(localctx, 0, self.RULE_prog)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 83 
+            self.state = 83
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while True:
                 self.state = 73
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==GraphQueryLanguageParser.EOL:
+                if _la == GraphQueryLanguageParser.EOL:
                     self.state = 72
                     self.match(GraphQueryLanguageParser.EOL)
-
 
                 self.state = 76
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==GraphQueryLanguageParser.WS:
+                if _la == GraphQueryLanguageParser.WS:
                     self.state = 75
                     self.match(GraphQueryLanguageParser.WS)
-
 
                 self.state = 78
                 self.stmt()
@@ -417,16 +519,29 @@ class GraphQueryLanguageParser ( Parser ):
                 self.match(GraphQueryLanguageParser.SEMICOLON)
                 self.state = 81
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,2,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input, 2, self._ctx)
                 if la_ == 1:
                     self.state = 80
                     self.match(GraphQueryLanguageParser.EOL)
 
-
-                self.state = 85 
+                self.state = 85
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << GraphQueryLanguageParser.PRINT) | (1 << GraphQueryLanguageParser.VAR) | (1 << GraphQueryLanguageParser.WS) | (1 << GraphQueryLanguageParser.EOL))) != 0)):
+                if not (
+                    (
+                        ((_la) & ~0x3F) == 0
+                        and (
+                            (1 << _la)
+                            & (
+                                (1 << GraphQueryLanguageParser.PRINT)
+                                | (1 << GraphQueryLanguageParser.VAR)
+                                | (1 << GraphQueryLanguageParser.WS)
+                                | (1 << GraphQueryLanguageParser.EOL)
+                            )
+                        )
+                        != 0
+                    )
+                ):
                     break
 
             self.state = 87
@@ -440,8 +555,9 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class StmtContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -449,17 +565,15 @@ class GraphQueryLanguageParser ( Parser ):
             return self.getToken(GraphQueryLanguageParser.PRINT, 0)
 
         def expr(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.ExprContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.ExprContext, 0)
 
         def var(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.VarContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.VarContext, 0)
 
         def ASSIGN(self):
             return self.getToken(GraphQueryLanguageParser.ASSIGN, 0)
 
-        def WS(self, i:int=None):
+        def WS(self, i: int = None):
             if i is None:
                 return self.getTokens(GraphQueryLanguageParser.WS)
             else:
@@ -468,22 +582,19 @@ class GraphQueryLanguageParser ( Parser ):
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_stmt
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterStmt" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterStmt"):
                 listener.enterStmt(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitStmt" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitStmt"):
                 listener.exitStmt(self)
-
-
-
 
     def stmt(self):
 
         localctx = GraphQueryLanguageParser.StmtContext(self, self._ctx, self.state)
         self.enterRule(localctx, 2, self.RULE_stmt)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.state = 101
             self._errHandler.sync(self)
@@ -502,20 +613,18 @@ class GraphQueryLanguageParser ( Parser ):
                 self.state = 93
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==GraphQueryLanguageParser.WS:
+                if _la == GraphQueryLanguageParser.WS:
                     self.state = 92
                     self.match(GraphQueryLanguageParser.WS)
-
 
                 self.state = 95
                 self.match(GraphQueryLanguageParser.ASSIGN)
                 self.state = 97
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==GraphQueryLanguageParser.WS:
+                if _la == GraphQueryLanguageParser.WS:
                     self.state = 96
                     self.match(GraphQueryLanguageParser.WS)
-
 
                 self.state = 99
                 self.expr(0)
@@ -532,43 +641,40 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class ExprContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def LP(self):
             return self.getToken(GraphQueryLanguageParser.LP, 0)
 
-        def expr(self, i:int=None):
+        def expr(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(GraphQueryLanguageParser.ExprContext)
             else:
-                return self.getTypedRuleContext(GraphQueryLanguageParser.ExprContext,i)
-
+                return self.getTypedRuleContext(GraphQueryLanguageParser.ExprContext, i)
 
         def RP(self):
             return self.getToken(GraphQueryLanguageParser.RP, 0)
 
         def anfunc(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.AnfuncContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.AnfuncContext, 0)
 
         def mapping(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.MappingContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.MappingContext, 0)
 
         def filtering(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.FilteringContext,0)
-
+            return self.getTypedRuleContext(
+                GraphQueryLanguageParser.FilteringContext, 0
+            )
 
         def var(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.VarContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.VarContext, 0)
 
         def val(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.ValContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.ValContext, 0)
 
         def NOT(self):
             return self.getToken(GraphQueryLanguageParser.NOT, 0)
@@ -591,17 +697,15 @@ class GraphQueryLanguageParser ( Parser ):
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_expr
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterExpr" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterExpr"):
                 listener.enterExpr(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitExpr" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitExpr"):
                 listener.exitExpr(self)
 
-
-
-    def expr(self, _p:int=0):
+    def expr(self, _p: int = 0):
         _parentctx = self._ctx
         _parentState = self.state
         localctx = GraphQueryLanguageParser.ExprContext(self, self._ctx, _parentState)
@@ -612,7 +716,7 @@ class GraphQueryLanguageParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 115
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,7,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 7, self._ctx)
             if la_ == 1:
                 self.state = 104
                 self.match(GraphQueryLanguageParser.LP)
@@ -654,26 +758,32 @@ class GraphQueryLanguageParser ( Parser ):
                 self.expr(6)
                 pass
 
-
             self._ctx.stop = self._input.LT(-1)
             self.state = 133
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,9,self._ctx)
-            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1:
+            _alt = self._interp.adaptivePredict(self._input, 9, self._ctx)
+            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                if _alt == 1:
                     if self._parseListeners is not None:
                         self.triggerExitRuleEvent()
                     _prevctx = localctx
                     self.state = 131
                     self._errHandler.sync(self)
-                    la_ = self._interp.adaptivePredict(self._input,8,self._ctx)
+                    la_ = self._interp.adaptivePredict(self._input, 8, self._ctx)
                     if la_ == 1:
-                        localctx = GraphQueryLanguageParser.ExprContext(self, _parentctx, _parentState)
-                        self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
+                        localctx = GraphQueryLanguageParser.ExprContext(
+                            self, _parentctx, _parentState
+                        )
+                        self.pushNewRecursionContext(
+                            localctx, _startState, self.RULE_expr
+                        )
                         self.state = 117
                         if not self.precpred(self._ctx, 5):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 5)")
+
+                            raise FailedPredicateException(
+                                self, "self.precpred(self._ctx, 5)"
+                            )
                         self.state = 118
                         self.match(GraphQueryLanguageParser.IN)
                         self.state = 119
@@ -681,12 +791,19 @@ class GraphQueryLanguageParser ( Parser ):
                         pass
 
                     elif la_ == 2:
-                        localctx = GraphQueryLanguageParser.ExprContext(self, _parentctx, _parentState)
-                        self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
+                        localctx = GraphQueryLanguageParser.ExprContext(
+                            self, _parentctx, _parentState
+                        )
+                        self.pushNewRecursionContext(
+                            localctx, _startState, self.RULE_expr
+                        )
                         self.state = 120
                         if not self.precpred(self._ctx, 4):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 4)")
+
+                            raise FailedPredicateException(
+                                self, "self.precpred(self._ctx, 4)"
+                            )
                         self.state = 121
                         self.match(GraphQueryLanguageParser.AND)
                         self.state = 122
@@ -694,12 +811,19 @@ class GraphQueryLanguageParser ( Parser ):
                         pass
 
                     elif la_ == 3:
-                        localctx = GraphQueryLanguageParser.ExprContext(self, _parentctx, _parentState)
-                        self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
+                        localctx = GraphQueryLanguageParser.ExprContext(
+                            self, _parentctx, _parentState
+                        )
+                        self.pushNewRecursionContext(
+                            localctx, _startState, self.RULE_expr
+                        )
                         self.state = 123
                         if not self.precpred(self._ctx, 3):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 3)")
+
+                            raise FailedPredicateException(
+                                self, "self.precpred(self._ctx, 3)"
+                            )
                         self.state = 124
                         self.match(GraphQueryLanguageParser.DOT)
                         self.state = 125
@@ -707,12 +831,19 @@ class GraphQueryLanguageParser ( Parser ):
                         pass
 
                     elif la_ == 4:
-                        localctx = GraphQueryLanguageParser.ExprContext(self, _parentctx, _parentState)
-                        self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
+                        localctx = GraphQueryLanguageParser.ExprContext(
+                            self, _parentctx, _parentState
+                        )
+                        self.pushNewRecursionContext(
+                            localctx, _startState, self.RULE_expr
+                        )
                         self.state = 126
                         if not self.precpred(self._ctx, 2):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
+
+                            raise FailedPredicateException(
+                                self, "self.precpred(self._ctx, 2)"
+                            )
                         self.state = 127
                         self.match(GraphQueryLanguageParser.OR)
                         self.state = 128
@@ -720,20 +851,26 @@ class GraphQueryLanguageParser ( Parser ):
                         pass
 
                     elif la_ == 5:
-                        localctx = GraphQueryLanguageParser.ExprContext(self, _parentctx, _parentState)
-                        self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
+                        localctx = GraphQueryLanguageParser.ExprContext(
+                            self, _parentctx, _parentState
+                        )
+                        self.pushNewRecursionContext(
+                            localctx, _startState, self.RULE_expr
+                        )
                         self.state = 129
                         if not self.precpred(self._ctx, 1):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 1)")
+
+                            raise FailedPredicateException(
+                                self, "self.precpred(self._ctx, 1)"
+                            )
                         self.state = 130
                         self.match(GraphQueryLanguageParser.KLEENE)
                         pass
 
-             
                 self.state = 135
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,9,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input, 9, self._ctx)
 
         except RecognitionException as re:
             localctx.exception = re
@@ -744,45 +881,48 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class GraphContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def load_graph(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.Load_graphContext,0)
-
+            return self.getTypedRuleContext(
+                GraphQueryLanguageParser.Load_graphContext, 0
+            )
 
         def cfg(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.CfgContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.CfgContext, 0)
 
         def string(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.StringContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.StringContext, 0)
 
         def set_start(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.Set_startContext,0)
-
+            return self.getTypedRuleContext(
+                GraphQueryLanguageParser.Set_startContext, 0
+            )
 
         def set_final(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.Set_finalContext,0)
-
+            return self.getTypedRuleContext(
+                GraphQueryLanguageParser.Set_finalContext, 0
+            )
 
         def add_start(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.Add_startContext,0)
-
+            return self.getTypedRuleContext(
+                GraphQueryLanguageParser.Add_startContext, 0
+            )
 
         def add_final(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.Add_finalContext,0)
-
+            return self.getTypedRuleContext(
+                GraphQueryLanguageParser.Add_finalContext, 0
+            )
 
         def LP(self):
             return self.getToken(GraphQueryLanguageParser.LP, 0)
 
         def graph(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.GraphContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.GraphContext, 0)
 
         def RP(self):
             return self.getToken(GraphQueryLanguageParser.RP, 0)
@@ -790,16 +930,13 @@ class GraphQueryLanguageParser ( Parser ):
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_graph
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterGraph" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterGraph"):
                 listener.enterGraph(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitGraph" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitGraph"):
                 listener.exitGraph(self)
-
-
-
 
     def graph(self):
 
@@ -808,7 +945,7 @@ class GraphQueryLanguageParser ( Parser ):
         try:
             self.state = 147
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,10,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 10, self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 136
@@ -861,7 +998,6 @@ class GraphQueryLanguageParser ( Parser ):
                 self.match(GraphQueryLanguageParser.RP)
                 pass
 
-
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -871,8 +1007,9 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class Load_graphContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -880,26 +1017,24 @@ class GraphQueryLanguageParser ( Parser ):
             return self.getToken(GraphQueryLanguageParser.LOAD, 0)
 
         def path(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.PathContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.PathContext, 0)
 
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_load_graph
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterLoad_graph" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterLoad_graph"):
                 listener.enterLoad_graph(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitLoad_graph" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitLoad_graph"):
                 listener.exitLoad_graph(self)
-
-
-
 
     def load_graph(self):
 
-        localctx = GraphQueryLanguageParser.Load_graphContext(self, self._ctx, self.state)
+        localctx = GraphQueryLanguageParser.Load_graphContext(
+            self, self._ctx, self.state
+        )
         self.enterRule(localctx, 8, self.RULE_load_graph)
         try:
             self.enterOuterAlt(localctx, 1)
@@ -916,8 +1051,9 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class Set_startContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -934,37 +1070,33 @@ class GraphQueryLanguageParser ( Parser ):
             return self.getToken(GraphQueryLanguageParser.TO, 0)
 
         def graph(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.GraphContext,0)
+            return self.getTypedRuleContext(GraphQueryLanguageParser.GraphContext, 0)
 
-
-        def var(self, i:int=None):
+        def var(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(GraphQueryLanguageParser.VarContext)
             else:
-                return self.getTypedRuleContext(GraphQueryLanguageParser.VarContext,i)
-
+                return self.getTypedRuleContext(GraphQueryLanguageParser.VarContext, i)
 
         def vertices(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.VerticesContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.VerticesContext, 0)
 
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_set_start
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSet_start" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterSet_start"):
                 listener.enterSet_start(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSet_start" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitSet_start"):
                 listener.exitSet_start(self)
-
-
-
 
     def set_start(self):
 
-        localctx = GraphQueryLanguageParser.Set_startContext(self, self._ctx, self.state)
+        localctx = GraphQueryLanguageParser.Set_startContext(
+            self, self._ctx, self.state
+        )
         self.enterRule(localctx, 10, self.RULE_set_start)
         try:
             self.enterOuterAlt(localctx, 1)
@@ -977,7 +1109,14 @@ class GraphQueryLanguageParser ( Parser ):
             self.state = 157
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [GraphQueryLanguageParser.LOAD, GraphQueryLanguageParser.SET, GraphQueryLanguageParser.ADD, GraphQueryLanguageParser.LP, GraphQueryLanguageParser.CFG, GraphQueryLanguageParser.STRING]:
+            if token in [
+                GraphQueryLanguageParser.LOAD,
+                GraphQueryLanguageParser.SET,
+                GraphQueryLanguageParser.ADD,
+                GraphQueryLanguageParser.LP,
+                GraphQueryLanguageParser.CFG,
+                GraphQueryLanguageParser.STRING,
+            ]:
                 self.state = 155
                 self.graph()
                 pass
@@ -993,7 +1132,12 @@ class GraphQueryLanguageParser ( Parser ):
             self.state = 162
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [GraphQueryLanguageParser.SELECT, GraphQueryLanguageParser.LCB, GraphQueryLanguageParser.LP, GraphQueryLanguageParser.INT]:
+            if token in [
+                GraphQueryLanguageParser.SELECT,
+                GraphQueryLanguageParser.LCB,
+                GraphQueryLanguageParser.LP,
+                GraphQueryLanguageParser.INT,
+            ]:
                 self.state = 160
                 self.vertices()
                 pass
@@ -1013,8 +1157,9 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class Set_finalContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -1031,37 +1176,33 @@ class GraphQueryLanguageParser ( Parser ):
             return self.getToken(GraphQueryLanguageParser.TO, 0)
 
         def graph(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.GraphContext,0)
+            return self.getTypedRuleContext(GraphQueryLanguageParser.GraphContext, 0)
 
-
-        def var(self, i:int=None):
+        def var(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(GraphQueryLanguageParser.VarContext)
             else:
-                return self.getTypedRuleContext(GraphQueryLanguageParser.VarContext,i)
-
+                return self.getTypedRuleContext(GraphQueryLanguageParser.VarContext, i)
 
         def vertices(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.VerticesContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.VerticesContext, 0)
 
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_set_final
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSet_final" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterSet_final"):
                 listener.enterSet_final(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSet_final" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitSet_final"):
                 listener.exitSet_final(self)
-
-
-
 
     def set_final(self):
 
-        localctx = GraphQueryLanguageParser.Set_finalContext(self, self._ctx, self.state)
+        localctx = GraphQueryLanguageParser.Set_finalContext(
+            self, self._ctx, self.state
+        )
         self.enterRule(localctx, 12, self.RULE_set_final)
         try:
             self.enterOuterAlt(localctx, 1)
@@ -1074,7 +1215,14 @@ class GraphQueryLanguageParser ( Parser ):
             self.state = 169
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [GraphQueryLanguageParser.LOAD, GraphQueryLanguageParser.SET, GraphQueryLanguageParser.ADD, GraphQueryLanguageParser.LP, GraphQueryLanguageParser.CFG, GraphQueryLanguageParser.STRING]:
+            if token in [
+                GraphQueryLanguageParser.LOAD,
+                GraphQueryLanguageParser.SET,
+                GraphQueryLanguageParser.ADD,
+                GraphQueryLanguageParser.LP,
+                GraphQueryLanguageParser.CFG,
+                GraphQueryLanguageParser.STRING,
+            ]:
                 self.state = 167
                 self.graph()
                 pass
@@ -1090,7 +1238,12 @@ class GraphQueryLanguageParser ( Parser ):
             self.state = 174
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [GraphQueryLanguageParser.SELECT, GraphQueryLanguageParser.LCB, GraphQueryLanguageParser.LP, GraphQueryLanguageParser.INT]:
+            if token in [
+                GraphQueryLanguageParser.SELECT,
+                GraphQueryLanguageParser.LCB,
+                GraphQueryLanguageParser.LP,
+                GraphQueryLanguageParser.INT,
+            ]:
                 self.state = 172
                 self.vertices()
                 pass
@@ -1110,8 +1263,9 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class Add_startContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -1128,37 +1282,33 @@ class GraphQueryLanguageParser ( Parser ):
             return self.getToken(GraphQueryLanguageParser.TO, 0)
 
         def graph(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.GraphContext,0)
+            return self.getTypedRuleContext(GraphQueryLanguageParser.GraphContext, 0)
 
-
-        def var(self, i:int=None):
+        def var(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(GraphQueryLanguageParser.VarContext)
             else:
-                return self.getTypedRuleContext(GraphQueryLanguageParser.VarContext,i)
-
+                return self.getTypedRuleContext(GraphQueryLanguageParser.VarContext, i)
 
         def vertices(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.VerticesContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.VerticesContext, 0)
 
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_add_start
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAdd_start" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterAdd_start"):
                 listener.enterAdd_start(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAdd_start" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitAdd_start"):
                 listener.exitAdd_start(self)
-
-
-
 
     def add_start(self):
 
-        localctx = GraphQueryLanguageParser.Add_startContext(self, self._ctx, self.state)
+        localctx = GraphQueryLanguageParser.Add_startContext(
+            self, self._ctx, self.state
+        )
         self.enterRule(localctx, 14, self.RULE_add_start)
         try:
             self.enterOuterAlt(localctx, 1)
@@ -1171,7 +1321,14 @@ class GraphQueryLanguageParser ( Parser ):
             self.state = 181
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [GraphQueryLanguageParser.LOAD, GraphQueryLanguageParser.SET, GraphQueryLanguageParser.ADD, GraphQueryLanguageParser.LP, GraphQueryLanguageParser.CFG, GraphQueryLanguageParser.STRING]:
+            if token in [
+                GraphQueryLanguageParser.LOAD,
+                GraphQueryLanguageParser.SET,
+                GraphQueryLanguageParser.ADD,
+                GraphQueryLanguageParser.LP,
+                GraphQueryLanguageParser.CFG,
+                GraphQueryLanguageParser.STRING,
+            ]:
                 self.state = 179
                 self.graph()
                 pass
@@ -1187,7 +1344,12 @@ class GraphQueryLanguageParser ( Parser ):
             self.state = 186
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [GraphQueryLanguageParser.SELECT, GraphQueryLanguageParser.LCB, GraphQueryLanguageParser.LP, GraphQueryLanguageParser.INT]:
+            if token in [
+                GraphQueryLanguageParser.SELECT,
+                GraphQueryLanguageParser.LCB,
+                GraphQueryLanguageParser.LP,
+                GraphQueryLanguageParser.INT,
+            ]:
                 self.state = 184
                 self.vertices()
                 pass
@@ -1207,8 +1369,9 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class Add_finalContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -1225,37 +1388,33 @@ class GraphQueryLanguageParser ( Parser ):
             return self.getToken(GraphQueryLanguageParser.TO, 0)
 
         def graph(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.GraphContext,0)
+            return self.getTypedRuleContext(GraphQueryLanguageParser.GraphContext, 0)
 
-
-        def var(self, i:int=None):
+        def var(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(GraphQueryLanguageParser.VarContext)
             else:
-                return self.getTypedRuleContext(GraphQueryLanguageParser.VarContext,i)
-
+                return self.getTypedRuleContext(GraphQueryLanguageParser.VarContext, i)
 
         def vertices(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.VerticesContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.VerticesContext, 0)
 
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_add_final
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAdd_final" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterAdd_final"):
                 listener.enterAdd_final(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAdd_final" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitAdd_final"):
                 listener.exitAdd_final(self)
-
-
-
 
     def add_final(self):
 
-        localctx = GraphQueryLanguageParser.Add_finalContext(self, self._ctx, self.state)
+        localctx = GraphQueryLanguageParser.Add_finalContext(
+            self, self._ctx, self.state
+        )
         self.enterRule(localctx, 16, self.RULE_add_final)
         try:
             self.enterOuterAlt(localctx, 1)
@@ -1268,7 +1427,14 @@ class GraphQueryLanguageParser ( Parser ):
             self.state = 193
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [GraphQueryLanguageParser.LOAD, GraphQueryLanguageParser.SET, GraphQueryLanguageParser.ADD, GraphQueryLanguageParser.LP, GraphQueryLanguageParser.CFG, GraphQueryLanguageParser.STRING]:
+            if token in [
+                GraphQueryLanguageParser.LOAD,
+                GraphQueryLanguageParser.SET,
+                GraphQueryLanguageParser.ADD,
+                GraphQueryLanguageParser.LP,
+                GraphQueryLanguageParser.CFG,
+                GraphQueryLanguageParser.STRING,
+            ]:
                 self.state = 191
                 self.graph()
                 pass
@@ -1284,7 +1450,12 @@ class GraphQueryLanguageParser ( Parser ):
             self.state = 198
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [GraphQueryLanguageParser.SELECT, GraphQueryLanguageParser.LCB, GraphQueryLanguageParser.LP, GraphQueryLanguageParser.INT]:
+            if token in [
+                GraphQueryLanguageParser.SELECT,
+                GraphQueryLanguageParser.LCB,
+                GraphQueryLanguageParser.LP,
+                GraphQueryLanguageParser.INT,
+            ]:
                 self.state = 196
                 self.vertices()
                 pass
@@ -1304,45 +1475,50 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class VerticesContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def vertex(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.VertexContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.VertexContext, 0)
 
         def vertices_range(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.Vertices_rangeContext,0)
-
+            return self.getTypedRuleContext(
+                GraphQueryLanguageParser.Vertices_rangeContext, 0
+            )
 
         def vertices_set(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.Vertices_setContext,0)
-
+            return self.getTypedRuleContext(
+                GraphQueryLanguageParser.Vertices_setContext, 0
+            )
 
         def select_reachable(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.Select_reachableContext,0)
-
+            return self.getTypedRuleContext(
+                GraphQueryLanguageParser.Select_reachableContext, 0
+            )
 
         def select_final(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.Select_finalContext,0)
-
+            return self.getTypedRuleContext(
+                GraphQueryLanguageParser.Select_finalContext, 0
+            )
 
         def select_start(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.Select_startContext,0)
-
+            return self.getTypedRuleContext(
+                GraphQueryLanguageParser.Select_startContext, 0
+            )
 
         def select_vertices(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.Select_verticesContext,0)
-
+            return self.getTypedRuleContext(
+                GraphQueryLanguageParser.Select_verticesContext, 0
+            )
 
         def LP(self):
             return self.getToken(GraphQueryLanguageParser.LP, 0)
 
         def vertices(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.VerticesContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.VerticesContext, 0)
 
         def RP(self):
             return self.getToken(GraphQueryLanguageParser.RP, 0)
@@ -1350,16 +1526,13 @@ class GraphQueryLanguageParser ( Parser ):
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_vertices
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterVertices" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterVertices"):
                 listener.enterVertices(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitVertices" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitVertices"):
                 listener.exitVertices(self)
-
-
-
 
     def vertices(self):
 
@@ -1368,7 +1541,7 @@ class GraphQueryLanguageParser ( Parser ):
         try:
             self.state = 211
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,19,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 19, self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 200
@@ -1421,7 +1594,6 @@ class GraphQueryLanguageParser ( Parser ):
                 self.match(GraphQueryLanguageParser.RP)
                 pass
 
-
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -1431,8 +1603,9 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class VertexContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -1442,16 +1615,13 @@ class GraphQueryLanguageParser ( Parser ):
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_vertex
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterVertex" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterVertex"):
                 listener.enterVertex(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitVertex" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitVertex"):
                 listener.exitVertex(self)
-
-
-
 
     def vertex(self):
 
@@ -1470,36 +1640,35 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class EdgesContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def edge(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.EdgeContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.EdgeContext, 0)
 
         def edges_set(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.Edges_setContext,0)
-
+            return self.getTypedRuleContext(
+                GraphQueryLanguageParser.Edges_setContext, 0
+            )
 
         def select_edges(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.Select_edgesContext,0)
-
+            return self.getTypedRuleContext(
+                GraphQueryLanguageParser.Select_edgesContext, 0
+            )
 
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_edges
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterEdges" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterEdges"):
                 listener.enterEdges(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitEdges" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitEdges"):
                 listener.exitEdges(self)
-
-
-
 
     def edges(self):
 
@@ -1536,30 +1705,31 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class EdgeContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def LP(self):
             return self.getToken(GraphQueryLanguageParser.LP, 0)
 
-        def vertex(self, i:int=None):
+        def vertex(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(GraphQueryLanguageParser.VertexContext)
             else:
-                return self.getTypedRuleContext(GraphQueryLanguageParser.VertexContext,i)
+                return self.getTypedRuleContext(
+                    GraphQueryLanguageParser.VertexContext, i
+                )
 
-
-        def COMMA(self, i:int=None):
+        def COMMA(self, i: int = None):
             if i is None:
                 return self.getTokens(GraphQueryLanguageParser.COMMA)
             else:
                 return self.getToken(GraphQueryLanguageParser.COMMA, i)
 
         def label(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.LabelContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.LabelContext, 0)
 
         def RP(self):
             return self.getToken(GraphQueryLanguageParser.RP, 0)
@@ -1567,16 +1737,13 @@ class GraphQueryLanguageParser ( Parser ):
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_edge
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterEdge" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterEdge"):
                 listener.enterEdge(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitEdge" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitEdge"):
                 listener.exitEdge(self)
-
-
-
 
     def edge(self):
 
@@ -1585,7 +1752,7 @@ class GraphQueryLanguageParser ( Parser ):
         try:
             self.state = 234
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,21,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 21, self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 220
@@ -1618,7 +1785,6 @@ class GraphQueryLanguageParser ( Parser ):
                 self.match(GraphQueryLanguageParser.RP)
                 pass
 
-
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -1628,36 +1794,35 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class LabelsContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def label(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.LabelContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.LabelContext, 0)
 
         def labels_set(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.Labels_setContext,0)
-
+            return self.getTypedRuleContext(
+                GraphQueryLanguageParser.Labels_setContext, 0
+            )
 
         def select_labels(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.Select_labelsContext,0)
-
+            return self.getTypedRuleContext(
+                GraphQueryLanguageParser.Select_labelsContext, 0
+            )
 
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_labels
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterLabels" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterLabels"):
                 listener.enterLabels(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitLabels" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitLabels"):
                 listener.exitLabels(self)
-
-
-
 
     def labels(self):
 
@@ -1694,28 +1859,25 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class LabelContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def string(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.StringContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.StringContext, 0)
 
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_label
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterLabel" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterLabel"):
                 listener.enterLabel(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitLabel" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitLabel"):
                 listener.exitLabel(self)
-
-
-
 
     def label(self):
 
@@ -1734,8 +1896,9 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class AnfuncContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -1743,22 +1906,21 @@ class GraphQueryLanguageParser ( Parser ):
             return self.getToken(GraphQueryLanguageParser.FUN, 0)
 
         def variables(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.VariablesContext,0)
-
+            return self.getTypedRuleContext(
+                GraphQueryLanguageParser.VariablesContext, 0
+            )
 
         def DOUBLE_ARROW(self):
             return self.getToken(GraphQueryLanguageParser.DOUBLE_ARROW, 0)
 
         def expr(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.ExprContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.ExprContext, 0)
 
         def LP(self):
             return self.getToken(GraphQueryLanguageParser.LP, 0)
 
         def anfunc(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.AnfuncContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.AnfuncContext, 0)
 
         def RP(self):
             return self.getToken(GraphQueryLanguageParser.RP, 0)
@@ -1766,16 +1928,13 @@ class GraphQueryLanguageParser ( Parser ):
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_anfunc
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAnfunc" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterAnfunc"):
                 listener.enterAnfunc(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAnfunc" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitAnfunc"):
                 listener.exitAnfunc(self)
-
-
-
 
     def anfunc(self):
 
@@ -1817,8 +1976,9 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class MappingContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -1826,26 +1986,21 @@ class GraphQueryLanguageParser ( Parser ):
             return self.getToken(GraphQueryLanguageParser.MAP, 0)
 
         def anfunc(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.AnfuncContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.AnfuncContext, 0)
 
         def expr(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.ExprContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.ExprContext, 0)
 
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_mapping
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterMapping" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterMapping"):
                 listener.enterMapping(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitMapping" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitMapping"):
                 listener.exitMapping(self)
-
-
-
 
     def mapping(self):
 
@@ -1868,8 +2023,9 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class FilteringContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -1877,30 +2033,27 @@ class GraphQueryLanguageParser ( Parser ):
             return self.getToken(GraphQueryLanguageParser.FILTER, 0)
 
         def anfunc(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.AnfuncContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.AnfuncContext, 0)
 
         def expr(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.ExprContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.ExprContext, 0)
 
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_filtering
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterFiltering" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterFiltering"):
                 listener.enterFiltering(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitFiltering" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitFiltering"):
                 listener.exitFiltering(self)
-
-
-
 
     def filtering(self):
 
-        localctx = GraphQueryLanguageParser.FilteringContext(self, self._ctx, self.state)
+        localctx = GraphQueryLanguageParser.FilteringContext(
+            self, self._ctx, self.state
+        )
         self.enterRule(localctx, 34, self.RULE_filtering)
         try:
             self.enterOuterAlt(localctx, 1)
@@ -1919,8 +2072,9 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class Select_edgesContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -1934,30 +2088,27 @@ class GraphQueryLanguageParser ( Parser ):
             return self.getToken(GraphQueryLanguageParser.FROM, 0)
 
         def graph(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.GraphContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.GraphContext, 0)
 
         def var(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.VarContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.VarContext, 0)
 
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_select_edges
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSelect_edges" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterSelect_edges"):
                 listener.enterSelect_edges(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSelect_edges" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitSelect_edges"):
                 listener.exitSelect_edges(self)
-
-
-
 
     def select_edges(self):
 
-        localctx = GraphQueryLanguageParser.Select_edgesContext(self, self._ctx, self.state)
+        localctx = GraphQueryLanguageParser.Select_edgesContext(
+            self, self._ctx, self.state
+        )
         self.enterRule(localctx, 36, self.RULE_select_edges)
         try:
             self.enterOuterAlt(localctx, 1)
@@ -1970,7 +2121,14 @@ class GraphQueryLanguageParser ( Parser ):
             self.state = 267
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [GraphQueryLanguageParser.LOAD, GraphQueryLanguageParser.SET, GraphQueryLanguageParser.ADD, GraphQueryLanguageParser.LP, GraphQueryLanguageParser.CFG, GraphQueryLanguageParser.STRING]:
+            if token in [
+                GraphQueryLanguageParser.LOAD,
+                GraphQueryLanguageParser.SET,
+                GraphQueryLanguageParser.ADD,
+                GraphQueryLanguageParser.LP,
+                GraphQueryLanguageParser.CFG,
+                GraphQueryLanguageParser.STRING,
+            ]:
                 self.state = 265
                 self.graph()
                 pass
@@ -1990,8 +2148,9 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class Select_labelsContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -2005,30 +2164,27 @@ class GraphQueryLanguageParser ( Parser ):
             return self.getToken(GraphQueryLanguageParser.FROM, 0)
 
         def graph(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.GraphContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.GraphContext, 0)
 
         def var(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.VarContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.VarContext, 0)
 
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_select_labels
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSelect_labels" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterSelect_labels"):
                 listener.enterSelect_labels(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSelect_labels" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitSelect_labels"):
                 listener.exitSelect_labels(self)
-
-
-
 
     def select_labels(self):
 
-        localctx = GraphQueryLanguageParser.Select_labelsContext(self, self._ctx, self.state)
+        localctx = GraphQueryLanguageParser.Select_labelsContext(
+            self, self._ctx, self.state
+        )
         self.enterRule(localctx, 38, self.RULE_select_labels)
         try:
             self.enterOuterAlt(localctx, 1)
@@ -2041,7 +2197,14 @@ class GraphQueryLanguageParser ( Parser ):
             self.state = 274
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [GraphQueryLanguageParser.LOAD, GraphQueryLanguageParser.SET, GraphQueryLanguageParser.ADD, GraphQueryLanguageParser.LP, GraphQueryLanguageParser.CFG, GraphQueryLanguageParser.STRING]:
+            if token in [
+                GraphQueryLanguageParser.LOAD,
+                GraphQueryLanguageParser.SET,
+                GraphQueryLanguageParser.ADD,
+                GraphQueryLanguageParser.LP,
+                GraphQueryLanguageParser.CFG,
+                GraphQueryLanguageParser.STRING,
+            ]:
                 self.state = 272
                 self.graph()
                 pass
@@ -2061,8 +2224,9 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class Select_reachableContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -2079,30 +2243,27 @@ class GraphQueryLanguageParser ( Parser ):
             return self.getToken(GraphQueryLanguageParser.FROM, 0)
 
         def graph(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.GraphContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.GraphContext, 0)
 
         def var(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.VarContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.VarContext, 0)
 
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_select_reachable
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSelect_reachable" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterSelect_reachable"):
                 listener.enterSelect_reachable(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSelect_reachable" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitSelect_reachable"):
                 listener.exitSelect_reachable(self)
-
-
-
 
     def select_reachable(self):
 
-        localctx = GraphQueryLanguageParser.Select_reachableContext(self, self._ctx, self.state)
+        localctx = GraphQueryLanguageParser.Select_reachableContext(
+            self, self._ctx, self.state
+        )
         self.enterRule(localctx, 40, self.RULE_select_reachable)
         try:
             self.enterOuterAlt(localctx, 1)
@@ -2117,7 +2278,14 @@ class GraphQueryLanguageParser ( Parser ):
             self.state = 282
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [GraphQueryLanguageParser.LOAD, GraphQueryLanguageParser.SET, GraphQueryLanguageParser.ADD, GraphQueryLanguageParser.LP, GraphQueryLanguageParser.CFG, GraphQueryLanguageParser.STRING]:
+            if token in [
+                GraphQueryLanguageParser.LOAD,
+                GraphQueryLanguageParser.SET,
+                GraphQueryLanguageParser.ADD,
+                GraphQueryLanguageParser.LP,
+                GraphQueryLanguageParser.CFG,
+                GraphQueryLanguageParser.STRING,
+            ]:
                 self.state = 280
                 self.graph()
                 pass
@@ -2137,8 +2305,9 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class Select_finalContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -2155,30 +2324,27 @@ class GraphQueryLanguageParser ( Parser ):
             return self.getToken(GraphQueryLanguageParser.FROM, 0)
 
         def graph(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.GraphContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.GraphContext, 0)
 
         def var(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.VarContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.VarContext, 0)
 
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_select_final
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSelect_final" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterSelect_final"):
                 listener.enterSelect_final(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSelect_final" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitSelect_final"):
                 listener.exitSelect_final(self)
-
-
-
 
     def select_final(self):
 
-        localctx = GraphQueryLanguageParser.Select_finalContext(self, self._ctx, self.state)
+        localctx = GraphQueryLanguageParser.Select_finalContext(
+            self, self._ctx, self.state
+        )
         self.enterRule(localctx, 42, self.RULE_select_final)
         try:
             self.enterOuterAlt(localctx, 1)
@@ -2193,7 +2359,14 @@ class GraphQueryLanguageParser ( Parser ):
             self.state = 290
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [GraphQueryLanguageParser.LOAD, GraphQueryLanguageParser.SET, GraphQueryLanguageParser.ADD, GraphQueryLanguageParser.LP, GraphQueryLanguageParser.CFG, GraphQueryLanguageParser.STRING]:
+            if token in [
+                GraphQueryLanguageParser.LOAD,
+                GraphQueryLanguageParser.SET,
+                GraphQueryLanguageParser.ADD,
+                GraphQueryLanguageParser.LP,
+                GraphQueryLanguageParser.CFG,
+                GraphQueryLanguageParser.STRING,
+            ]:
                 self.state = 288
                 self.graph()
                 pass
@@ -2213,8 +2386,9 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class Select_startContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -2231,30 +2405,27 @@ class GraphQueryLanguageParser ( Parser ):
             return self.getToken(GraphQueryLanguageParser.FROM, 0)
 
         def graph(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.GraphContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.GraphContext, 0)
 
         def var(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.VarContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.VarContext, 0)
 
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_select_start
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSelect_start" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterSelect_start"):
                 listener.enterSelect_start(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSelect_start" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitSelect_start"):
                 listener.exitSelect_start(self)
-
-
-
 
     def select_start(self):
 
-        localctx = GraphQueryLanguageParser.Select_startContext(self, self._ctx, self.state)
+        localctx = GraphQueryLanguageParser.Select_startContext(
+            self, self._ctx, self.state
+        )
         self.enterRule(localctx, 44, self.RULE_select_start)
         try:
             self.enterOuterAlt(localctx, 1)
@@ -2269,7 +2440,14 @@ class GraphQueryLanguageParser ( Parser ):
             self.state = 298
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [GraphQueryLanguageParser.LOAD, GraphQueryLanguageParser.SET, GraphQueryLanguageParser.ADD, GraphQueryLanguageParser.LP, GraphQueryLanguageParser.CFG, GraphQueryLanguageParser.STRING]:
+            if token in [
+                GraphQueryLanguageParser.LOAD,
+                GraphQueryLanguageParser.SET,
+                GraphQueryLanguageParser.ADD,
+                GraphQueryLanguageParser.LP,
+                GraphQueryLanguageParser.CFG,
+                GraphQueryLanguageParser.STRING,
+            ]:
                 self.state = 296
                 self.graph()
                 pass
@@ -2289,8 +2467,9 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class Select_verticesContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -2304,30 +2483,27 @@ class GraphQueryLanguageParser ( Parser ):
             return self.getToken(GraphQueryLanguageParser.FROM, 0)
 
         def graph(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.GraphContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.GraphContext, 0)
 
         def var(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.VarContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.VarContext, 0)
 
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_select_vertices
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSelect_vertices" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterSelect_vertices"):
                 listener.enterSelect_vertices(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSelect_vertices" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitSelect_vertices"):
                 listener.exitSelect_vertices(self)
-
-
-
 
     def select_vertices(self):
 
-        localctx = GraphQueryLanguageParser.Select_verticesContext(self, self._ctx, self.state)
+        localctx = GraphQueryLanguageParser.Select_verticesContext(
+            self, self._ctx, self.state
+        )
         self.enterRule(localctx, 46, self.RULE_select_vertices)
         try:
             self.enterOuterAlt(localctx, 1)
@@ -2340,7 +2516,14 @@ class GraphQueryLanguageParser ( Parser ):
             self.state = 305
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [GraphQueryLanguageParser.LOAD, GraphQueryLanguageParser.SET, GraphQueryLanguageParser.ADD, GraphQueryLanguageParser.LP, GraphQueryLanguageParser.CFG, GraphQueryLanguageParser.STRING]:
+            if token in [
+                GraphQueryLanguageParser.LOAD,
+                GraphQueryLanguageParser.SET,
+                GraphQueryLanguageParser.ADD,
+                GraphQueryLanguageParser.LP,
+                GraphQueryLanguageParser.CFG,
+                GraphQueryLanguageParser.STRING,
+            ]:
                 self.state = 303
                 self.graph()
                 pass
@@ -2360,15 +2543,16 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class Vertices_rangeContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def LCB(self):
             return self.getToken(GraphQueryLanguageParser.LCB, 0)
 
-        def INT(self, i:int=None):
+        def INT(self, i: int = None):
             if i is None:
                 return self.getTokens(GraphQueryLanguageParser.INT)
             else:
@@ -2383,20 +2567,19 @@ class GraphQueryLanguageParser ( Parser ):
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_vertices_range
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterVertices_range" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterVertices_range"):
                 listener.enterVertices_range(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitVertices_range" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitVertices_range"):
                 listener.exitVertices_range(self)
-
-
-
 
     def vertices_range(self):
 
-        localctx = GraphQueryLanguageParser.Vertices_rangeContext(self, self._ctx, self.state)
+        localctx = GraphQueryLanguageParser.Vertices_rangeContext(
+            self, self._ctx, self.state
+        )
         self.enterRule(localctx, 48, self.RULE_vertices_range)
         try:
             self.enterOuterAlt(localctx, 1)
@@ -2419,8 +2602,9 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class CfgContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -2430,16 +2614,13 @@ class GraphQueryLanguageParser ( Parser ):
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_cfg
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterCfg" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterCfg"):
                 listener.enterCfg(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitCfg" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitCfg"):
                 listener.exitCfg(self)
-
-
-
 
     def cfg(self):
 
@@ -2458,8 +2639,9 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class StringContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -2469,16 +2651,13 @@ class GraphQueryLanguageParser ( Parser ):
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_string
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterString" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterString"):
                 listener.enterString(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitString" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitString"):
                 listener.exitString(self)
-
-
-
 
     def string(self):
 
@@ -2497,8 +2676,9 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class PathContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -2508,16 +2688,13 @@ class GraphQueryLanguageParser ( Parser ):
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_path
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterPath" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterPath"):
                 listener.enterPath(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitPath" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitPath"):
                 listener.exitPath(self)
-
-
-
 
     def path(self):
 
@@ -2536,8 +2713,9 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class Vertices_setContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -2547,69 +2725,68 @@ class GraphQueryLanguageParser ( Parser ):
         def RCB(self):
             return self.getToken(GraphQueryLanguageParser.RCB, 0)
 
-        def INT(self, i:int=None):
+        def INT(self, i: int = None):
             if i is None:
                 return self.getTokens(GraphQueryLanguageParser.INT)
             else:
                 return self.getToken(GraphQueryLanguageParser.INT, i)
 
-        def COMMA(self, i:int=None):
+        def COMMA(self, i: int = None):
             if i is None:
                 return self.getTokens(GraphQueryLanguageParser.COMMA)
             else:
                 return self.getToken(GraphQueryLanguageParser.COMMA, i)
 
         def vertices_range(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.Vertices_rangeContext,0)
-
+            return self.getTypedRuleContext(
+                GraphQueryLanguageParser.Vertices_rangeContext, 0
+            )
 
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_vertices_set
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterVertices_set" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterVertices_set"):
                 listener.enterVertices_set(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitVertices_set" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitVertices_set"):
                 listener.exitVertices_set(self)
-
-
-
 
     def vertices_set(self):
 
-        localctx = GraphQueryLanguageParser.Vertices_setContext(self, self._ctx, self.state)
+        localctx = GraphQueryLanguageParser.Vertices_setContext(
+            self, self._ctx, self.state
+        )
         self.enterRule(localctx, 56, self.RULE_vertices_set)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.state = 332
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,32,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 32, self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 319
                 self.match(GraphQueryLanguageParser.LCB)
                 self.state = 324
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,30,self._ctx)
-                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                    if _alt==1:
+                _alt = self._interp.adaptivePredict(self._input, 30, self._ctx)
+                while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                    if _alt == 1:
                         self.state = 320
                         self.match(GraphQueryLanguageParser.INT)
                         self.state = 321
-                        self.match(GraphQueryLanguageParser.COMMA) 
+                        self.match(GraphQueryLanguageParser.COMMA)
                     self.state = 326
                     self._errHandler.sync(self)
-                    _alt = self._interp.adaptivePredict(self._input,30,self._ctx)
+                    _alt = self._interp.adaptivePredict(self._input, 30, self._ctx)
 
                 self.state = 328
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==GraphQueryLanguageParser.INT:
+                if _la == GraphQueryLanguageParser.INT:
                     self.state = 327
                     self.match(GraphQueryLanguageParser.INT)
-
 
                 self.state = 330
                 self.match(GraphQueryLanguageParser.RCB)
@@ -2621,7 +2798,6 @@ class GraphQueryLanguageParser ( Parser ):
                 self.vertices_range()
                 pass
 
-
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -2631,8 +2807,9 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class Labels_setContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -2642,13 +2819,13 @@ class GraphQueryLanguageParser ( Parser ):
         def RCB(self):
             return self.getToken(GraphQueryLanguageParser.RCB, 0)
 
-        def STRING(self, i:int=None):
+        def STRING(self, i: int = None):
             if i is None:
                 return self.getTokens(GraphQueryLanguageParser.STRING)
             else:
                 return self.getToken(GraphQueryLanguageParser.STRING, i)
 
-        def COMMA(self, i:int=None):
+        def COMMA(self, i: int = None):
             if i is None:
                 return self.getTokens(GraphQueryLanguageParser.COMMA)
             else:
@@ -2657,46 +2834,44 @@ class GraphQueryLanguageParser ( Parser ):
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_labels_set
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterLabels_set" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterLabels_set"):
                 listener.enterLabels_set(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitLabels_set" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitLabels_set"):
                 listener.exitLabels_set(self)
-
-
-
 
     def labels_set(self):
 
-        localctx = GraphQueryLanguageParser.Labels_setContext(self, self._ctx, self.state)
+        localctx = GraphQueryLanguageParser.Labels_setContext(
+            self, self._ctx, self.state
+        )
         self.enterRule(localctx, 58, self.RULE_labels_set)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 334
             self.match(GraphQueryLanguageParser.LCB)
             self.state = 339
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,33,self._ctx)
-            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1:
+            _alt = self._interp.adaptivePredict(self._input, 33, self._ctx)
+            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                if _alt == 1:
                     self.state = 335
                     self.match(GraphQueryLanguageParser.STRING)
                     self.state = 336
-                    self.match(GraphQueryLanguageParser.COMMA) 
+                    self.match(GraphQueryLanguageParser.COMMA)
                 self.state = 341
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,33,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input, 33, self._ctx)
 
             self.state = 343
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==GraphQueryLanguageParser.STRING:
+            if _la == GraphQueryLanguageParser.STRING:
                 self.state = 342
                 self.match(GraphQueryLanguageParser.STRING)
-
 
             self.state = 345
             self.match(GraphQueryLanguageParser.RCB)
@@ -2709,8 +2884,9 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class Edges_setContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -2720,14 +2896,13 @@ class GraphQueryLanguageParser ( Parser ):
         def RCB(self):
             return self.getToken(GraphQueryLanguageParser.RCB, 0)
 
-        def edge(self, i:int=None):
+        def edge(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(GraphQueryLanguageParser.EdgeContext)
             else:
-                return self.getTypedRuleContext(GraphQueryLanguageParser.EdgeContext,i)
+                return self.getTypedRuleContext(GraphQueryLanguageParser.EdgeContext, i)
 
-
-        def COMMA(self, i:int=None):
+        def COMMA(self, i: int = None):
             if i is None:
                 return self.getTokens(GraphQueryLanguageParser.COMMA)
             else:
@@ -2736,46 +2911,44 @@ class GraphQueryLanguageParser ( Parser ):
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_edges_set
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterEdges_set" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterEdges_set"):
                 listener.enterEdges_set(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitEdges_set" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitEdges_set"):
                 listener.exitEdges_set(self)
-
-
-
 
     def edges_set(self):
 
-        localctx = GraphQueryLanguageParser.Edges_setContext(self, self._ctx, self.state)
+        localctx = GraphQueryLanguageParser.Edges_setContext(
+            self, self._ctx, self.state
+        )
         self.enterRule(localctx, 60, self.RULE_edges_set)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 347
             self.match(GraphQueryLanguageParser.LCB)
             self.state = 353
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,35,self._ctx)
-            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1:
+            _alt = self._interp.adaptivePredict(self._input, 35, self._ctx)
+            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                if _alt == 1:
                     self.state = 348
                     self.edge()
                     self.state = 349
-                    self.match(GraphQueryLanguageParser.COMMA) 
+                    self.match(GraphQueryLanguageParser.COMMA)
                 self.state = 355
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,35,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input, 35, self._ctx)
 
             self.state = 357
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==GraphQueryLanguageParser.LP:
+            if _la == GraphQueryLanguageParser.LP:
                 self.state = 356
                 self.edge()
-
 
             self.state = 359
             self.match(GraphQueryLanguageParser.RCB)
@@ -2788,8 +2961,9 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class VarContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -2799,16 +2973,13 @@ class GraphQueryLanguageParser ( Parser ):
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_var
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterVar" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterVar"):
                 listener.enterVar(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitVar" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitVar"):
                 listener.exitVar(self)
-
-
-
 
     def var(self):
 
@@ -2827,31 +2998,31 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class Var_edgeContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def LP(self, i:int=None):
+        def LP(self, i: int = None):
             if i is None:
                 return self.getTokens(GraphQueryLanguageParser.LP)
             else:
                 return self.getToken(GraphQueryLanguageParser.LP, i)
 
-        def var(self, i:int=None):
+        def var(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(GraphQueryLanguageParser.VarContext)
             else:
-                return self.getTypedRuleContext(GraphQueryLanguageParser.VarContext,i)
+                return self.getTypedRuleContext(GraphQueryLanguageParser.VarContext, i)
 
-
-        def COMMA(self, i:int=None):
+        def COMMA(self, i: int = None):
             if i is None:
                 return self.getTokens(GraphQueryLanguageParser.COMMA)
             else:
                 return self.getToken(GraphQueryLanguageParser.COMMA, i)
 
-        def RP(self, i:int=None):
+        def RP(self, i: int = None):
             if i is None:
                 return self.getTokens(GraphQueryLanguageParser.RP)
             else:
@@ -2860,16 +3031,13 @@ class GraphQueryLanguageParser ( Parser ):
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_var_edge
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterVar_edge" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterVar_edge"):
                 listener.enterVar_edge(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitVar_edge" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitVar_edge"):
                 listener.exitVar_edge(self)
-
-
-
 
     def var_edge(self):
 
@@ -2878,7 +3046,7 @@ class GraphQueryLanguageParser ( Parser ):
         try:
             self.state = 393
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,37,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 37, self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 363
@@ -2945,7 +3113,6 @@ class GraphQueryLanguageParser ( Parser ):
                 self.match(GraphQueryLanguageParser.RP)
                 pass
 
-
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -2955,73 +3122,73 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class VariablesContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def var(self, i:int=None):
+        def var(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(GraphQueryLanguageParser.VarContext)
             else:
-                return self.getTypedRuleContext(GraphQueryLanguageParser.VarContext,i)
+                return self.getTypedRuleContext(GraphQueryLanguageParser.VarContext, i)
 
-
-        def COMMA(self, i:int=None):
+        def COMMA(self, i: int = None):
             if i is None:
                 return self.getTokens(GraphQueryLanguageParser.COMMA)
             else:
                 return self.getToken(GraphQueryLanguageParser.COMMA, i)
 
         def var_edge(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.Var_edgeContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.Var_edgeContext, 0)
 
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_variables
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterVariables" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterVariables"):
                 listener.enterVariables(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitVariables" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitVariables"):
                 listener.exitVariables(self)
-
-
-
 
     def variables(self):
 
-        localctx = GraphQueryLanguageParser.VariablesContext(self, self._ctx, self.state)
+        localctx = GraphQueryLanguageParser.VariablesContext(
+            self, self._ctx, self.state
+        )
         self.enterRule(localctx, 66, self.RULE_variables)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.state = 407
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [GraphQueryLanguageParser.DOUBLE_ARROW, GraphQueryLanguageParser.VAR]:
+            if token in [
+                GraphQueryLanguageParser.DOUBLE_ARROW,
+                GraphQueryLanguageParser.VAR,
+            ]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 400
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,38,self._ctx)
-                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                    if _alt==1:
+                _alt = self._interp.adaptivePredict(self._input, 38, self._ctx)
+                while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                    if _alt == 1:
                         self.state = 395
                         self.var()
                         self.state = 396
-                        self.match(GraphQueryLanguageParser.COMMA) 
+                        self.match(GraphQueryLanguageParser.COMMA)
                     self.state = 402
                     self._errHandler.sync(self)
-                    _alt = self._interp.adaptivePredict(self._input,38,self._ctx)
+                    _alt = self._interp.adaptivePredict(self._input, 38, self._ctx)
 
                 self.state = 404
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==GraphQueryLanguageParser.VAR:
+                if _la == GraphQueryLanguageParser.VAR:
                     self.state = 403
                     self.var()
-
 
                 pass
             elif token in [GraphQueryLanguageParser.LP]:
@@ -3041,44 +3208,37 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class ValContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def boolean(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.BooleanContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.BooleanContext, 0)
 
         def graph(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.GraphContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.GraphContext, 0)
 
         def edges(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.EdgesContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.EdgesContext, 0)
 
         def labels(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.LabelsContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.LabelsContext, 0)
 
         def vertices(self):
-            return self.getTypedRuleContext(GraphQueryLanguageParser.VerticesContext,0)
-
+            return self.getTypedRuleContext(GraphQueryLanguageParser.VerticesContext, 0)
 
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_val
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterVal" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterVal"):
                 listener.enterVal(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitVal" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitVal"):
                 listener.exitVal(self)
-
-
-
 
     def val(self):
 
@@ -3087,7 +3247,7 @@ class GraphQueryLanguageParser ( Parser ):
         try:
             self.state = 414
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,41,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 41, self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 409
@@ -3118,7 +3278,6 @@ class GraphQueryLanguageParser ( Parser ):
                 self.vertices()
                 pass
 
-
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -3128,8 +3287,9 @@ class GraphQueryLanguageParser ( Parser ):
         return localctx
 
     class BooleanContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(
+            self, parser, parent: ParserRuleContext = None, invokingState: int = -1
+        ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -3139,16 +3299,13 @@ class GraphQueryLanguageParser ( Parser ):
         def getRuleIndex(self):
             return GraphQueryLanguageParser.RULE_boolean
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterBoolean" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterBoolean"):
                 listener.enterBoolean(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitBoolean" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitBoolean"):
                 listener.exitBoolean(self)
-
-
-
 
     def boolean(self):
 
@@ -3166,9 +3323,7 @@ class GraphQueryLanguageParser ( Parser ):
             self.exitRule()
         return localctx
 
-
-
-    def sempred(self, localctx:RuleContext, ruleIndex:int, predIndex:int):
+    def sempred(self, localctx: RuleContext, ruleIndex: int, predIndex: int):
         if self._predicates == None:
             self._predicates = dict()
         self._predicates[2] = self.expr_sempred
@@ -3178,27 +3333,18 @@ class GraphQueryLanguageParser ( Parser ):
         else:
             return pred(localctx, predIndex)
 
-    def expr_sempred(self, localctx:ExprContext, predIndex:int):
-            if predIndex == 0:
-                return self.precpred(self._ctx, 5)
-         
+    def expr_sempred(self, localctx: ExprContext, predIndex: int):
+        if predIndex == 0:
+            return self.precpred(self._ctx, 5)
 
-            if predIndex == 1:
-                return self.precpred(self._ctx, 4)
-         
+        if predIndex == 1:
+            return self.precpred(self._ctx, 4)
 
-            if predIndex == 2:
-                return self.precpred(self._ctx, 3)
-         
+        if predIndex == 2:
+            return self.precpred(self._ctx, 3)
 
-            if predIndex == 3:
-                return self.precpred(self._ctx, 2)
-         
+        if predIndex == 3:
+            return self.precpred(self._ctx, 2)
 
-            if predIndex == 4:
-                return self.precpred(self._ctx, 1)
-         
-
-
-
-
+        if predIndex == 4:
+            return self.precpred(self._ctx, 1)

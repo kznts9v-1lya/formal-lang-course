@@ -13,8 +13,8 @@ def serializedATN():
         buf.write("\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22\4\23")
         buf.write("\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30")
         buf.write("\4\31\t\31\4\32\t\32\4\33\t\33\4\34\t\34\4\35\t\35\4\36")
-        buf.write("\t\36\4\37\t\37\4 \t \4!\t!\4\"\t\"\4#\t#\4$\t$\4%\t%")
-        buf.write("\4&\t&\4\'\t\'\4(\t(\4)\t)\4*\t*\4+\t+\4,\t,\4-\t-\4.")
+        buf.write('\t\36\4\37\t\37\4 \t \4!\t!\4"\t"\4#\t#\4$\t$\4%\t%')
+        buf.write("\4&\t&\4'\t'\4(\t(\4)\t)\4*\t*\4+\t+\4,\t,\4-\t-\4.")
         buf.write("\t.\4/\t/\4\60\t\60\4\61\t\61\4\62\t\62\3\2\5\2g\n\2\3")
         buf.write("\2\3\2\3\2\3\2\3\2\5\2n\n\2\3\3\5\3q\n\3\3\3\3\3\3\3\3")
         buf.write("\3\3\3\3\3\5\3y\n\3\3\4\5\4|\n\4\3\4\3\4\3\4\3\4\3\4\5")
@@ -45,9 +45,9 @@ def serializedATN():
         buf.write("\n\33\3\34\5\34\u016b\n\34\3\34\3\34\5\34\u016f\n\34\3")
         buf.write("\35\5\35\u0172\n\35\3\35\3\35\5\35\u0176\n\35\3\36\3\36")
         buf.write("\5\36\u017a\n\36\3\37\3\37\5\37\u017e\n\37\3 \5 \u0181")
-        buf.write("\n \3 \3 \5 \u0185\n \3!\3!\5!\u0189\n!\3\"\5\"\u018c")
-        buf.write("\n\"\3\"\3\"\5\"\u0190\n\"\3#\3#\3$\3$\3$\3$\3%\3%\3&")
-        buf.write("\3&\3&\3\'\3\'\3\'\3(\3(\5(\u01a2\n(\3(\7(\u01a5\n(\f")
+        buf.write('\n \3 \3 \5 \u0185\n \3!\3!\5!\u0189\n!\3"\5"\u018c')
+        buf.write('\n"\3"\3"\5"\u0190\n"\3#\3#\3$\3$\3$\3$\3%\3%\3&')
+        buf.write("\3&\3&\3'\3'\3'\3(\3(\5(\u01a2\n(\3(\7(\u01a5\n(\f")
         buf.write("(\16(\u01a8\13(\3)\3)\7)\u01ac\n)\f)\16)\u01af\13)\3)")
         buf.write("\5)\u01b2\n)\3*\3*\3*\3*\3*\7*\u01b9\n*\f*\16*\u01bc\13")
         buf.write("*\3*\3*\3+\3+\3+\3+\7+\u01c4\n+\f+\16+\u01c7\13+\3+\3")
@@ -56,15 +56,15 @@ def serializedATN():
         buf.write("\6\61\u01e4\n\61\r\61\16\61\u01e5\3\61\3\61\3\62\6\62")
         buf.write("\u01eb\n\62\r\62\16\62\u01ec\2\2\63\3\3\5\4\7\5\t\6\13")
         buf.write("\7\r\b\17\t\21\n\23\13\25\f\27\r\31\16\33\17\35\20\37")
-        buf.write("\21!\22#\23%\24\'\25)\26+\27-\30/\31\61\32\63\33\65\34")
-        buf.write("\67\359\36;\37= ?!A\"C#E$G%I&K\'M(O)Q*S+U,W-Y.[/]\60_")
-        buf.write("\61a\62c\63\3\2\n\4\2\f\f\"\"\4\2\"\"aa\6\2\"\"\61\61")
-        buf.write("^^aa\4\2C\\c|\3\2\63;\3\2\62;\5\2\13\13\17\17\"\"\3\2")
+        buf.write("\21!\22#\23%\24'\25)\26+\27-\30/\31\61\32\63\33\65\34")
+        buf.write("\67\359\36;\37= ?!A\"C#E$G%I&K'M(O)Q*S+U,W-Y.[/]\60_")
+        buf.write('\61a\62c\63\3\2\n\4\2\f\f""\4\2""aa\6\2""\61\61')
+        buf.write('^^aa\4\2C\\c|\3\2\63;\3\2\62;\5\2\13\13\17\17""\3\2')
         buf.write("\f\f\2\u023a\2\3\3\2\2\2\2\5\3\2\2\2\2\7\3\2\2\2\2\t\3")
         buf.write("\2\2\2\2\13\3\2\2\2\2\r\3\2\2\2\2\17\3\2\2\2\2\21\3\2")
         buf.write("\2\2\2\23\3\2\2\2\2\25\3\2\2\2\2\27\3\2\2\2\2\31\3\2\2")
         buf.write("\2\2\33\3\2\2\2\2\35\3\2\2\2\2\37\3\2\2\2\2!\3\2\2\2\2")
-        buf.write("#\3\2\2\2\2%\3\2\2\2\2\'\3\2\2\2\2)\3\2\2\2\2+\3\2\2\2")
+        buf.write("#\3\2\2\2\2%\3\2\2\2\2'\3\2\2\2\2)\3\2\2\2\2+\3\2\2\2")
         buf.write("\2-\3\2\2\2\2/\3\2\2\2\2\61\3\2\2\2\2\63\3\2\2\2\2\65")
         buf.write("\3\2\2\2\2\67\3\2\2\2\29\3\2\2\2\2;\3\2\2\2\2=\3\2\2\2")
         buf.write("\2?\3\2\2\2\2A\3\2\2\2\2C\3\2\2\2\2E\3\2\2\2\2G\3\2\2")
@@ -76,7 +76,7 @@ def serializedATN():
         buf.write("\2\2\23\u00bd\3\2\2\2\25\u00ca\3\2\2\2\27\u00d6\3\2\2")
         buf.write("\2\31\u00e6\3\2\2\2\33\u00f2\3\2\2\2\35\u00fe\3\2\2\2")
         buf.write("\37\u0109\3\2\2\2!\u0116\3\2\2\2#\u0120\3\2\2\2%\u012d")
-        buf.write("\3\2\2\2\'\u012f\3\2\2\2)\u0134\3\2\2\2+\u013b\3\2\2\2")
+        buf.write("\3\2\2\2'\u012f\3\2\2\2)\u0134\3\2\2\2+\u013b\3\2\2\2")
         buf.write("-\u0142\3\2\2\2/\u0149\3\2\2\2\61\u0150\3\2\2\2\63\u015a")
         buf.write("\3\2\2\2\65\u0163\3\2\2\2\67\u016a\3\2\2\29\u0171\3\2")
         buf.write("\2\2;\u0177\3\2\2\2=\u017b\3\2\2\2?\u0180\3\2\2\2A\u0186")
@@ -156,12 +156,12 @@ def serializedATN():
         buf.write("\u0115\3\2\2\2\u0116\u0117\3\2\2\2\u0117\u0118\3\2\2\2")
         buf.write("\u0118\u0119\7O\2\2\u0119\u011a\7C\2\2\u011a\u011b\7R")
         buf.write("\2\2\u011b\u011d\3\2\2\2\u011c\u011e\5a\61\2\u011d\u011c")
-        buf.write("\3\2\2\2\u011d\u011e\3\2\2\2\u011e\"\3\2\2\2\u011f\u0121")
+        buf.write('\3\2\2\2\u011d\u011e\3\2\2\2\u011e"\3\2\2\2\u011f\u0121')
         buf.write("\5a\61\2\u0120\u011f\3\2\2\2\u0120\u0121\3\2\2\2\u0121")
         buf.write("\u0122\3\2\2\2\u0122\u0123\7R\2\2\u0123\u0124\7T\2\2\u0124")
         buf.write("\u0125\7K\2\2\u0125\u0126\7P\2\2\u0126\u0127\7V\2\2\u0127")
         buf.write("\u0129\3\2\2\2\u0128\u012a\5a\61\2\u0129\u0128\3\2\2\2")
-        buf.write("\u0129\u012a\3\2\2\2\u012a$\3\2\2\2\u012b\u012e\5\'\24")
+        buf.write("\u0129\u012a\3\2\2\2\u012a$\3\2\2\2\u012b\u012e\5'\24")
         buf.write("\2\u012c\u012e\5)\25\2\u012d\u012b\3\2\2\2\u012d\u012c")
         buf.write("\3\2\2\2\u012e&\3\2\2\2\u012f\u0130\7V\2\2\u0130\u0131")
         buf.write("\7T\2\2\u0131\u0132\7W\2\2\u0132\u0133\7G\2\2\u0133(\3")
@@ -221,7 +221,7 @@ def serializedATN():
         buf.write("\2\2\2\u01b0\u01b2\7\62\2\2\u01b1\u01a9\3\2\2\2\u01b1")
         buf.write("\u01b0\3\2\2\2\u01b2R\3\2\2\2\u01b3\u01ba\5G$\2\u01b4")
         buf.write("\u01b9\5[.\2\u01b5\u01b9\5_\60\2\u01b6\u01b9\t\2\2\2\u01b7")
-        buf.write("\u01b9\5M\'\2\u01b8\u01b4\3\2\2\2\u01b8\u01b5\3\2\2\2")
+        buf.write("\u01b9\5M'\2\u01b8\u01b4\3\2\2\2\u01b8\u01b5\3\2\2\2")
         buf.write("\u01b8\u01b6\3\2\2\2\u01b8\u01b7\3\2\2\2\u01b9\u01bc\3")
         buf.write("\2\2\2\u01ba\u01b8\3\2\2\2\u01ba\u01bb\3\2\2\2\u01bb\u01bd")
         buf.write("\3\2\2\2\u01bc\u01ba\3\2\2\2\u01bd\u01be\5G$\2\u01beT")
@@ -261,7 +261,7 @@ class GraphQueryLanguageLexer(Lexer):
 
     atn = ATNDeserializer().deserialize(serializedATN())
 
-    decisionsToDFA = [ DFA(ds, i) for i, ds in enumerate(atn.decisionToState) ]
+    decisionsToDFA = [DFA(ds, i) for i, ds in enumerate(atn.decisionToState)]
 
     FUN = 1
     LOAD = 2
@@ -313,38 +313,133 @@ class GraphQueryLanguageLexer(Lexer):
     WS = 48
     EOL = 49
 
-    channelNames = [ u"DEFAULT_TOKEN_CHANNEL", u"HIDDEN" ]
+    channelNames = [u"DEFAULT_TOKEN_CHANNEL", u"HIDDEN"]
 
-    modeNames = [ "DEFAULT_MODE" ]
+    modeNames = ["DEFAULT_MODE"]
 
-    literalNames = [ "<INVALID>",
-            "'TRUE'", "'FALSE'", "'\"'", "'\"\"\"'", "':'", "'=>'", "'->'" ]
+    literalNames = [
+        "<INVALID>",
+        "'TRUE'",
+        "'FALSE'",
+        "'\"'",
+        '\'"""\'',
+        "':'",
+        "'=>'",
+        "'->'",
+    ]
 
-    symbolicNames = [ "<INVALID>",
-            "FUN", "LOAD", "SET", "ADD", "OF", "TO", "VERTICES", "LABELS", 
-            "SELECT", "EDGES", "REACHABLE", "START", "FINAL", "FROM", "FILTER", 
-            "MAP", "PRINT", "BOOL", "TRUE", "FALSE", "ASSIGN", "AND", "OR", 
-            "NOT", "IN", "KLEENE", "DOT", "COMMA", "SEMICOLON", "LCB", "RCB", 
-            "LP", "RP", "QUOT", "TRIPLE_QUOT", "COLON", "DOUBLE_ARROW", 
-            "ARROW", "VAR", "INT", "CFG", "STRING", "PATH", "ID_CHAR", "CHAR", 
-            "NONZERO_DIGIT", "DIGIT", "WS", "EOL" ]
+    symbolicNames = [
+        "<INVALID>",
+        "FUN",
+        "LOAD",
+        "SET",
+        "ADD",
+        "OF",
+        "TO",
+        "VERTICES",
+        "LABELS",
+        "SELECT",
+        "EDGES",
+        "REACHABLE",
+        "START",
+        "FINAL",
+        "FROM",
+        "FILTER",
+        "MAP",
+        "PRINT",
+        "BOOL",
+        "TRUE",
+        "FALSE",
+        "ASSIGN",
+        "AND",
+        "OR",
+        "NOT",
+        "IN",
+        "KLEENE",
+        "DOT",
+        "COMMA",
+        "SEMICOLON",
+        "LCB",
+        "RCB",
+        "LP",
+        "RP",
+        "QUOT",
+        "TRIPLE_QUOT",
+        "COLON",
+        "DOUBLE_ARROW",
+        "ARROW",
+        "VAR",
+        "INT",
+        "CFG",
+        "STRING",
+        "PATH",
+        "ID_CHAR",
+        "CHAR",
+        "NONZERO_DIGIT",
+        "DIGIT",
+        "WS",
+        "EOL",
+    ]
 
-    ruleNames = [ "FUN", "LOAD", "SET", "ADD", "OF", "TO", "VERTICES", "LABELS", 
-                  "SELECT", "EDGES", "REACHABLE", "START", "FINAL", "FROM", 
-                  "FILTER", "MAP", "PRINT", "BOOL", "TRUE", "FALSE", "ASSIGN", 
-                  "AND", "OR", "NOT", "IN", "KLEENE", "DOT", "COMMA", "SEMICOLON", 
-                  "LCB", "RCB", "LP", "RP", "QUOT", "TRIPLE_QUOT", "COLON", 
-                  "DOUBLE_ARROW", "ARROW", "VAR", "INT", "CFG", "STRING", 
-                  "PATH", "ID_CHAR", "CHAR", "NONZERO_DIGIT", "DIGIT", "WS", 
-                  "EOL" ]
+    ruleNames = [
+        "FUN",
+        "LOAD",
+        "SET",
+        "ADD",
+        "OF",
+        "TO",
+        "VERTICES",
+        "LABELS",
+        "SELECT",
+        "EDGES",
+        "REACHABLE",
+        "START",
+        "FINAL",
+        "FROM",
+        "FILTER",
+        "MAP",
+        "PRINT",
+        "BOOL",
+        "TRUE",
+        "FALSE",
+        "ASSIGN",
+        "AND",
+        "OR",
+        "NOT",
+        "IN",
+        "KLEENE",
+        "DOT",
+        "COMMA",
+        "SEMICOLON",
+        "LCB",
+        "RCB",
+        "LP",
+        "RP",
+        "QUOT",
+        "TRIPLE_QUOT",
+        "COLON",
+        "DOUBLE_ARROW",
+        "ARROW",
+        "VAR",
+        "INT",
+        "CFG",
+        "STRING",
+        "PATH",
+        "ID_CHAR",
+        "CHAR",
+        "NONZERO_DIGIT",
+        "DIGIT",
+        "WS",
+        "EOL",
+    ]
 
     grammarFileName = "GraphQueryLanguage.g4"
 
-    def __init__(self, input=None, output:TextIO = sys.stdout):
+    def __init__(self, input=None, output: TextIO = sys.stdout):
         super().__init__(input, output)
         self.checkVersion("4.7.2")
-        self._interp = LexerATNSimulator(self, self.atn, self.decisionsToDFA, PredictionContextCache())
+        self._interp = LexerATNSimulator(
+            self, self.atn, self.decisionsToDFA, PredictionContextCache()
+        )
         self._actions = None
         self._predicates = None
-
-
