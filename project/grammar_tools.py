@@ -225,6 +225,40 @@ def get_cnf_from_text(cfg_text: str, start_symbol: str = None) -> (CFG, CFG):
     return chomsky_cnf, hopcroft_cnf
 
 
+def get_cnf_from_cfg(cfg: CFG) -> (CFG, CFG):
+    """
+    Makes Context Free Grammars (with epsilon by Chomsky, no epsilon by Hopcroft) in Chomsky Normal Form
+    equivalent to given CFG. Both versions are equal if CNF doesn't contain epsilon productions.
+
+    The Chomsky Normal Form is a more strict case of the Weak Chomsky Normal Form,
+    which can be weakened to it through product changes.
+
+    Parameters
+    ----------
+    cfg: CFG
+        Context Free Grammar
+
+    Returns
+    -------
+    Tuple[CFG, CFG]:
+        Context Free Grammars (with epsilon by Chomsky, no epsilon by Hopcroft) in Chomsky Normal Form
+        equivalent to text representation of CFG
+    """
+
+    hopcroft_cnf = cfg.to_normal_form()
+
+    chomsky_cnf = None
+    if cfg.generate_epsilon():
+        chomsky_cnf = CFG(
+            hopcroft_cnf.variables,
+            hopcroft_cnf.terminals,
+            hopcroft_cnf.start_symbol,
+            hopcroft_cnf.productions | {Production(hopcroft_cnf.start_symbol, [])},
+        )
+
+    return chomsky_cnf, hopcroft_cnf
+
+
 def get_wcnf_from_file(path: str, start_symbol: str = None) -> CFG:
     """
     Makes Context Free Grammar in Weak Chomsky Normal Form equivalent to
@@ -898,11 +932,11 @@ def tensor_cfpq(graph: nx.MultiDiGraph, cfg: CFG) -> Set[Tuple[int, str, int]]:
     ba.boolean_adjacencies = boxes
     ba.number_of_states = num
 
-    changing = True
-    while changing:
-        changing = False
-
+    prev_nnz = -2
+    new_nnz = -1
+    while prev_nnz != new_nnz:
         transitive_closure = ba.intersect(boolean_adjacencies).get_transitive_closure()
+        prev_nnz, new_nnz = new_nnz, transitive_closure.nnz
         x, y = transitive_closure.nonzero()
 
         for (i, j) in zip(x, y):
@@ -923,10 +957,8 @@ def tensor_cfpq(graph: nx.MultiDiGraph, cfg: CFG) -> Set[Tuple[int, str, int]]:
                 ),
             )
 
-            if not boolean_adjacency[graph_from, graph_to]:
-                changing = True
-                boolean_adjacency[graph_from, graph_to] = True
-                boolean_adjacencies.boolean_adjacencies[variable] = boolean_adjacency
+            boolean_adjacency[graph_from, graph_to] = True
+            boolean_adjacencies.boolean_adjacencies[variable] = boolean_adjacency
 
     trio = set()
     for variable, boolean_adjacency in boolean_adjacencies.boolean_adjacencies.items():
