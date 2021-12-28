@@ -13,10 +13,10 @@ val =
     String of string
   | Int of int
   | Bool of bool
-  | Path of path
-  | List of string
-  | List of int
-  | List of bool
+  | Graph of graph
+  | Labels of labels
+  | Vertices of vertices
+  | Edges of edges
 
 expr =
     Var of var                   // переменные
@@ -38,7 +38,6 @@ expr =
   | Concat of expr * expr        // конкатенация языков
   | Union of expr * expr         // объединение языков
   | Star of expr                 // замыкание языков (звезда Клини)
-  | Smb of expr                  // единичный переход
 
 lambda =
     Lambda of List<var> * expr
@@ -218,114 +217,177 @@ _____________________________________
 
 ## Описание конкретного синтаксиса языка
 
-[...] - скобки грамматики
-
-(...) - скобки конкретного синтаксиса
-
-<...> - скобки полиморфизма типов
-
--> - стрелка грамматики
-
-=> - стрелка конкретного синтаксиса
-
 ```
-program -> stmt ; program | eps
-stmt -> var = expr | PRINT ( expr )
+prog -> (stmt SEMICOLON (NEOL | TREOL)?)+
 
-lower_symbol -> [a-z]
-upper_symbol -> [A-Z]
-digit -> [0-9]
+stmt -> PRINT expr
+      | var ASSIGN expr
 
-int -> 0 | [1-9] digit*
-string -> [_ | . | lower_symbol | upper_symbol] [_ | . | lower_symbol | upper_symbol | digit]*
-bool -> TRUE | FALSE
-path -> " [\ | : | / | _ | . | lower_symbol | upper_symbol | digit]+ "
+expr -> LP expr RP
+      | anfunc
+      | mapping
+      | filtering
+      | var
+      | val
+      | NOT expr
+      | expr IN expr
+      | expr AND expr
+      | expr DOT expr
+      | expr OR expr
+      | expr KLEENE
 
-var -> string
-val ->
-    int
-    | " string "
-    | bool
-    | path
-    | list<int>
-    | list<" string ">
-    | list<bool>
-set ->
-    set<int>
-    | set<" string ">
-    | RANGE ( int , int )
+graph -> load_graph
+       | cfg
+       | string
+       | set_start
+       | set_final
+       | add_start
+       | add_final
+       | LP graph RP
 
-expr -> var
-expr -> val
-expr -> graph
-graph -> " string "
-graph -> SET_START ( set , graph )
-graph -> SET_FINAL ( set , graph )
-graph -> ADD_START ( set , graph )
-graph -> ADD_FINAL ( set , graph )
+load_graph -> LOAD path
+set_start -> SET START OF (graph | var) TO (vertices | var)
+set_final -> SET FINAL OF (graph | var) TO (vertices | var)
+add_start -> ADD START OF (graph | var) TO (vertices | var)
+add_final -> ADD FINAL OF (graph | var) TO (vertices | var)
 
-expr -> vertex | vertices
-vertex -> int
-vertices -> set<vertex> | RANGE ( int , int )
-vertices -> GET_START ( graph )
-vertices -> GET_FINAL ( set , graph )
+vertices -> vertex
+          | vertices_range
+          | vertices_set
+          | select_reachable
+          | select_final
+          | select_start
+          | select_vertices
+          | LP vertices RP
 
-expr -> vertices_pair
-vertices_pair -> set<(int, int)>
-vertices_pair -> GET_REACHABLE ( graph )
+vertex -> INT
 
-vertices -> GET_VERTICES ( graph )
+edges -> edge
+       | edges_set
+       | select_edges
 
-expr -> edge | edges
-edge -> (int, " string ", int) | (int, int, int)
-edges -> set<edge>
-edges -> GET_EDGES ( graph )
+edge -> LP vertex COMMA label COMMA vertex RP
+      | LP vertex COMMA vertex RP
 
-expr -> labels
-labels -> set<int> | set<" string ">
-labels -> GET_LABELS ( graph )
+labels -> label
+        | labels_set
+        | select_labels
 
-expr -> MAP ( lambda , expr )
-expr -> FILTER ( lambda , expr )
-graph -> LOAD ( path )
-graph -> INTERSECT ( graph , graph )
-graph -> CONCAT ( graph , graph )
-graph -> UNION ( graph , graph )
-graph -> STAR ( graph , graph )
+label -> string
 
-lambda -> ( list<var> => [bool_expr | expr] )
-bool_expr ->
-    bool_expr or bool_expr
-    | bool_expr and bool_expr
-    | not bool_expr
-    | bool
-    | HAS_LABEL ( edge , " string " )
-    | IS_START ( vertex )
-    | IS_FINAL ( vertex )
-    | x IN set<x>
+anfunc -> FUN variables DOUBLE_ARROW expr
+        | LP anfunc RP
 
-list<x> -> LIST ( x [, x]* ) | LIST ( )
-set<x> -> SET ( x [, x]* ) | SET ( )
+mapping -> MAP anfunc expr
+filtering -> FILTER anfunc expr
+
+select_edges -> SELECT EDGES FROM (graph | var)
+select_labels -> SELECT LABELS FROM (graph | var)
+select_reachable -> SELECT REACHABLE VERTICES FROM (graph | var)
+select_final -> SELECT FINAL VERTICES FROM (graph | var)
+select_start -> SELECT START VERTICES FROM (graph | var)
+select_vertices -> SELECT VERTICES FROM (graph | var)
+vertices_range -> LCB INT COLON INT RCB
+
+cfg -> CFG
+string -> STRING
+path -> PATH
+
+vertices_set -> LCB (INT COMMA)* (INT)? RCB
+              | vertices_range
+
+labels_set -> LCB (STRING COMMA)* (STRING)? RCB
+
+edges_set -> LCB (edge COMMA)* (edge)? RCB
+var -> VAR
+
+var_edge -> LP var COMMA var RP
+          | LP var COMMA var COMMA var RP
+          | LP LP var COMMA var RP COMMA var COMMA LP var COMMA var RP RP
+
+variables -> (var COMMA)* var? | var_edge
+
+val -> boolean
+     | graph
+     | edges
+     | labels
+     | vertices
+
+boolean -> BOOL
+
+FUN -> 'FUN'
+LOAD -> 'LOAD'
+SET -> 'SET'
+ADD -> 'ADD'
+OF -> 'OF'
+TO -> 'TO'
+VERTICES -> 'VERTICES'
+LABELS -> 'LABELS'
+SELECT -> 'SELECT'
+EDGES -> 'EDGES'
+REACHABLE -> 'REACHABLE'
+START -> 'START'
+FINAL -> 'FINAL'
+FROM -> 'FROM'
+FILTER -> 'FILTER'
+MAP -> 'MAP'
+PRINT -> 'PRINT'
+BOOL -> TRUE | FALSE
+TRUE -> 'TRUE'
+FALSE -> 'FALSE'
+
+ASSIGN -> '='
+AND -> '&'
+OR -> '|'
+NOT -> 'NOT'
+IN -> 'IN'
+KLEENE -> '*'
+DOT -> '.'
+COMMA -> ','
+SEMICOLON -> ';'
+LCB -> '{'
+RCB -> '}'
+LP -> '('
+RP -> ')'
+QUOT -> '"'
+TRIPLE_QUOT -> '"""'
+COLON -> ':'
+DOUBLE_ARROW -> '=>'
+ARROW -> '->'
+
+VAR -> ('_' | CHAR) ID_CHAR*    // '_' в значении wildcard
+
+INT -> NONZERO_DIGIT DIGIT* | '0'
+CFG -> TRIPLE_QUOT (CHAR | DIGIT | ' ' | '\n' | ARROW)* TRIPLE_QUOT
+STRING -> QUOT (CHAR | DIGIT | '_' | ' ')* QUOT
+PATH -> QUOT (CHAR | DIGIT | '_' | ' ' | '/' | '\' | '.')* QUOT
+ID_CHAR -> (CHAR | DIGIT | '_')
+CHAR -> [a-z] | [A-Z]
+NONZERO_DIGIT -> [1-9]
+DIGIT -> [0-9]
+TREOL -> [\t\r]+
+NEOL -> [\n]+
 ```
 
 ## Пример программы
 
+Данный скрипт загружает граф "core" по пути и создаёт его копию с заданными стартовыми и финальными вершинами.
+Затем создает два запроса на метках графа. Наконец, выполняет пересечение исходного графа (все вершины
+тогда будут стартовыми и финальными по умолчанию) с первым запросом и его копии со вторым запросом,
+печатая результат.
+
 ```
-graph1 = LOAD("core")
-graph2 = SET_START(SET_FINAL(GET_VERTICES(graph), graph)), RANGE(1, 100))
+graph1 = LOAD "./core.dot";
+graph2 = SET START OF (SET FINAL OF graph1 TO (SELECT VERTICES FROM graph1)) TO {1 : 10};
 
-lu = UNION("label1", "label2")
+query_part = "label1" | "label2";
 
-query1 = STAR(UNION("type_of", lu))
-query2 = CONCAT("sub_class_of", lu)
+query1 = ("type_of" | query_part)*;
+query2 = "subclass_of" . query_part;
 
-result1 = INTERSECT(graph1, query1)
-result2 = INTERSECT(graph2, query2)
+result1 = graph1 & query1;
+result2 = graph2 & query2;
 
-PRINT(result1)
-PRINT(result2)
-
-start1 = GET_START(graph1)
-vertices1 = FILTER((LIST(vertex) -> vertex in start1), GET_EDGES(result1))
-PRINT(vertices1);
+PRINT result1;
+PRINT result2;
 ```
