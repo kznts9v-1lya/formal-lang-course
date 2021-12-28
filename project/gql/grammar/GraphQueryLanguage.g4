@@ -1,4 +1,4 @@
-grammar graph_query_language;
+grammar GraphQueryLanguage ;
 
 prog : (EOL? WS? stmt SEMICOLON EOL?)+ EOF ;
 

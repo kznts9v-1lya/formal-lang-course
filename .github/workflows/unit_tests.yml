@@ -56,21 +56,20 @@ jobs:
               brew install antlr
           fi
 
-      # Builds GQL grammar
-      - name: Build grammar
+      # Generate GQL grammar
+      - name: Generate GQL grammar
 
         shell: bash
         run: |
           if [ "$RUNNER_OS" == "Linux" ]; then
-              antlr4 -Dlanguage=Python3 ./project/gql/grammar/graph_query_language.g4
+              antlr4 -Dlanguage=Python3 ./project/gql/grammar/GraphQueryLanguage.g4
           elif [ "$RUNNER_OS" == "Windows" ]; then
-              antlr4 -Dlanguage=Python3 ./project/gql/grammar/graph_query_language.g4
+              antlr4 -Dlanguage=Python3 ./project/gql/grammar/GraphQueryLanguage.g4
           else
-              antlr -Dlanguage=Python3 ./project/gql/grammar/graph_query_language.g4
+              antlr -Dlanguage=Python3 ./project/gql/grammar/GraphQueryLanguage.g4
           fi
 
-
-      # Runs unit tests from /tests directory using pytest
+      # Run unit tests using pytest
       - name: Run unit tests
         run: |
           pytest -vv ./tests
