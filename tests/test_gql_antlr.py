@@ -68,8 +68,8 @@ def test_map(text, expected):
     [
         ("FILTER (FUN x => x) g", True),
         (
-                "FILTER (FUN ((u_g,u_q1),l,(v_g,v_q1)) => u_g) (SELECT EDGES FROM res1)",
-                True,
+            "FILTER (FUN ((u_g,u_q1),l,(v_g,v_q1)) => u_g) (SELECT EDGES FROM res1)",
+            True,
         ),
         (" FILTER (FUN 1 => 1) 1", False),
         ("FILTER p p", False),
@@ -96,13 +96,13 @@ def test_filter(text, expected):
         ("{1, 2, 3}", True),
         ("{1, 2, 3)", False),
         (
-                '''"""
+            '''"""
     S -> A S B S
     A -> a
     B -> b
     """
     ''',
-                True,
+            True,
         ),
         ('(1, "l", 2)', True),
         ('("l", "k", "m")', False),
@@ -187,7 +187,7 @@ def test_stmt(text, expected):
     "text, expected",
     [
         (
-                """
+            """
     g = LOAD "hello";
     g = SET START OF (SET FINAL OF g TO (SELECT VERTICES FROM g)) TO {1 : 100};
     l1 = "l1" | "l2";
@@ -201,7 +201,7 @@ def test_stmt(text, expected):
     vertices3 = vertices1 & vertices2;
     PRINT vertices3;
     """,
-                True,
+            True,
         ),
         ('g = LOAD "hello"', False),
     ],
