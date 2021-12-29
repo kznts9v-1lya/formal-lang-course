@@ -15,3 +15,6 @@ from project.path_querying_tools import *
 
 import project.grammar_tools
 from project.grammar_tools import *
+
+import project.gql
+from project.gql import *
