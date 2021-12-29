@@ -30,7 +30,7 @@ def test_get_description() -> None:
 
 
 def test_get_two_cycles() -> None:
-    path = "tests/data/two_cycles.dot"
+    path = "tests/data/graphs/two_cycles.dot"
 
     if os.path.exists(path):
         os.remove(path)
