@@ -3,7 +3,7 @@ import sys
 import pytest
 
 if sys.platform.startswith("win"):
-    pytest.skip("Skipping tests", allow_module_level=True)
+    pytest.skip("Windows is unsupported", allow_module_level=True)
 else:
     from project.gql.parser import parse
 

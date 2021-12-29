@@ -56,8 +56,8 @@ jobs:
               brew install antlr
           fi
 
-      # Generate GQL grammar
-      - name: Generate GQL grammar
+      # Generate GQL ANTLR
+      - name: Generate GQL ANTLR
 
         shell: bash
         run: |
