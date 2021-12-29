@@ -245,7 +245,7 @@ graph -> load_graph
        | add_final
        | LP graph RP
 
-load_graph -> LOAD path
+load_graph -> LOAD (string | path)
 set_start -> SET START OF (graph | var) TO (vertices | var)
 set_final -> SET FINAL OF (graph | var) TO (vertices | var)
 add_start -> ADD START OF (graph | var) TO (vertices | var)
@@ -360,7 +360,7 @@ VAR -> ('_' | CHAR) ID_CHAR*    // '_' в значении wildcard
 INT -> NONZERO_DIGIT DIGIT* | '0'
 CFG -> TRIPLE_QUOT (CHAR | DIGIT | ' ' | '\n' | ARROW)* TRIPLE_QUOT
 STRING -> QUOT (CHAR | DIGIT | '_' | ' ')* QUOT
-PATH -> QUOT (CHAR | DIGIT | '_' | ' ' | '/' | '\' | DOT)* QUOT
+PATH -> QUOT (CHAR | DIGIT | '_' | ' ' | '/' | '\' | COLON | DOT)* QUOT
 ID_CHAR -> (CHAR | DIGIT | '_')
 CHAR -> [a-z] | [A-Z]
 NONZERO_DIGIT -> [1-9]
