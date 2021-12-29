@@ -27,14 +27,17 @@ def test_tree_dot():
     PRINT vertices3;
     """
 
-    path = os.sep.join([os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "tests", "data", "dots"])
+    path = os.sep.join(
+        [
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+            "tests",
+            "data",
+            "dots",
+        ]
+    )
 
-    expected_path = os.sep.join(
-        [path, "expected_tree.dot"]
-    )
-    actual_path = os.sep.join(
-        [path, "actual_tree.dot"]
-    )
+    expected_path = os.sep.join([path, "expected_tree.dot"])
+    actual_path = os.sep.join([path, "actual_tree.dot"])
 
     generate_dot(text, actual_path)
 
