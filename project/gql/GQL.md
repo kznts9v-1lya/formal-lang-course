@@ -218,7 +218,7 @@ _____________________________________
 ## Описание конкретного синтаксиса языка
 
 ```
-prog -> (stmt SEMICOLON (NEOL | TREOL)?)+
+prog -> (stmt SEMICOLON EOL?)+
 
 stmt -> PRINT expr
       | var ASSIGN expr
@@ -245,7 +245,7 @@ graph -> load_graph
        | add_final
        | LP graph RP
 
-load_graph -> LOAD path
+load_graph -> LOAD (string | path)
 set_start -> SET START OF (graph | var) TO (vertices | var)
 set_final -> SET FINAL OF (graph | var) TO (vertices | var)
 add_start -> ADD START OF (graph | var) TO (vertices | var)
@@ -360,13 +360,13 @@ VAR -> ('_' | CHAR) ID_CHAR*    // '_' в значении wildcard
 INT -> NONZERO_DIGIT DIGIT* | '0'
 CFG -> TRIPLE_QUOT (CHAR | DIGIT | ' ' | '\n' | ARROW)* TRIPLE_QUOT
 STRING -> QUOT (CHAR | DIGIT | '_' | ' ')* QUOT
-PATH -> QUOT (CHAR | DIGIT | '_' | ' ' | '/' | '\' | '.')* QUOT
+PATH -> QUOT (CHAR | DIGIT | '_' | ' ' | '/' | '\' | COLON | DOT)* QUOT
 ID_CHAR -> (CHAR | DIGIT | '_')
 CHAR -> [a-z] | [A-Z]
 NONZERO_DIGIT -> [1-9]
 DIGIT -> [0-9]
-TREOL -> [\t\r]+
-NEOL -> [\n]+
+WS -> [ \t\r]+
+EOL -> [\n]+
 ```
 
 ## Пример программы
