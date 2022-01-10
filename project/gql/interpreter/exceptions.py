@@ -19,7 +19,9 @@ class GraphLoadingException(RuntimeException):
     """
 
     def __init__(self, name: str):
-        self.message = f"Could not load graph '{name}'. Check correctness of given name."
+        self.message = (
+            f"Could not load graph '{name}'. Check correctness of given name."
+        )
 
 
 class CastingException(RuntimeException):

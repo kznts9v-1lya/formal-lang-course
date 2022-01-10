@@ -12,10 +12,10 @@ class Bool(Type):
     def __bool__(self):
         return self.b
 
-    def intersect(self, other: 'Bool') -> 'Bool':
+    def intersect(self, other: "Bool") -> "Bool":
         return Bool(self.b and other.b)
 
-    def union(self, other: 'Bool') -> 'Bool':
+    def union(self, other: "Bool") -> "Bool":
         return Bool(self.b or other.b)
 
     def concatenate(self, other):
