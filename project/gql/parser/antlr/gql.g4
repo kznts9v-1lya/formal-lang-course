@@ -90,6 +90,7 @@ vertices_set : LCB (INT COMMA)* (INT)? RCB
 labels_set : LCB (STRING COMMA)* (STRING)? RCB ;
 
 edges_set : LCB (edge COMMA)* (edge)? RCB ;
+
 var : VAR ;
 
 var_edge : LP var COMMA var RP
