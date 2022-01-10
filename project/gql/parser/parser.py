@@ -3,9 +3,9 @@ from antlr4.error.Errors import ParseCancellationException
 from antlr4.tree.Tree import TerminalNodeImpl
 from pydot import Dot, Node, Edge
 
-from project.gql.antlr.gqlLexer import gqlLexer
-from project.gql.antlr.gqlParser import gqlParser
-from project.gql.antlr.gqlListener import gqlListener
+from project.gql.parser.antlr.gqlLexer import gqlLexer
+from project.gql.parser.antlr.gqlParser import gqlParser
+from project.gql.parser.antlr.gqlListener import gqlListener
 
 __all__ = ["parse", "accept", "generate_dot"]
 
