@@ -29,8 +29,8 @@ class CastingException(RuntimeException):
     Raises if it is impossible to cast two types.
     """
 
-    def __init__(self, lhs: str, rhs: str):
-        self.message = f"Casting error."
+    def __init__(self, left_type: str, right_type: str):
+        self.message = f"Casting error between {left_type} and {right_type}."
 
 
 class VariableNotFoundException(RuntimeException):

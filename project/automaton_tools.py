@@ -18,6 +18,8 @@ __all__ = [
     "get_rsm_from_ecfg",
     "minimize_rsm",
     "check_regex_equality",
+    "set_nfa_states",
+    "add_nfa_states",
 ]
 
 from project.grammar_tools import ECFG
@@ -25,7 +27,7 @@ from project.grammar_tools import ECFG
 
 def get_min_dfa_from_regex_str(regex_str: str) -> DeterministicFiniteAutomaton:
     """
-    Based on a regular expression given as a Regex string, builds an Deterministic Finite Automaton.
+    Based on a regular expression given as a Regex string, builds a Deterministic Finite Automaton.
 
     Parameters
     ----------
@@ -43,7 +45,7 @@ def get_min_dfa_from_regex_str(regex_str: str) -> DeterministicFiniteAutomaton:
 
 def get_min_dfa_from_regex(regex: Regex) -> DeterministicFiniteAutomaton:
     """
-    Based on a regular expression given as Regex, builds an Deterministic Finite Automaton.
+    Based on a regular expression given as Regex, builds a Deterministic Finite Automaton.
 
     Parameters
     ----------
@@ -146,6 +148,45 @@ def get_nfa_from_graph(
         nfa.add_final_state(final_state)
 
     return nfa
+
+
+def set_nfa_states(
+    nfa: NondeterministicFiniteAutomaton,
+    start_states: Set[State] = None,
+    final_states: Set[State] = None,
+) -> NondeterministicFiniteAutomaton:
+    new_nfa = nfa.copy()
+
+    new_nfa._start_state = set()
+    new_nfa._final_states = set()
+
+    if start_states:
+        for state in start_states:
+            new_nfa.add_start_state(state)
+
+    if final_states:
+        for state in final_states:
+            new_nfa.add_final_state(state)
+
+    return new_nfa
+
+
+def add_nfa_states(
+    nfa: NondeterministicFiniteAutomaton,
+    start_states: Set[State] = None,
+    final_states: Set[State] = None,
+) -> NondeterministicFiniteAutomaton:
+    new_nfa = nfa.copy()
+
+    if start_states:
+        for state in start_states:
+            new_nfa.add_start_state(state)
+
+    if final_states:
+        for state in final_states:
+            new_nfa.add_final_state(state)
+
+    return new_nfa
 
 
 class RSMBox:
