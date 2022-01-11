@@ -34,7 +34,9 @@ class FiniteAutomaton(Automaton):
         left_regex = self.nfa.to_regex()
         right_regex = other.nfa.to_regex()
 
-        return FiniteAutomaton(left_regex.concatenate(right_regex).to_epsilon_nfa().to_deterministic())
+        return FiniteAutomaton(
+            left_regex.concatenate(right_regex).to_epsilon_nfa().to_deterministic()
+        )
 
     def inverse(self):
         inverted_nfa = self.nfa.copy()
