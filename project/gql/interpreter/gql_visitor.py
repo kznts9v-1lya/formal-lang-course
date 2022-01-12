@@ -40,7 +40,12 @@ class GQLVisitor(gqlVisitor):
             self.memory.add_variable(name, value)
 
     def visitExpr(self, ctx: gqlParser.ExprContext) -> Type:
-        binary_operations = {"AND": "intersect", "OR": "union", "DOT": "concatenate", "IN": "find_variable"}
+        binary_operations = {
+            "AND": "intersect",
+            "OR": "union",
+            "DOT": "concatenate",
+            "IN": "find_variable",
+        }
         unary_operations = {"NOT": "inverse", "KLEENE": "kleene"}
 
         for bin_op in binary_operations:
@@ -60,6 +65,3 @@ class GQLVisitor(gqlVisitor):
                 return getattr(_type, unary_operations[un_op])()
 
         return self.visitChildren(ctx)
-
-
-

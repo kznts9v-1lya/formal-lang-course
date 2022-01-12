@@ -6,7 +6,7 @@ from typing import List, Dict
 
 class Memory:
     def __init__(self):
-        self.tables: List[Dict[str: Type]] = [{}]
+        self.tables: List[Dict[str:Type]] = [{}]
 
     def next_scope(self):
         new_table = Memory()
