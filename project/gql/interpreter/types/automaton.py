@@ -9,46 +9,46 @@ class Automaton(Type, ABC):
     """
 
     @abstractmethod
-    def set_start_states(self, start_states):
+    def set_start(self, start_states):
         pass
 
     @abstractmethod
-    def set_final_states(self, final_states):
+    def set_final(self, final_states):
         pass
 
     @abstractmethod
-    def add_start_states(self, start_states):
+    def add_start(self, start_states):
         pass
 
     @abstractmethod
-    def add_final_states(self, final_states):
+    def add_final(self, final_states):
         pass
 
     @abstractmethod
-    def get_reachable_states(self):
-        pass
-
-    @property
-    @abstractmethod
-    def start_states(self):
+    def get_reachable(self):
         pass
 
     @property
     @abstractmethod
-    def final_states(self):
+    def start(self):
         pass
 
     @property
     @abstractmethod
-    def symbols(self):
+    def final(self):
         pass
 
     @property
     @abstractmethod
-    def transitions(self):
+    def labels(self):
         pass
 
     @property
     @abstractmethod
-    def states(self):
+    def edges(self):
+        pass
+
+    @property
+    @abstractmethod
+    def vertices(self):
         pass

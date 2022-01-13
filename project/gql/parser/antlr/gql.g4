@@ -91,7 +91,7 @@ labels_set : LCB (STRING COMMA)* (STRING)? RCB ;
 
 edges_set : LCB (edge COMMA)* (edge)? RCB ;
 
-var : VAR ;
+var : ID ;
 
 var_edge : LP var COMMA var RP
          | LP var COMMA var COMMA var RP
@@ -109,7 +109,7 @@ val : boolean
     | vertices
     ;
 
-boolean : BOOL ;
+boolean : TRUE | FALSE ;
 
 FUN : WS? 'FUN' WS? ;
 LOAD : WS? 'LOAD' WS? ;
@@ -127,31 +127,30 @@ FINAL : WS? 'FINAL' WS? ;
 FROM : WS? 'FROM' WS? ;
 FILTER : WS? 'FILTER' WS? ;
 MAP : WS? 'MAP' WS? ;
-PRINT : WS? 'PRINT' WS?;
-BOOL : TRUE | FALSE;
+PRINT : WS? 'PRINT' WS? ;
 TRUE : 'TRUE' ;
 FALSE : 'FALSE' ;
 
 ASSIGN : WS? '=' WS? ;
-AND : WS? '&' WS?;
+AND : WS? '&' WS? ;
 OR : WS? '|' WS? ;
 NOT : WS? 'NOT' WS? ;
-IN : WS? 'IN' WS?;
-KLEENE : WS? '*' WS?;
+IN : WS? 'IN' WS? ;
+KLEENE : WS? '*' WS? ;
 DOT : WS? '.' WS? ;
-COMMA : WS? ',' WS?;
-SEMICOLON : ';' WS?;
-LCB : WS? '{' WS?;
-RCB : WS? '}' WS?;
-LP : WS? '(' WS?;
-RP : WS? ')' WS?;
+COMMA : WS? ',' WS? ;
+SEMICOLON : ';' WS? ;
+LCB : WS? '{' WS? ;
+RCB : WS? '}' WS? ;
+LP : WS? '(' WS? ;
+RP : WS? ')' WS? ;
 QUOT : '"' ;
 TRIPLE_QUOT : '"""' ;
 COLON : WS? ':' WS? ;
 DOUBLE_ARROW : WS? '=>' WS? ;
 ARROW : '->' ;
 
-VAR : ('_' | CHAR) ID_CHAR* ;
+ID : ('_' | CHAR) ID_CHAR* ;
 
 INT : NONZERO_DIGIT DIGIT* | '0' ;
 CFG : TRIPLE_QUOT (CHAR | DIGIT | ' ' | '\n' | ARROW)* TRIPLE_QUOT ;

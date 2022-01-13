@@ -52,37 +52,37 @@ class FiniteAutomaton(Automaton):
     def kleene(self):
         return FiniteAutomaton(self.nfa.kleene_star().to_deterministic())
 
-    def set_start_states(self, start_states):
+    def set_start(self, start_states):
         self.nfa = set_nfa_states(self.nfa, start_states=start_states)
 
-    def set_final_states(self, final_states):
+    def set_final(self, final_states):
         self.nfa = set_nfa_states(self.nfa, final_states=final_states)
 
-    def add_start_states(self, start_states):
+    def add_start(self, start_states):
         self.nfa = add_nfa_states(self.nfa, start_states=start_states)
 
-    def add_final_states(self, final_states):
+    def add_final(self, final_states):
         self.nfa = add_nfa_states(self.nfa, final_states=final_states)
 
-    def get_reachable_states(self):
+    def get_reachable(self):
         raise NotImplementedException("TODO")
 
     @property
-    def start_states(self):
+    def start(self):
         return self.nfa.start_states
 
     @property
-    def final_states(self):
+    def final(self):
         return self.nfa.final_states
 
     @property
-    def symbols(self):
+    def labels(self):
         return self.nfa.symbols
 
     @property
-    def transitions(self):
+    def edges(self):
         return self.nfa.to_dict()
 
     @property
-    def states(self):
+    def vertices(self):
         return self.nfa.states
