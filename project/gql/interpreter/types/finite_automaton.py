@@ -1,4 +1,5 @@
 from project.gql.interpreter.types.automaton import Automaton
+from project.gql.interpreter.types.set import Set
 from project.automaton_tools import get_nfa_from_graph, set_nfa_states, add_nfa_states
 from project.matrix_tools import BooleanAdjacencies
 
@@ -52,37 +53,45 @@ class FiniteAutomaton(Automaton):
     def kleene(self):
         return FiniteAutomaton(self.nfa.kleene_star().to_deterministic())
 
-    def set_start(self, start_states):
-        self.nfa = set_nfa_states(self.nfa, start_states=start_states)
+    def set_start(self, start_states: Set):
+        self.nfa = set_nfa_states(self.nfa, start_states=start_states.set)
 
-    def set_final(self, final_states):
-        self.nfa = set_nfa_states(self.nfa, final_states=final_states)
+    def set_final(self, final_states: Set):
+        self.nfa = set_nfa_states(self.nfa, final_states=final_states.set)
 
-    def add_start(self, start_states):
-        self.nfa = add_nfa_states(self.nfa, start_states=start_states)
+    def add_start(self, start_states: Set):
+        self.nfa = add_nfa_states(self.nfa, start_states=start_states.set)
 
-    def add_final(self, final_states):
-        self.nfa = add_nfa_states(self.nfa, final_states=final_states)
+    def add_final(self, final_states: Set):
+        self.nfa = add_nfa_states(self.nfa, final_states=final_states.set)
 
     def get_reachable(self):
         raise NotImplementedException("TODO")
 
     @property
     def start(self):
-        return self.nfa.start_states
+        return Set(self.nfa.start_states)
 
     @property
     def final(self):
-        return self.nfa.final_states
+        return Set(self.nfa.final_states)
 
     @property
     def labels(self):
-        return self.nfa.symbols
+        return Set(self.nfa.symbols)
 
     @property
     def edges(self):
-        return self.nfa.to_dict()
+        edges_set = set()
+
+        edges_dict = self.nfa.to_dict()
+        for u in edges_dict.keys():
+            for label, v_set in edges_dict.get(u).items():
+                for v in v_set:
+                    edges_set.add((u, label, v))
+
+        return Set(edges_set)
 
     @property
     def vertices(self):
-        return self.nfa.states
+        return Set(self.nfa.states)

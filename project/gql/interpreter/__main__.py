@@ -7,7 +7,7 @@ from project.gql.parser.antlr.gqlParser import gqlParser
 from project.gql.interpreter.gql_visitor import GQLVisitor
 
 if __name__ == "__main__":
-    input_stream = InputStream("".join(sys.stdin.readlines()))
+    input_stream = InputStream(input())
 
     lexer = gqlLexer(input_stream)
     token_stream = CommonTokenStream(lexer)

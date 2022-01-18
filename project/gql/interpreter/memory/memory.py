@@ -37,7 +37,7 @@ class Memory:
         while level >= 0:
             value = self.tables[level].get(name)
 
-            if value:
+            if value is not None:
                 return value
 
             level -= 1

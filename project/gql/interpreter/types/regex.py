@@ -12,7 +12,12 @@ class Regex(Type):
         self.regex_str = regex_str
 
     def __str__(self):
-        return self.regex_str.lstrip("(").rstrip(")")
+        regex_str = self.regex_str
+
+        while regex_str[0] == '(' and regex_str[-1] == ')':
+            regex_str = regex_str[1:-1]
+
+        return regex_str
 
     @classmethod
     def from_str(cls, regex_str: str):
