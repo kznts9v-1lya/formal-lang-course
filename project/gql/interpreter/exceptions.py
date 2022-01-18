@@ -12,6 +12,8 @@ class TypingError(RuntimeException):
     Raises in case of differences between expected and actual type.
     """
 
+    pass
+
 
 class GraphLoadingException(RuntimeException):
     """

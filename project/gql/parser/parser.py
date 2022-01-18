@@ -56,7 +56,7 @@ class DotTreeListener(gqlListener):
 
 def generate_dot(text: str, path: str):
     if not accept(text):
-        raise ParseCancellationException("The word doesn't match the ANTLR")
+        raise ParseCancellationException("The word doesn't match the ANTLR.")
 
     ast = parse(text).prog()
     tree = Dot("tree", graph_type="digraph")

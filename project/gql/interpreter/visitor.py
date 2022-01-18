@@ -22,7 +22,7 @@ import sys
 Anfunc = namedtuple("Anfunc", ["parameters", "body"])
 
 
-class GQLVisitor(gqlVisitor):
+class Visitor(gqlVisitor):
     def __init__(self):
         self.memory = Memory()
 
