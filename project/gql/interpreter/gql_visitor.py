@@ -1,4 +1,5 @@
-from project.gql.parser.antlr.gqlVisitor import gqlVisitor, gqlParser
+from project.gql.parser.antlr.gqlVisitor import gqlVisitor
+from project.gql.parser.antlr.gqlParser import gqlParser
 
 from project.gql.interpreter.types.type import Type
 from project.gql.interpreter.types.automaton import Automaton
@@ -44,7 +45,7 @@ class GQLVisitor(gqlVisitor):
             "AND": "intersect",
             "OR": "union",
             "DOT": "concatenate",
-            "IN": "find_variable",
+            "IN": "find",
         }
         unary_operations = {"NOT": "inverse", "KLEENE": "kleene"}
 

@@ -21,8 +21,6 @@ expr : LP expr RP
      ;
 
 graph : load_graph
-      | cfg
-      | string
       | set_start
       | set_final
       | add_start
@@ -79,7 +77,6 @@ select_start : SELECT START VERTICES FROM (graph | var) ;
 select_vertices : SELECT VERTICES FROM (graph | var) ;
 vertices_range : LCB INT COLON INT RCB ;
 
-cfg : CFG ;
 string : STRING ;
 path : PATH ;
 
@@ -128,6 +125,7 @@ FROM : WS? 'FROM' WS? ;
 FILTER : WS? 'FILTER' WS? ;
 MAP : WS? 'MAP' WS? ;
 PRINT : WS? 'PRINT' WS? ;
+
 TRUE : 'TRUE' ;
 FALSE : 'FALSE' ;
 
@@ -145,7 +143,6 @@ RCB : WS? '}' WS? ;
 LP : WS? '(' WS? ;
 RP : WS? ')' WS? ;
 QUOT : '"' ;
-TRIPLE_QUOT : '"""' ;
 COLON : WS? ':' WS? ;
 DOUBLE_ARROW : WS? '=>' WS? ;
 ARROW : '->' ;
@@ -153,12 +150,12 @@ ARROW : '->' ;
 ID : ('_' | CHAR) ID_CHAR* ;
 
 INT : NONZERO_DIGIT DIGIT* | '0' ;
-CFG : TRIPLE_QUOT (CHAR | DIGIT | ' ' | '\n' | ARROW)* TRIPLE_QUOT ;
 STRING : QUOT (CHAR | DIGIT | '_' | ' ')* QUOT ;
 PATH : QUOT (CHAR | DIGIT | '_' | ' ' | '/' | '\\' | COLON | DOT)* QUOT ;
 ID_CHAR : (CHAR | DIGIT | '_') ;
 CHAR : [a-z] | [A-Z] ;
 NONZERO_DIGIT : [1-9] ;
 DIGIT : [0-9] ;
+
 WS : [ \t\r]+ -> skip ;
 EOL : [\n]+ ;
