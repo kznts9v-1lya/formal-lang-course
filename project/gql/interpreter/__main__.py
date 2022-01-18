@@ -16,4 +16,4 @@ if __name__ == "__main__":
     tree = parser.prog()
 
     visitor = GQLVisitor()
-    total = visitor.visit(tree)
+    visitor.visit(tree)
