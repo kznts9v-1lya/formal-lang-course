@@ -14,7 +14,7 @@ class Regex(Type):
     def __str__(self):
         regex_str = self.regex_str
 
-        while regex_str[0] == '(' and regex_str[-1] == ')':
+        while regex_str[0] == "(" and regex_str[-1] == ")":
             regex_str = regex_str[1:-1]
 
         return regex_str
