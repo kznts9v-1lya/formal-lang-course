@@ -18,7 +18,7 @@ class Set(Type):
     @classmethod
     def from_set(cls, s: set):
         if not Set.type_consistency(s):
-            return TypingError
+            raise TypingError("Inconsistent types in set.")
 
         return Set(s)
 
@@ -53,13 +53,13 @@ class Set(Type):
         return Bool(v in self.s)
 
     def intersect(self, other):
-        if self.type != other.type:
+        if self.set and other.set and self.type != other.type:
             raise TypingError(f"Types mismatched: {self.type} not equals {other.type}.")
 
         return Set(self.set & other.set)
 
     def union(self, other):
-        if self.type != other.type:
+        if self.set and other.set and self.type != other.type:
             raise TypingError(f"Types mismatched: {self.type} not equals {other.type}.")
 
         return Set(self.set | other.set)
@@ -68,7 +68,7 @@ class Set(Type):
         raise NotImplementedException("Use union operation for sets.")
 
     def inverse(self):
-        raise NotImplementedException("Set does not support 'not' operation.")
+        raise NotImplementedException("Set does not support 'NOT' operation.")
 
     def kleene(self):
         raise NotImplementedException("Set does not support '*' operation.")

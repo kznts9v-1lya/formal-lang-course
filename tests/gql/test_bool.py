@@ -42,12 +42,12 @@ def test_inversion(left, expected):
     [
         ("TRUE", ".", "TRUE"),
         ("TRUE", ".", "FALSE"),
-        ("TRUE", "*", None),
+        ("TRUE", "*", ""),
         ("FALSE", "*", ""),
     ]
 )
 def test_kleene_concatenate(left, operation, right):
-    expression = left + operation + right if right else left + operation
+    expression = left + operation + right
 
     with pytest.raises(NotImplementedException):
         interpret_token(expression, "expr")
