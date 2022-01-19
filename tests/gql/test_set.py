@@ -1,4 +1,6 @@
 import sys
+
+from project.gql.interpreter.types.bool import Bool
 from project.gql.interpreter.types.set import Set
 from project.gql.interpreter.exceptions import NotImplementedException, TypingError
 import pytest
@@ -42,11 +44,23 @@ def test_kleene_concatenate_inverse(left, operation, right):
 
 
 @pytest.mark.parametrize(
+    "left, right, expected",
+    [("2", "{1 : 10}", True), ("0", "{}", False), ("9", "{10:13}", False)],
+)
+def test_in(left, right, expected):
+    expression = left + " IN " + right
+
+    actual = interpret(expression, "expr")
+
+    assert actual == Bool(expected)
+
+
+@pytest.mark.parametrize(
     "vertices_range, expected",
     [
         ("{1 : 5}", {1, 2, 3, 4, 5}),
         ("{0:1}", {0, 1}),
-        ("{1:1}", {1}),
+        ("{1: 1}", {1}),
     ],
 )
 def test_vertices_range(vertices_range, expected):
