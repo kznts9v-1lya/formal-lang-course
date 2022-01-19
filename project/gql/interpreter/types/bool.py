@@ -12,6 +12,9 @@ class Bool(Type):
     def __bool__(self):
         return self.b
 
+    def __eq__(self, other: "Bool") -> bool:
+        return self.b == other.b
+
     def intersect(self, other: "Bool") -> "Bool":
         return Bool(self.b and other.b)
 
