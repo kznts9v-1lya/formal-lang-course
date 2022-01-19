@@ -23,9 +23,9 @@ else:
     ],
 )
 def test_intersect_union(left, operation, right, expected):
-    expression = left + operation + right
+    expr = left + operation + right
 
-    assert interpret(expression, "expr") == Bool(expected)
+    assert interpret(expr, "expr") == Bool(expected)
 
 
 @pytest.mark.parametrize(
@@ -36,9 +36,9 @@ def test_intersect_union(left, operation, right, expected):
     ],
 )
 def test_inversion(left, expected):
-    expression = "NOT " + left
+    expr = "NOT " + left
 
-    assert interpret(expression, "expr") == Bool(expected)
+    assert interpret(expr, "expr") == Bool(expected)
 
 
 @pytest.mark.parametrize(
@@ -51,7 +51,7 @@ def test_inversion(left, expected):
     ],
 )
 def test_kleene_concatenate(left, operation, right):
-    expression = left + operation + right
+    expr = left + operation + right
 
     with pytest.raises(NotImplementedException):
-        interpret(expression, "expr")
+        interpret(expr, "expr")

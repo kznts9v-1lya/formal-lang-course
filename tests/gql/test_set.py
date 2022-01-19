@@ -24,9 +24,9 @@ else:
     ],
 )
 def test_intersect_union(left, operation, right, expected):
-    expression = left + operation + right
+    expr = left + operation + right
 
-    actual = interpret(expression, "expr")
+    actual = interpret(expr, "expr")
     expected = Set(expected)
 
     assert actual.set == expected.set
@@ -37,10 +37,10 @@ def test_intersect_union(left, operation, right, expected):
     [("{1, 2}", ".", "{1, 2, 3}"), ("{1, 2, 3}", "*", ""), ("", "NOT ", "{1, 2, 3}")],
 )
 def test_kleene_concatenate_inverse(left, operation, right):
-    expression = left + operation + right
+    expr = left + operation + right
 
     with pytest.raises(NotImplementedException):
-        interpret(expression, "expr")
+        interpret(expr, "expr")
 
 
 @pytest.mark.parametrize(
@@ -48,9 +48,9 @@ def test_kleene_concatenate_inverse(left, operation, right):
     [("2", "{1 : 10}", True), ("0", "{}", False), ("9", "{10:13}", False)],
 )
 def test_in(left, right, expected):
-    expression = left + " IN " + right
+    expr = left + " IN " + right
 
-    actual = interpret(expression, "expr")
+    actual = interpret(expr, "expr")
 
     assert actual == Bool(expected)
 
@@ -73,10 +73,10 @@ def test_types_mismatch():
     left = "{1, 2, 3}"
     right = '{"1", "2", "3"}'
 
-    expression = left + "|" + right
+    expr = left + "|" + right
 
     with pytest.raises(TypingError):
-        interpret(expression, "expr")
+        interpret(expr, "expr")
 
 
 def test_types_consistency():
