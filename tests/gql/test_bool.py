@@ -1,8 +1,12 @@
-from interpret_token import interpret_token
+import sys
 from project.gql.interpreter.types.bool import Bool
 from project.gql.interpreter.exceptions import NotImplementedException
-
 import pytest
+
+if sys.platform.startswith("win"):
+    pytest.skip("Windows is unsupported", allow_module_level=True)
+else:
+    from tools import interpret
 
 
 @pytest.mark.parametrize(
@@ -21,7 +25,7 @@ import pytest
 def test_intersect_union(left, operation, right, expected):
     expression = left + operation + right
 
-    assert interpret_token(expression, "expr") == Bool(expected)
+    assert interpret(expression, "expr") == Bool(expected)
 
 
 @pytest.mark.parametrize(
@@ -34,7 +38,7 @@ def test_intersect_union(left, operation, right, expected):
 def test_inversion(left, expected):
     expression = "NOT " + left
 
-    assert interpret_token(expression, "expr") == Bool(expected)
+    assert interpret(expression, "expr") == Bool(expected)
 
 
 @pytest.mark.parametrize(
@@ -50,4 +54,4 @@ def test_kleene_concatenate(left, operation, right):
     expression = left + operation + right
 
     with pytest.raises(NotImplementedException):
-        interpret_token(expression, "expr")
+        interpret(expression, "expr")

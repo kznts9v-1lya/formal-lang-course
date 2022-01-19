@@ -3,7 +3,7 @@ from project.gql.interpreter.visitor import Visitor
 from project.gql.interpreter.types.type import Type
 
 
-def interpret_token(text: str, token: str) -> Type:
+def interpret(text: str, token: str) -> Type:
     parser = parse(text)
     parser.removeErrorListeners()
 

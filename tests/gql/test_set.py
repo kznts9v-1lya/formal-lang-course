@@ -1,8 +1,12 @@
-from interpret_token import interpret_token
+import sys
 from project.gql.interpreter.types.set import Set
 from project.gql.interpreter.exceptions import NotImplementedException, TypingError
-
 import pytest
+
+if sys.platform.startswith("win"):
+    pytest.skip("Windows is unsupported", allow_module_level=True)
+else:
+    from tools import interpret
 
 
 @pytest.mark.parametrize(
@@ -20,7 +24,7 @@ import pytest
 def test_intersect_union(left, operation, right, expected):
     expression = left + operation + right
 
-    actual = interpret_token(expression, "expr")
+    actual = interpret(expression, "expr")
     expected = Set(expected)
 
     assert actual.set == expected.set
@@ -34,7 +38,7 @@ def test_kleene_concatenate_inverse(left, operation, right):
     expression = left + operation + right
 
     with pytest.raises(NotImplementedException):
-        interpret_token(expression, "expr")
+        interpret(expression, "expr")
 
 
 @pytest.mark.parametrize(
@@ -46,7 +50,7 @@ def test_kleene_concatenate_inverse(left, operation, right):
     ],
 )
 def test_vertices_range(vertices_range, expected):
-    actual = interpret_token(vertices_range, "vertices_range")
+    actual = interpret(vertices_range, "vertices_range")
 
     assert actual.set == Set(expected).set
 
@@ -58,7 +62,7 @@ def test_types_mismatch():
     expression = left + "|" + right
 
     with pytest.raises(TypingError):
-        interpret_token(expression, "expr")
+        interpret(expression, "expr")
 
 
 def test_types_consistency():
