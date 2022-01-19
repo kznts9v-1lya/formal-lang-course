@@ -8,4 +8,3 @@ if sys.platform.startswith("win"):
     pytest.skip("Windows is unsupported", allow_module_level=True)
 else:
     from tools import interpret
-
