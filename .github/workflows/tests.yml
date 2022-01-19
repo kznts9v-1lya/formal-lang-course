@@ -63,7 +63,7 @@ jobs:
         run: |
           if [ "$RUNNER_OS" == "Linux" ]; then
               antlr4 -Dlanguage=Python3 -visitor ./project/gql/parser/antlr/gql.g4
-          elif [ "$RUNNER_OS" == "Windows" ]; then
+          elif [ "$RUNNER_OS" == "Win32" ]; then
               antlr4 -Dlanguage=Python3 -visitor ./project/gql/parser/antlr/gql.g4
           else
               antlr -Dlanguage=Python3 -visitor ./project/gql/parser/antlr/gql.g4
