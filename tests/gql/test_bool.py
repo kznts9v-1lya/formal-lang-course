@@ -16,7 +16,7 @@ import pytest
         ("TRUE", "|", "FALSE", True),
         ("FALSE", "|", "TRUE", True),
         ("FALSE", "|", "FALSE", False),
-    ]
+    ],
 )
 def test_intersect_union(left, operation, right, expected):
     expression = left + operation + right
@@ -29,7 +29,7 @@ def test_intersect_union(left, operation, right, expected):
     [
         ("TRUE", False),
         ("FALSE", True),
-    ]
+    ],
 )
 def test_inversion(left, expected):
     expression = "NOT " + left
@@ -44,7 +44,7 @@ def test_inversion(left, expected):
         ("TRUE", ".", "FALSE"),
         ("TRUE", "*", ""),
         ("FALSE", "*", ""),
-    ]
+    ],
 )
 def test_kleene_concatenate(left, operation, right):
     expression = left + operation + right

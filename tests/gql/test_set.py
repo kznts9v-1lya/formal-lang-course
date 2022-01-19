@@ -28,11 +28,7 @@ def test_intersect_union(left, operation, right, expected):
 
 @pytest.mark.parametrize(
     "left, operation, right",
-    [
-        ("{1, 2}", ".", "{1, 2, 3}"),
-        ("{1, 2, 3}", "*", ""),
-        ("", "NOT ", "{1, 2, 3}")
-    ],
+    [("{1, 2}", ".", "{1, 2, 3}"), ("{1, 2, 3}", "*", ""), ("", "NOT ", "{1, 2, 3}")],
 )
 def test_kleene_concatenate_inverse(left, operation, right):
     expression = left + operation + right
@@ -66,8 +62,7 @@ def test_types_mismatch():
 
 
 def test_types_consistency():
-    left = {1, '2', 3}
+    left = {1, "2", 3}
 
     with pytest.raises(TypingError):
         Set.from_set(left)
-
