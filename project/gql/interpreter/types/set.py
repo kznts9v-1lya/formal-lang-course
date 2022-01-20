@@ -9,14 +9,14 @@ class Set(Type):
         self.t = Set.get_type(s)
         self.s = s
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.s)
 
     def __str__(self):
         return "{" + ", ".join(map(lambda x: str(x), self.set)) + "}"
 
     @classmethod
-    def from_set(cls, s: set):
+    def from_set(cls, s: set) -> "Set":
         if not Set.type_consistency(s):
             raise TypingError("Inconsistent types in set.")
 
@@ -32,7 +32,7 @@ class Set(Type):
         return type(next(iter_seq))
 
     @staticmethod
-    def type_consistency(s: set):
+    def type_consistency(s: set) -> bool:
         if len(s) == 0:
             return True
 
@@ -42,23 +42,23 @@ class Set(Type):
         return all(map(lambda x: isinstance(x, t), iter_seq))
 
     @property
-    def type(self):
+    def type(self) -> type:
         return self.t
 
     @property
-    def set(self):
+    def set(self) -> set:
         return self.s
 
-    def find(self, v):
+    def find(self, v) -> Bool:
         return Bool(v in self.s)
 
-    def intersect(self, other):
+    def intersect(self, other: "Set") -> "Set":
         if self.set and other.set and self.type != other.type:
             raise TypingError(f"Types mismatched: {self.type} not equals {other.type}.")
 
         return Set(self.set & other.set)
 
-    def union(self, other):
+    def union(self, other: "Set") -> "Set":
         if self.set and other.set and self.type != other.type:
             raise TypingError(f"Types mismatched: {self.type} not equals {other.type}.")
 

@@ -1,6 +1,6 @@
 from project.graph_tools import get_from_dataset
 from project.gql.interpreter.exceptions import GraphLoadingException
-from project.gql.interpreter.types.finite_automaton import FiniteAutomaton
+from project.gql.interpreter.types.finite_automaton_regex import FiniteAutomaton
 
 
 def load_graph(name: str) -> FiniteAutomaton:

@@ -1,4 +1,5 @@
 from project.gql.interpreter.types.type import Type
+
 from project.gql.interpreter.exceptions import NotImplementedException
 
 
@@ -9,7 +10,7 @@ class Bool(Type):
     def __str__(self):
         return "TRUE" if self.b else "FALSE"
 
-    def __bool__(self):
+    def __bool__(self) -> bool:
         return self.b
 
     def __eq__(self, other: "Bool") -> bool:
@@ -24,7 +25,7 @@ class Bool(Type):
     def concatenate(self, other):
         raise NotImplementedException("Bool does not support '.' operation.")
 
-    def inverse(self):
+    def inverse(self) -> "Bool":
         return Bool(not self.b)
 
     def kleene(self):

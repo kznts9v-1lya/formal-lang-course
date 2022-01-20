@@ -13,12 +13,19 @@ expr : LP expr RP
      | var
      | val
      | NOT expr
+     | expr KLEENE
      | expr IN expr
      | expr AND expr
      | expr DOT expr
      | expr OR expr
-     | expr KLEENE
      ;
+
+val : boolean
+    | graph
+    | edges
+    | labels
+    | vertices
+    ;
 
 graph : load_graph
       | set_start
@@ -98,13 +105,6 @@ var_edge : LP var COMMA var RP
 variables : (var COMMA)* var?
      | var_edge
      ;
-
-val : boolean
-    | graph
-    | edges
-    | labels
-    | vertices
-    ;
 
 boolean : TRUE | FALSE ;
 
