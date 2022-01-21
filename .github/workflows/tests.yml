@@ -69,7 +69,7 @@ jobs:
               antlr4 -Dlanguage=Python3 -visitor ./gql.g4 -o ../antlr
           else
               cd project/gql/parser/grammar
-              antlr4 -Dlanguage=Python3 -visitor ./gql.g4 -o ../antlr
+              antlr -Dlanguage=Python3 -visitor ./gql.g4 -o ../antlr
           fi
 
       # Run unit tests using pytest
