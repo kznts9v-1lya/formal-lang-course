@@ -1,7 +1,10 @@
 import sys
 
-from project.gql.interpreter.types.finite_automaton_regex import Regex
+from project.gql.interpreter.types.finite_automaton_regex import Regex, FiniteAutomaton
 from project.gql.interpreter.exceptions import NotImplementedException
+
+from pyformlang.finite_automaton import NondeterministicFiniteAutomaton, State
+
 import pytest
 
 if sys.platform.startswith("win"):
@@ -58,15 +61,27 @@ def test_union(regex):
 # @pytest.mark.parametrize(
 #     "regex",
 #     [
-#         '"1" & "2"',
+#         # 'NOT "a" | "b"',
 #     ],
 # )
-# def test_intersect(regex):
+# def test_inverse(regex):
 #     actual = interpret(regex, "expr")
 #
-#
-#     assert actual == expected
+#     assert actual == Regex.from_str(regex).inverse()
 
+
+# @pytest.mark.parametrize(
+#     "regex, expected",
+#     [
+#         ('"a" & "b"',
+#             NondeterministicFiniteAutomaton({State("0⋂0"), State("1⋂1")}, start_state={State("0⋂0")},
+#                                             final_states={State("1⋂1")})),
+#     ],
+# )
+# def test_intersect(regex, expected):
+#     actual = interpret(regex, "expr")
+#
+#     assert actual == FiniteAutomaton(expected)
 
 # @pytest.mark.parametrize(
 #     "regex",

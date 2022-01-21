@@ -23,7 +23,7 @@ class Regex(Type):
     def __init__(self, regex_str: str):
         self.regex_str = regex_str
 
-    def __str__(self):
+    def __str__(self) -> str:
         regex_str = self.regex_str
 
         while regex_str[0] == "(" and regex_str[-1] == ")":
@@ -83,6 +83,9 @@ class FiniteAutomaton(Automaton):
 
     def __str__(self):
         return str(self.nfa.to_dict())
+
+    def __eq__(self, other: "FiniteAutomaton") -> bool:
+        return self.nfa.is_equivalent_to(other.nfa)
 
     @classmethod
     def from_graph(cls, graph: MultiDiGraph):
