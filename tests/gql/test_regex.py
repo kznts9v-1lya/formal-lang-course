@@ -1,5 +1,3 @@
-import sys
-
 from project.gql.interpreter.types.finite_automaton_regex import Regex, FiniteAutomaton
 from project.gql.interpreter.exceptions import NotImplementedException
 
@@ -7,10 +5,7 @@ from pyformlang.finite_automaton import NondeterministicFiniteAutomaton, State
 
 import pytest
 
-if sys.platform.startswith("win"):
-    pytest.skip("Windows is unsupported", allow_module_level=True)
-else:
-    from tools import interpret
+from tools import interpret
 
 
 @pytest.mark.parametrize(

@@ -1,12 +1,8 @@
-import sys
 from project.gql.interpreter.types.bool import Bool
 from project.gql.interpreter.exceptions import NotImplementedException
 import pytest
 
-if sys.platform.startswith("win"):
-    pytest.skip("Windows is unsupported", allow_module_level=True)
-else:
-    from tools import interpret
+from tools import interpret
 
 
 @pytest.mark.parametrize(

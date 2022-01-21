@@ -62,11 +62,14 @@ jobs:
         shell: bash
         run: |
           if [ "$RUNNER_OS" == "Linux" ]; then
-              antlr4 -Dlanguage=Python3 -visitor ./project/gql/parser/antlr/gql.g4
+              cd project/gql/parser/grammar
+              antlr4 -Dlanguage=Python3 -visitor ./gql.g4 -o ../antlr
           elif [ "$RUNNER_OS" == "Windows" ]; then
-              antlr4 -Dlanguage=Python3 -visitor ./project/gql/parser/antlr/gql.g4
+              cd project/gql/parser/grammar
+              antlr4 -Dlanguage=Python3 -visitor ./gql.g4 -o ../antlr
           else
-              antlr -Dlanguage=Python3 -visitor ./project/gql/parser/antlr/gql.g4
+              cd project/gql/parser/grammar
+              antlr -Dlanguage=Python3 -visitor ./gql.g4 -o ../antlr
           fi
 
       # Run unit tests using pytest
