@@ -546,7 +546,7 @@ class ECFG:
         ValueError:
            If file text is not satisfied to the rules
         MisformedRegexError
-           If specified regex_str has an irregular format
+           If specified file text has an irregular format
         """
 
         with open(path) as file:
@@ -575,7 +575,7 @@ class ECFG:
         ValueError:
             If cfg_text not satisfied to the rules
         MisformedRegexError
-            If specified regex_str has an irregular format
+            If specified text has an irregular format
         """
 
         variables = set()
