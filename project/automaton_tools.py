@@ -18,8 +18,7 @@ __all__ = [
     "get_rsm_from_ecfg",
     "minimize_rsm",
     "check_regex_equality",
-    "set_nfa_states",
-    "add_nfa_states",
+    "nfa_from_graph",
 ]
 
 from project.grammar_tools import ECFG
@@ -150,43 +149,34 @@ def get_nfa_from_graph(
     return nfa
 
 
-def set_nfa_states(
-    nfa: NondeterministicFiniteAutomaton,
-    start_states: Set[State] = None,
-    final_states: Set[State] = None,
-) -> NondeterministicFiniteAutomaton:
-    new_nfa = nfa.copy()
+def nfa_from_graph(graph, start_nodes: set = None, finale_nodes: set = None):
+    """
+    This function crate nfa from graph
+    :param graph: MultiDiGraph
+                  graph to create nfa
+    :param start_nodes: set
+                        nodes of graph which are represent start states of required nfa
+                        default: all states are start states
+    :param finale_nodes: set
+                         nodes of graph which are represent finale states of required nfa
+                         default: all states are finale states
+    :return: NondeterministicFiniteAutomaton
+             nfa from graph with set start and finale states
+    """
+    nfa = NondeterministicFiniteAutomaton.from_networkx(graph)
 
-    new_nfa._start_state = set()
-    new_nfa._final_states = set()
+    if finale_nodes is None:
+        finale_nodes = set(graph.nodes)
 
-    if start_states:
-        for state in start_states:
-            new_nfa.add_start_state(state)
+    if start_nodes is None:
+        start_nodes = set(graph.nodes)
 
-    if final_states:
-        for state in final_states:
-            new_nfa.add_final_state(state)
+    for node in start_nodes:
+        nfa.add_start_state(State(node))
+    for node in finale_nodes:
+        nfa.add_final_state(State(node))
 
-    return new_nfa
-
-
-def add_nfa_states(
-    nfa: NondeterministicFiniteAutomaton,
-    start_states: Set[State] = None,
-    final_states: Set[State] = None,
-) -> NondeterministicFiniteAutomaton:
-    new_nfa = nfa.copy()
-
-    if start_states:
-        for state in start_states:
-            new_nfa.add_start_state(state)
-
-    if final_states:
-        for state in final_states:
-            new_nfa.add_final_state(state)
-
-    return new_nfa
+    return nfa
 
 
 class RSMBox:

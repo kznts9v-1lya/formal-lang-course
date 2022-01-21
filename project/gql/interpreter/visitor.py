@@ -1,254 +1,644 @@
 from project.gql.parser.antlr.gqlVisitor import gqlVisitor
 from project.gql.parser.antlr.gqlParser import gqlParser
-
-from project.gql.interpreter.types.type import Type
-from project.gql.interpreter.types.automaton import Automaton
-from project.gql.interpreter.types.finite_automaton_regex import Regex
-from project.gql.interpreter.types.bool import Bool
-from project.gql.interpreter.types.set import Set
-
-from project.gql.interpreter.memory.memory import Memory
-
-from project.gql.interpreter.core.runtime import load_graph
-
-from project.gql.interpreter.exceptions import NotImplementedException, TypingError
-
-from antlr4 import ParserRuleContext
-from typing import Union
-from collections import namedtuple
-
-import sys
-
-Anfunc = namedtuple("Anfunc", ["parameters", "body"])
+from project.gql.interpreter.core.memory import MemoryList
+from project.gql.interpreter.core.loader import (
+    load_from_disk,
+    load_from_network,
+)
+from project.matrix_tools import BooleanAdjacencies
+from project.automaton_tools import nfa_from_graph
+from project.gql.interpreter.core.sets import *
+from project.gql.interpreter.core.states import *
+from project.gql.interpreter.core.types import *
+from project.gql.interpreter.core.exceptions import InterpError
+from project.gql.interpreter.observer import ObserverOutput
 
 
-class Visitor(gqlVisitor):
-    def __init__(self):
-        self.memory = Memory()
+class GQLTreeVisitor(gqlVisitor):
+    def __init__(self, outputter: ObserverOutput):
+        self.outputter = outputter
+        self.memory_lst = MemoryList()
+        self.output_logger = ""
+        # super().__init__()
 
-    def visitProg(self, ctx: ParserRuleContext):
-        return self.visitChildren(ctx)
+    # Visit a parse tree produced by grammarGQLParser#stm.
+    def visitStm(self, ctx: gqlParser.StmContext):
+        # bind stm
+        if ctx.var():
+            var_name = "empty name"
+            try:
+                var_name = ctx.var().IDENTIFIER().symbol.text
+                value_box = self.visit(ctx.expr())
+                if ctx.var().addr():
+                    self.outputter.send_out(
+                        "Skip addr - NOT CORRECT PLACEMENT OF ADDRESED VAR"
+                    )
 
-    def visitStmt(self, ctx: gqlParser.StmtContext):
-        if ctx.PRINT():
-            value = self.visit(ctx.expr())
-
-            sys.stdout.write(str(value) + "\n")
+                self.memory_lst.set_elem(var_name, value_box)
+            except InterpError as exc:
+                exc.stack_lst.append(f"bind statement: [{var_name}]")
+                raise exc
+        # print stm
         else:
-            name = ctx.var().getText()
-            value = self.visit(ctx.expr())
+            try:
+                value_box = self.visit(ctx.expr())
+                self.output_logger = ">>>" + str(value_box)
+                self.outputter.send_out(self.output_logger)
+            except InterpError as exc:
+                exc.stack_lst.append(f"print statement: [{ctx.getText()}]")
+                raise exc
 
-            self.memory.add_variable(name, value)
+    # Visit a parse tree produced by grammarGQLParser#expr.
+    def visitExpr(self, ctx: gqlParser.ExprContext):
+        flag = True
 
-    def visitExpr(self, ctx: gqlParser.ExprContext) -> Type:
-        unary_operations = {"NOT": "inverse", "KLEENE": "kleene"}
-        binary_operations = {
-            "AND": "intersect",
-            "OR": "union",
-            "DOT": "concatenate",
-            "IN": "find",
-        }
+        if ctx.setVal():
+            return self.visit(ctx.setVal())
 
-        for un_op in unary_operations:
-            if getattr(ctx, un_op)():
-                _type = self.visit(ctx.expr(0))
+        # get_reachable
+        if ctx.get_reachable():
+            return self.visit(ctx.get_reachable())
 
-                return getattr(_type, unary_operations[un_op])()
+        # get_vertices
+        if ctx.get_vertices():
+            return self.visit(ctx.get_vertices())
 
-        for bin_op in binary_operations:
-            if getattr(ctx, bin_op)():
-                left_type = self.visit(ctx.expr(0))
-                right_type = self.visit(ctx.expr(1))
+        # get_edges
+        if ctx.get_edges():
+            return self.visit(ctx.get_edges())
 
-                if bin_op == "IN":
-                    left_type, right_type = right_type, left_type
+        # get_labels
+        if ctx.get_labels():
+            return self.visit(ctx.get_labels())
 
-                return getattr(left_type, binary_operations[bin_op])(right_type)
+        # mapsys
+        if ctx.mapsys():
+            return self.visit(ctx.mapsys())
 
-        return self.visitChildren(ctx)
+        # filtersys
+        if ctx.filtersys():
+            return self.visit(ctx.filtersys())
 
-    def visitString(self, ctx: gqlParser.StringContext):
-        value = ctx.STRING().getText()
+        # star
+        if ctx.star():
+            return self.visit(ctx.star())
 
-        return value
+        # load graph
+        if ctx.load():
+            return self.visit(ctx.load())
 
-    def visitBoolean(self, ctx: gqlParser.BooleanContext):
-        return Bool(ctx.TRUE() is not None)
+        # val
+        if ctx.val():
+            try:
+                value = self.visit(ctx.val())
 
+            except InterpError as exc:
+                exc.stack_lst.append("expr val")
+                raise exc
+
+            return value
+
+        # var
+        if ctx.var():
+            try:
+                mem_item = self.visit(ctx.var())
+
+            except InterpError as exc:
+                exc.stack_lst.append("expr var")
+                raise exc
+
+            return mem_item
+
+        ## ---union of exprs--- ##
+
+        # get start / final
+        if ctx.get_start() or ctx.get_final():
+            if ctx.get_start():
+                act = "get_start"
+            else:
+                act = "get_final"
+
+            try:
+                if ctx.get_start():
+                    source = self.visit(ctx.get_start().expr())
+                else:
+                    source = self.visit(ctx.get_final().expr())
+
+                flag, exc = states_type_checker(source, act)
+                if not flag:
+                    raise exc
+
+                if ctx.get_start():
+                    result_set = source.value.start_states
+                else:
+                    result_set = source.value.final_states
+
+            except InterpError as exc:
+                if flag:
+                    exc.stack_lst.append(f"expr {act}")
+                raise exc
+
+            return MemBox(True, "str", result_set)
+
+        # set / add start
+        if ctx.set_start() or ctx.add_start():
+            try:
+                automaton = self.visit(ctx.expr(0))
+                states_set = self.visit(ctx.expr(1))
+                reset = False
+
+                if ctx.set_start():
+                    reset = True
+
+                result = set_or_add_start_states(automaton, states_set, reset)
+            except InterpError as exc:
+                if ctx.set_start():
+                    act = "set_start"
+                else:
+                    act = "add_start"
+                exc.stack_lst.append(f"expr {act}")
+                raise exc
+
+            return result
+
+        # set / add final
+        if ctx.set_final() or ctx.add_final():
+            try:
+                automaton = self.visit(ctx.expr(0))
+                states_set = self.visit(ctx.expr(1))
+                reset = False
+
+                if ctx.set_final():
+                    reset = True
+
+                result = set_or_add_final_states(automaton, states_set, reset)
+
+            except InterpError as exc:
+                if ctx.set_final():
+                    act = "set_final"
+                else:
+                    act = "add_final"
+                exc.stack_lst.append(f"expr {act}")
+                raise exc
+
+            return result
+
+        # intersect concat union
+        if ctx.intersect() or ctx.concat() or ctx.union():
+            act = "intersect"
+            if ctx.concat():
+                act = "concat"
+            elif ctx.union():
+                act = "union"
+
+            try:
+                first_arg = self.visit(ctx.expr(0))
+                second_arg = self.visit(ctx.expr(1))
+
+            except InterpError as exc:
+                exc.stack_lst.append(f"expr prepare {act}")
+                raise exc
+
+            try:
+                if ctx.intersect():
+                    result = intersection(first_arg, second_arg)
+
+                elif ctx.concat():
+                    result = concatenate(first_arg, second_arg)
+
+                else:
+                    result = union(first_arg, second_arg)
+
+            except InterpError as exc:
+                exc.stack_lst.append(f"expr {act}")
+                raise exc
+
+            return result
+
+        ## ---______________--- ##
+
+        raise InterpError([], f"BAD command in expr: {ctx.getText()}")
+
+    # Visit a parse tree produced by grammarGQLParser#var.
     def visitVar(self, ctx: gqlParser.VarContext):
-        name = ctx.ID().getText()
+        var_name = ctx.IDENTIFIER().symbol.text
+        flag = True
 
-        return self.memory.find_variable(name)
+        if ctx.addr():
 
-    def visitVertex(self, ctx: gqlParser.VertexContext):
-        return int(ctx.INT().getText())
+            try:
+                addr_lst = self.visit(ctx.addr())
+                mem_item = self.memory_lst.get_addr_elem(var_name, addr_lst)
+                if not isinstance(mem_item, MemBox):
+                    flag = False
+                    raise InterpError(
+                        ["var expr"], f"Except in addresing var: {var_name}"
+                    )
+            except InterpError as exc:
+                exc.stack_lst.append("var expr")
+                raise exc
 
-    def visitVertices_range(self, ctx: gqlParser.Vertices_rangeContext):
-        start = int(ctx.INT(0).getText())
-        end = int(ctx.INT(1).getText())
+            return mem_item
 
-        return Set(set(range(start, end + 1)))
-
-    def visitVertices_set(self, ctx: gqlParser.Vertices_setContext):
-        if ctx.vertices_range():
-            return self.visit(ctx.vertices_range())
         else:
-            return Set(set(map(lambda x: int(x.getText()), ctx.INT())))
 
-    def visitLabel(self, ctx: gqlParser.LabelContext):
-        return Regex(self.visit(ctx.string()))
+            try:
+                mem_item = self.memory_lst.get_elem(var_name)
+                if not isinstance(mem_item, MemBox):
+                    flag = False
+                    raise InterpError(
+                        ["var expr pure"], f"Except in getting var memory: {var_name}"
+                    )
+            except InterpError as exc:
+                if flag:
+                    exc.stack_lst.append("var expr pure")
+                raise exc
 
-    def visitLabels_set(self, ctx: gqlParser.Labels_setContext):
-        labels_set = set()
+            return mem_item
 
-        for label in ctx.STRING():
-            labels_set.add(label.getText())
-
-        return Set(labels_set)
-
-    def visitEdge(self, ctx: gqlParser.EdgeContext):
-        vertex_from = self.visit(ctx.vertex(0))
-        label = self.visit(ctx.label())
-        vertex_to = self.visit(ctx.vertex(1))
-
-        return vertex_from, label, vertex_to
-
-    def visitEdges(self, ctx: gqlParser.EdgesContext):
-        return self.visitChildren(ctx)
-
-    def visitEdges_set(self, ctx: gqlParser.Edges_setContext):
-        edges_set = set()
-
-        for edge in ctx.edge():
-            edges_set.add(self.visitEdge(edge))
-
-        return Set(edges_set)
-
-    def visitVariables(self, ctx: gqlParser.VariablesContext):
-        anfunc_context = {}
-
-        if ctx.var_edge():
-            raise NotImplementedException("Anfunc does not support var_edge now.")
+    # Visit a parse tree produced by grammarGQLParser#addr.
+    def visitAddr(self, ctx: gqlParser.AddrContext):
+        # TODO if it parsed, there no any runtime errors may occurred
+        if ctx.addr():
+            curr_addr = int(ctx.INT().symbol.text)
+            other_lst = self.visit(ctx.addr())
+            other_lst.insert(0, curr_addr)
+            return other_lst
         else:
-            for var in ctx.var():
-                anfunc_context[var.getText()] = None
+            curr_addr = int(ctx.INT().symbol.text)
+            return [curr_addr]
 
-        return anfunc_context
+    # Visit a parse tree produced by grammarGQLParser#val.
+    def visitVal(self, ctx: gqlParser.ValContext):
+        # TODO if it parsed, there no any runtime errors may occurred
+        if ctx.INT():
+            value = int(ctx.INT().symbol.text)
 
-    def visitVar_edge(self, ctx: gqlParser.Var_edgeContext):
-        pass
+        else:
+            value = ctx.STRING().symbol.text[1:-1]
 
-    def visitAnfunc(self, ctx: gqlParser.AnfuncContext) -> Anfunc:
-        parameters = self.visitVariables(ctx.variables())
-        body = ctx.expr()
+        return MemBox(False, "str", value)
 
-        return Anfunc(parameters, body)
+    # Visit a parse tree produced by grammarGQLParser#setElem.
+    def visitSetElem(self, ctx: gqlParser.SetElemContext):
+        # TODO if it parsed, there no any runtime errors may occurred
+        if ctx.val():
+            value = self.visit(ctx.val())
+            tail = self.visit(ctx.setElem())
+            tail.insert(0, value.value)
+        else:
+            tail = []
 
-    def apply_anfunc(self, anfunc: Anfunc, value: Type = None) -> Type:
-        self.memory = self.memory.next_scope()
+        return tail
 
-        if len(anfunc.parameters) > 0 and value is not None:
-            name = next(iter(anfunc.parameters))
-            self.memory.add_variable(name, value)
+    # Visit a parse tree produced by grammarGQLParser#setVal.
+    def visitSetVal(self, ctx: gqlParser.SetValContext):
+        try:
+            elements_lst = self.visit(ctx.setElem())
+            result = MemBox(True, "str", elements_lst)
 
-        result = self.visit(anfunc.body)
-
-        self.memory = self.memory.previous_scope()
+        except InterpError as exc:
+            exc.stack_lst.append(f"expr setVal")
+            raise exc
 
         return result
 
-    def iter_func(
-        self,
-        ctx: Union[gqlParser.MappingContext, gqlParser.FilteringContext],
-        func="map",
-    ):
-        anfunc = self.visit(ctx.anfunc())
-        iterable = self.visit(ctx.expr())
+    # Visit a parse tree produced by grammarGQLParser#star.
+    def visitStar(self, ctx: gqlParser.StarContext):
+        try:
+            arg = self.visit(ctx.expr())
 
-        if not isinstance(iterable, Set):
-            raise TypingError(
-                f"Could not apply {func} on {type(iterable)} object. Set is expected."
-            )
+            try:
+                result = kleene_star(arg)
 
-        if len(iterable) == 0:
-            return iterable
+            except:
+                raise InterpError(["expr kleene"], "Exception in kleene_star acting")
 
-        raise NotImplementedException("TODO")
+        except InterpError as exc:
+            exc.stack_lst.append("expr star")
+            raise exc
 
-    def visitMapping(self, ctx: gqlParser.MappingContext):
-        self.iter_func(ctx, "map")
+        return result
 
-    def visitFiltering(self, ctx: gqlParser.FilteringContext):
-        self.iter_func(ctx, "filter")
+    # Visit a parse tree produced by grammarGQLParser#get_reachable.
+    def visitGet_reachable(self, ctx: gqlParser.Get_reachableContext):
+        act = "get_reachable"
+        flag = True
 
-    def visitGraph(self, ctx: gqlParser.GraphContext) -> Automaton:
-        return self.visitChildren(ctx)
+        try:
+            source = self.visit(ctx.expr())
 
-    def visitLoad_graph(self, ctx: gqlParser.Load_graphContext):
-        name = ctx.string().getText().strip('"')
+            flag, exc = states_type_checker(source, act)
+            if not flag:
+                raise exc
 
-        return load_graph(name)
+            temp_rsm = BooleanAdjacencies(source.value)
+            matrix_tc = temp_rsm.get_transitive_closure()
 
-    def modify_func(
-        self,
-        ctx: Union[
-            gqlParser.Set_startContext,
-            gqlParser.Set_finalContext,
-            gqlParser.Add_startContext,
-            gqlParser.Add_finalContext,
-        ],
-        func,
-    ):
-        graph = self.visit(ctx.var(0)) if ctx.var(0) else self.visit(ctx.graph())
-        nodes = self.visit(ctx.var(1)) if ctx.var(1) else self.visit(ctx.vertices())
+            result_set = {(i, j) for i, j in zip(*matrix_tc.nonzero())}
 
-        getattr(graph, func)(nodes)
+        except InterpError as exc:
+            if flag:
+                exc.stack_lst.append(f"expr {act}")
+            raise exc
 
-        return graph
+        return MemBox(True, "tuple 2", result_set)
 
-    def visitSet_start(self, ctx: gqlParser.Set_startContext):
-        return self.modify_func(ctx, "set_start")
+    # Visit a parse tree produced by grammarGQLParser#get_vertices.
+    def visitGet_vertices(self, ctx: gqlParser.Get_verticesContext):
+        act = "get_vertices"
+        flag = True
 
-    def visitSet_final(self, ctx: gqlParser.Set_finalContext):
-        return self.modify_func(ctx, "set_final")
+        try:
+            source = self.visit(ctx.expr())
 
-    def visitAdd_start(self, ctx: gqlParser.Add_startContext):
-        return self.modify_func(ctx, "add_start")
+            flag, exc = states_type_checker(source, act)
+            if not flag:
+                raise exc
 
-    def visitAdd_final(self, ctx: gqlParser.Add_finalContext):
-        return self.modify_func(ctx, "add_final")
+            result_set = source.value.states
 
-    def description_func(
-        self,
-        ctx: Union[
-            gqlParser.Select_edgesContext,
-            gqlParser.Select_labelsContext,
-            gqlParser.Select_verticesContext,
-            gqlParser.Select_startContext,
-            gqlParser.Select_finalContext,
-        ],
-        func,
-    ):
-        graph = self.visit(ctx.var()) if ctx.var() else self.visit(ctx.graph())
+        except InterpError as exc:
+            if flag:
+                exc.stack_lst.append(f"expr {act}")
+            raise exc
 
-        return getattr(graph, func)
+        return MemBox(True, "str", result_set)
 
-    def visitSelect_edges(self, ctx: gqlParser.Select_edgesContext):
-        return self.description_func(ctx, "edges")
+    # Visit a parse tree produced by grammarGQLParser#get_edges.
+    def visitGet_edges(self, ctx: gqlParser.Get_edgesContext):
+        act = "get_edges"
+        flag = True
 
-    def visitSelect_labels(self, ctx: gqlParser.Select_labelsContext):
-        return self.description_func(ctx, "labels")
+        try:
+            source = self.visit(ctx.expr())
 
-    def visitSelect_start(self, ctx: gqlParser.Select_startContext):
-        return self.description_func(ctx, "start")
+            flag, exc = states_type_checker(source, act)
+            if not flag:
+                raise exc
 
-    def visitSelect_final(self, ctx: gqlParser.Select_finalContext):
-        return self.description_func(ctx, "final")
+            result_set = {
+                (st_from, str(label), states_to)
+                for st_from, trans in source.value.to_dict().items()
+                for label, states_to in trans.items()
+            }
 
-    def visitSelect_vertices(self, ctx: gqlParser.Select_verticesContext):
-        return self.description_func(ctx, "vertices")
+        except InterpError as exc:
+            if flag:
+                exc.stack_lst.append(f"expr {act}")
+            raise exc
 
-    def visitSelect_reachable(self, ctx: gqlParser.Select_reachableContext):
-        graph = self.visit(ctx.var()) if ctx.var() else self.visit(ctx.graph())
+        return MemBox(True, "tuple 3", result_set)
 
-        return graph.get_reachable()
+    # Visit a parse tree produced by grammarGQLParser#get_labels.
+    def visitGet_labels(self, ctx: gqlParser.Get_labelsContext):
+        act = "get_labels"
+        flag = True
+
+        try:
+            source = self.visit(ctx.expr())
+
+            flag, exc = states_type_checker(source, act)
+            if not flag:
+                raise exc
+
+            result_set = source.value.symbols
+
+        except InterpError as exc:
+            if flag:
+                exc.stack_lst.append(f"expr {act}")
+            raise exc
+
+        return MemBox(True, "str", result_set)
+
+    # Visit a parse tree produced by grammarGQLParser#mapsys.
+    def visitMapsys(self, ctx: gqlParser.MapsysContext):
+        flag = True
+
+        try:
+            source = self.visit(ctx.expr())
+
+            if not isinstance(source, MemBox):
+                flag = False
+                raise InterpError(["expr map}"], "Source not correct internal type")
+            if not source.is_list:
+                flag = False
+                raise InterpError(["expr map}"], "Required list source type")
+
+            new_lst = []
+            new_type = "str"
+
+            for elem in source.value:
+                if not isinstance(elem, (list, set, tuple)):
+                    param = MemBox(False, "str", elem)
+                else:
+                    param = MemBox(True, "str", elem)
+
+                var_name = ctx.lambdasys().var().getText()
+                self.memory_lst.set_elem_stack(var_name, param)
+
+                result = self.visit(ctx.lambdasys())
+
+                if not isinstance(result, MemBox):
+                    flag = False
+                    raise InterpError(
+                        ["expr map}"], "Wrong type from lambda, MemBox required"
+                    )
+
+                self.memory_lst.del_elem_stack(var_name)
+                if result.is_list:
+                    num = len(result.value)
+                    new_type = f"tuple {num}"
+
+                new_lst.append(result.value)
+
+            new_box = MemBox(True, new_type, set(new_lst))
+
+        except InterpError as exc:
+            if flag:
+                exc.stack_lst.append("expr map")
+
+            raise exc
+
+        return new_box
+
+    # Visit a parse tree produced by grammarGQLParser#filtersys.
+    def visitFiltersys(self, ctx: gqlParser.FiltersysContext):
+        flag = True
+
+        try:
+            source = self.visit(ctx.expr())
+
+            if not isinstance(source, MemBox):
+                flag = False
+                raise InterpError(["expr filter}"], "Source not correct internal type")
+            if not source.is_list:
+                flag = False
+                raise InterpError(["expr filter}"], "Required list source type")
+
+            new_lst = []
+            new_type = "str"
+
+            for elem in source.value:
+                if not isinstance(elem, (list, set, tuple)):
+                    param = MemBox(False, "str", elem)
+                else:
+                    param = MemBox(True, "str", elem)
+
+                var_name = ctx.lambdasys().var().getText()
+                self.memory_lst.set_elem_stack(var_name, param)
+
+                result = self.visit(ctx.lambdasys())
+
+                if not isinstance(result, bool):
+                    flag = False
+                    raise InterpError(
+                        ["expr filter}"], "Wrong type from lambda, bool required"
+                    )
+
+                self.memory_lst.del_elem_stack(var_name)
+
+                if result:
+                    if isinstance(elem, (list, set, tuple)):
+                        new_lst.append(elem)
+                    else:
+                        new_lst.append(str(elem))
+
+            new_box = MemBox(True, new_type, set(new_lst))
+
+        except InterpError as exc:
+            if flag:
+                exc.stack_lst.append("expr filter")
+
+            raise exc
+
+        return new_box
+
+    # Visit a parse tree produced by grammarGQLParser#load.
+    def visitLoad(self, ctx: gqlParser.LoadContext):
+        path = ctx.path().STRING().symbol.text[1:-1]
+
+        try:
+            # load from disk
+            if path.find(".") != -1:
+                graph = load_from_disk(path)
+
+            # load from network
+            else:
+                graph = load_from_network(path)
+
+        except:
+            raise InterpError(["expr load"], f"Can not load graph: {path}")
+
+        dfa = nfa_from_graph(graph).to_deterministic()
+
+        result_box = MemBox(False, "dfa", dfa)
+
+        return result_box
+
+    # Visit a parse tree produced by grammarGQLParser#lambdasys.
+    def visitLambdasys(self, ctx: gqlParser.LambdasysContext):
+        var_name = ctx.op().var(0).IDENTIFIER().symbol.text
+        flag = True
+        if ctx.op().inop():
+
+            try:
+                mem_val = self.visit(ctx.op().var(0))
+                mem_expr = self.visit(ctx.op().expr())
+
+                if not isinstance(mem_val, MemBox) or not isinstance(mem_expr, MemBox):
+                    flag = False
+                    raise InterpError(
+                        ["lambda in operator"],
+                        f"Some value is not in correct internal type: {var_name}",
+                    )
+                if mem_val.is_list or (not mem_expr.is_list):
+                    flag = False
+                    raise InterpError(
+                        ["lambda in operator"],
+                        f"Some value is not in correct type (list/ not list): {var_name}",
+                    )
+
+                result = mem_val.value in mem_expr.value
+
+            except InterpError as exc:
+                if flag:
+                    exc.stack_lst.append("lambda in operator")
+                raise exc
+
+            return result
+
+        elif ctx.op().multop() or ctx.op().plusop():
+            operator = "plus"
+            if ctx.op().multop():
+                operator = "multiply"
+
+            try:
+                param_lst = []
+                for i in range(len(ctx.op().var())):
+                    mem_val = self.visit(ctx.op().var(i))
+                    param_lst.append(mem_val)
+
+                for i in range(len(ctx.op().val())):
+                    mem_val = self.visit(ctx.op().val(i))
+                    param_lst.append(mem_val)
+
+                if len(param_lst) != 2:
+                    flag = False
+                    raise InterpError(
+                        [f"lambda {operator} operator"],
+                        f"2 params required: {var_name}",
+                    )
+                if not isinstance(param_lst[0], MemBox) or not isinstance(
+                    param_lst[1], MemBox
+                ):
+                    flag = False
+                    raise InterpError(
+                        [f"lambda {operator} operator"],
+                        f"Some value is not in correct internal type: {var_name}",
+                    )
+                if (
+                    param_lst[0].v_type != "str"
+                    or param_lst[0].is_list
+                    or param_lst[1].v_type != "str"
+                    or param_lst[1].is_list
+                ):
+                    flag = False
+                    raise InterpError(
+                        [f"lambda {operator} operator"],
+                        f"Required values type is str and not list: {var_name}",
+                    )
+                if not check_int(param_lst[0].value) or not check_int(
+                    param_lst[1].value
+                ):
+                    flag = False
+                    raise InterpError(
+                        [f"lambda {operator} operator"],
+                        f"INT required for math operations: {var_name}",
+                    )
+
+                first = int(param_lst[0].value)
+                second = int(param_lst[1].value)
+
+                if ctx.op().multop():
+                    result = first * second
+                else:
+                    result = first + second
+
+            except InterpError as exc:
+                if flag:
+                    exc.stack_lst.append(f"lambda {operator} operator")
+                raise exc
+
+            return MemBox(False, "str", str(result))
+
+        else:
+
+            try:
+                mem_val = self.visit(ctx.op().var())
+
+            except InterpError as exc:
+                exc.stack_lst.append(f"lambda var operator")
+                raise exc
+
+            return mem_val

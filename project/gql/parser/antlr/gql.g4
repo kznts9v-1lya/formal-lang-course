@@ -1,161 +1,97 @@
 grammar gql ;
 
-prog : (EOL? WS? stmt SEMICOLON EOL?)+ EOF ;
+prog: ((stm NEWLINE)* EOF);
 
-stmt : PRINT expr
-     | var WS? ASSIGN WS? expr
-     ;
 
-expr : LP expr RP
-     | anfunc
-     | mapping
-     | filtering
-     | var
-     | val
-     | NOT expr
-     | expr KLEENE
-     | expr IN expr
-     | expr AND expr
-     | expr DOT expr
-     | expr OR expr
-     ;
-
-val : boolean
-    | graph
-    | edges
-    | labels
-    | vertices
+stm
+    : var '=' expr
+    | 'PRINT' expr
     ;
 
-graph : load_graph
-      | set_start
-      | set_final
-      | add_start
-      | add_final
-      | LP graph RP
-      ;
+var
+    : IDENTIFIER addr
+    | IDENTIFIER
+    ;
 
-load_graph : LOAD (string | path) ;
-set_start : SET START OF (graph | var) TO (vertices | var) ;
-set_final : SET FINAL OF (graph | var) TO (vertices | var) ;
-add_start : ADD START OF (graph | var) TO (vertices | var) ;
-add_final : ADD FINAL OF (graph | var) TO (vertices | var) ;
+addr
+    : '[' INT ']' addr
+    | '[' INT ']'
+    ;
 
-vertices : vertex
-       | vertices_range
-       | vertices_set
-       | select_reachable
-       | select_final
-       | select_start
-       | select_vertices
-       | LP vertices RP
-       ;
+val:    INT | STRING;
 
-vertex : INT ;
+setVal: '{' setElem '}';
 
-edges : edge
-      | edges_set
-      | select_edges
-      ;
+setElem
+    : val ',' setElem
+    |
+    ;
 
-edge : LP vertex COMMA label COMMA vertex RP
-     | LP vertex COMMA vertex RP
-     ;
+expr
+    : var
+    | val
+    | set_start expr ') TO' expr
+    | set_final expr ') TO' expr
+    | add_start expr ') TO' expr
+    | add_final expr ') TO' expr
+    | get_start
+    | get_final
+    | get_reachable
+    | get_vertices
+    | get_edges
+    | get_labels
+    | mapsys
+    | filtersys
+    | load
+    | expr intersect expr
+    | expr concat expr
+    | expr union expr
+    | star
+    | setVal
+    ;
 
-labels : label
-       | labels_set
-       | select_labels
-       ;
+intersect:  '&&';
+concat: '..';
+union:  '||';
+star:   '(' expr ')**';
 
-label : string ;
+set_start: 'SET START OF (';
+set_final: 'SET FINAL OF (';
+add_start: 'ADD START OF (';
+add_final: 'ADD FINAL OF (';
 
-anfunc : FUN variables DOUBLE_ARROW expr
-       | LP anfunc RP
-       ;
+get_start: 'SELECT STARTS OF (' expr ')';
+get_final: 'SELECT FINALS OF (' expr ')';
+get_reachable: 'SELECT REACHABLE OF (' expr ')';
+get_vertices: 'SELECT VERTICES OF (' expr ')';
+get_edges: 'SELECT EDGES OF (' expr ')';
+get_labels: 'SELECT LABELS OF (' expr ')';
 
-mapping : MAP anfunc expr ;
-filtering : FILTER anfunc expr ;
+mapsys:    'MAP (' lambdasys ')(' expr ')';
+filtersys: 'FILTER (' lambdasys ')(' expr ')';
 
-select_edges : SELECT EDGES FROM (graph | var) ;
-select_labels : SELECT LABELS FROM (graph | var) ;
-select_reachable : SELECT REACHABLE VERTICES FROM (graph | var) ;
-select_final : SELECT FINAL VERTICES FROM (graph | var) ;
-select_start : SELECT START VERTICES FROM (graph | var) ;
-select_vertices : SELECT VERTICES FROM (graph | var) ;
-vertices_range : LCB INT COLON INT RCB ;
+load
+    : 'LOAD GRAPH FROM' path
+    | 'LOAD GRAPH' path
+    ;
 
-string : STRING ;
-path : PATH ;
+path:   STRING;
 
-vertices_set : LCB (INT COMMA)* (INT)? RCB
-             | vertices_range
-             ;
+lambdasys: 'FUN (' var ') ->' op;
 
-labels_set : LCB (STRING COMMA)* (STRING)? RCB ;
+inop:  'IN';
+multop: '*';
+plusop:  '+';
 
-edges_set : LCB (edge COMMA)* (edge)? RCB ;
+op
+    : var inop expr
+    | (var | val) multop (var | val)
+    | (var | val) plusop (var | val)
+    | (var | val)
+    ;
 
-var : ID ;
-
-var_edge : LP var COMMA var RP
-         | LP var COMMA var COMMA var RP
-         | LP LP var COMMA var RP COMMA var COMMA LP var COMMA var RP RP
-         ;
-
-variables : (var COMMA)* var?
-     | var_edge
-     ;
-
-boolean : TRUE | FALSE ;
-
-FUN : WS? 'FUN' WS? ;
-LOAD : WS? 'LOAD' WS? ;
-SET : WS? 'SET' WS? ;
-ADD : WS? 'ADD' WS? ;
-OF : WS? 'OF' WS? ;
-TO : WS? 'TO' WS? ;
-VERTICES : WS? 'VERTICES' WS? ;
-LABELS : WS? 'LABELS' WS? ;
-SELECT : WS? 'SELECT' WS? ;
-EDGES : WS? 'EDGES' WS? ;
-REACHABLE : WS? 'REACHABLE' WS? ;
-START : WS? 'START' WS? ;
-FINAL : WS? 'FINAL' WS? ;
-FROM : WS? 'FROM' WS? ;
-FILTER : WS? 'FILTER' WS? ;
-MAP : WS? 'MAP' WS? ;
-PRINT : WS? 'PRINT' WS? ;
-
-TRUE : 'TRUE' ;
-FALSE : 'FALSE' ;
-
-ASSIGN : WS? '=' WS? ;
-AND : WS? '&' WS? ;
-OR : WS? '|' WS? ;
-NOT : WS? 'NOT' WS? ;
-IN : WS? 'IN' WS? ;
-KLEENE : WS? '*' WS? ;
-DOT : WS? '.' WS? ;
-COMMA : WS? ',' WS? ;
-SEMICOLON : ';' WS? ;
-LCB : WS? '{' WS? ;
-RCB : WS? '}' WS? ;
-LP : WS? '(' WS? ;
-RP : WS? ')' WS? ;
-QUOT : '"' ;
-COLON : WS? ':' WS? ;
-DOUBLE_ARROW : WS? '=>' WS? ;
-ARROW : '->' ;
-
-ID : ('_' | CHAR) ID_CHAR* ;
-
-INT : NONZERO_DIGIT DIGIT* | '0' ;
-STRING : QUOT (CHAR | DIGIT | '_' | ' ')* QUOT ;
-PATH : QUOT (CHAR | DIGIT | '_' | ' ' | '/' | '\\' | COLON | DOT)* QUOT ;
-ID_CHAR : (CHAR | DIGIT | '_') ;
-CHAR : [a-z] | [A-Z] ;
-NONZERO_DIGIT : [1-9] ;
-DIGIT : [0-9] ;
-
-WS : [ \t\r]+ -> skip ;
-EOL : [\n]+ ;
+NEWLINE     : [\r\n]+ ;
+INT         : [0-9]+ ;
+IDENTIFIER  : [A-Za-z0-9]+ ;
+STRING      : '\'' ~('\'')+ '\'';
+WS          :   [ \t\r\n]+ -> skip;
