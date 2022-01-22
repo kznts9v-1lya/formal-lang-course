@@ -1,4 +1,4 @@
-from project.gql.interpreter.exceptions import RuntimeException
+from project.gql.interpreter.core.exceptions import RuntimeException
 from project.gql.parser.parser import parse
 from project.gql.interpreter.visitor import Visitor
 

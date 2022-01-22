@@ -1,5 +1,5 @@
 from project.gql.interpreter.types.type import Type
-from project.gql.interpreter.exceptions import VariableNotFoundException
+from project.gql.interpreter.core.exceptions import VariableNotFoundException
 
 from typing import List, Dict
 

@@ -28,6 +28,7 @@ val : boolean
     ;
 
 graph : load_graph
+      | cfg
       | set_start
       | set_final
       | add_start
@@ -40,6 +41,8 @@ set_start : SET START OF (graph | var) TO (vertices | var) ;
 set_final : SET FINAL OF (graph | var) TO (vertices | var) ;
 add_start : ADD START OF (graph | var) TO (vertices | var) ;
 add_final : ADD FINAL OF (graph | var) TO (vertices | var) ;
+
+cfg: CFG ;
 
 vertices : vertex
        | vertices_range
@@ -145,7 +148,10 @@ RP : WS? ')' WS? ;
 QUOT : '"' ;
 COLON : WS? ':' WS? ;
 DOUBLE_ARROW : WS? '=>' WS? ;
+
 ARROW : '->' ;
+TRIPLE_QUOT : '"""' ;
+CFG : TRIPLE_QUOT (CHAR | DIGIT | ' ' | '\n' | ARROW)* TRIPLE_QUOT ;
 
 ID : ('_' | CHAR) ID_CHAR* ;
 

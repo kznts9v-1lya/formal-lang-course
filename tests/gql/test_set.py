@@ -1,6 +1,6 @@
 from project.gql.interpreter.types.bool import Bool
 from project.gql.interpreter.types.set import Set
-from project.gql.interpreter.exceptions import NotImplementedException, TypingError
+from project.gql.interpreter.core.exceptions import NotImplementedException, TypingError
 import pytest
 
 from tools import interpret

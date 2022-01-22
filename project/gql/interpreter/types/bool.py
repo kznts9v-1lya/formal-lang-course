@@ -1,6 +1,6 @@
 from project.gql.interpreter.types.type import Type
 
-from project.gql.interpreter.exceptions import NotImplementedException
+from project.gql.interpreter.core.exceptions import NotImplementedException
 
 
 class Bool(Type):

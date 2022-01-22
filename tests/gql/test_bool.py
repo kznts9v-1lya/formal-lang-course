@@ -1,5 +1,5 @@
 from project.gql.interpreter.types.bool import Bool
-from project.gql.interpreter.exceptions import NotImplementedException
+from project.gql.interpreter.core.exceptions import NotImplementedException
 import pytest
 
 from tools import interpret

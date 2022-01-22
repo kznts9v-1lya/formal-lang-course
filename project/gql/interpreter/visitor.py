@@ -3,15 +3,16 @@ from project.gql.parser.antlr.gqlParser import gqlParser
 
 from project.gql.interpreter.types.type import Type
 from project.gql.interpreter.types.automaton import Automaton
-from project.gql.interpreter.types.finite_automaton_regex import Regex
+from project.gql.interpreter.types.finite_automaton import FiniteAutomaton
 from project.gql.interpreter.types.bool import Bool
 from project.gql.interpreter.types.set import Set
+from project.gql.interpreter.types.recursive_state_machine import RecursiveStateMachine
 
 from project.gql.interpreter.memory.memory import Memory
 
 from project.gql.interpreter.core.runtime import load_graph
 
-from project.gql.interpreter.exceptions import NotImplementedException, TypingError
+from project.gql.interpreter.core.exceptions import NotImplementedException, TypingError
 
 from antlr4 import ParserRuleContext
 from typing import Union
@@ -96,7 +97,7 @@ class Visitor(gqlVisitor):
             return Set(set(map(lambda x: int(x.getText()), ctx.INT())))
 
     def visitLabel(self, ctx: gqlParser.LabelContext):
-        return Regex(self.visit(ctx.string()))
+        return FiniteAutomaton.from_string(self.visit(ctx.string()))
 
     def visitLabels_set(self, ctx: gqlParser.Labels_setContext):
         labels_set = set()
@@ -115,6 +116,11 @@ class Visitor(gqlVisitor):
 
     def visitEdges(self, ctx: gqlParser.EdgesContext):
         return self.visitChildren(ctx)
+
+    def visitCfg(self, ctx: gqlParser.CfgContext) -> RecursiveStateMachine:
+        cfg_text = ctx.CFG().getText().strip('"""')
+
+        return RecursiveStateMachine.from_text(cfg_text)
 
     def visitEdges_set(self, ctx: gqlParser.Edges_setContext):
         edges_set = set()
