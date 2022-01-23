@@ -15,22 +15,22 @@ class TypingError(RuntimeException):
     pass
 
 
-class ScriptPathException(RuntimeException):
+class ProgramPathException(RuntimeException):
     """
-    Raises when failed to open the given script.
+    Raises when failed to open the given program.
     """
 
-    def __init__(self, filename: str):
-        self.message = f"Could not open {filename}."
+    def __init__(self, file: str):
+        self.message = f"Could not open program from {file}."
 
 
-class ScriptExtensionException(RuntimeException):
+class ProgramExtensionException(RuntimeException):
     """
-    Raises when given script does not have '.gql' extension.
+    Raises when given program file does not have '.gql' extension.
     """
 
     def __init__(self):
-        self.message = f"Script name does not have '.gql' extension."
+        self.message = f"Program file does not have '.gql' extension."
 
 
 class GraphLoadingException(RuntimeException):
