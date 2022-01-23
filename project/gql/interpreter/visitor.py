@@ -235,9 +235,7 @@ class Visitor(gqlVisitor):
         graph = self.visit(ctx.var(0)) if ctx.var(0) else self.visit(ctx.graph())
         nodes = self.visit(ctx.var(1)) if ctx.var(1) else self.visit(ctx.vertices())
 
-        getattr(graph, func)(nodes)
-
-        return graph
+        return getattr(graph, func)(nodes)
 
     def visitSet_start(self, ctx: gqlParser.Set_startContext):
         return self.modify_func(ctx, "set_start")
