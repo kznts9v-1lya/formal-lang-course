@@ -9,7 +9,7 @@ import pytest
     [
         ("{1, 2}", "FUN x => x IN {2}", {Bool(True), Bool(False)}),
         ("{1, 2, 3}", "FUN x => 5", {5}),
-        ("{1, 2, 3, 4, 5}", "FUN _ => 0", {0})
+        ("{1, 2, 3, 4, 5}", "FUN _ => 0", {0}),
     ],
 )
 def test_map(initial, anfunc, expected):
