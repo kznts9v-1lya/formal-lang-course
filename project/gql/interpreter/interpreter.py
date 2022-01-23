@@ -1,5 +1,5 @@
 from project.gql.parser.parser import parse
-from project.gql.interpreter.visitor import Visitor
+from project.gql.interpreter.antlr.visitor import Visitor
 from project.gql.interpreter.core.exceptions import (
     RuntimeException,
     ScriptPathException,
