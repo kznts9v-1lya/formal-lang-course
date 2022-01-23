@@ -4,18 +4,16 @@ from project.gql.interpreter.interpreter import interpreter
 from project.gql.interpreter.core.exceptions import RuntimeException
 
 
-def main():
-    prog = "".join(sys.stdin.readlines())
-
+def main(*argv):
     try:
-        interpreter(prog)
-        sys.stdout.write("\nSuccessfully done\nExit code: 0\n")
-        return 0
+        interpreter(*argv)
     except RuntimeException as exception:
-        sys.stdout.write(exception.message)
-        sys.stdout.write("\nFailed\nExit code: 1\n")
-        return 1
+        sys.stdout.write(f"Exception: {exception.message}\n")
+
+        exit(1)
+
+    exit(0)
 
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:])
