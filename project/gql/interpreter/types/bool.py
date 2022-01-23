@@ -4,6 +4,15 @@ from project.gql.interpreter.core.exceptions import NotImplementedException
 
 
 class Bool(Type):
+    """
+    Boolean class.
+
+    Attributes
+    ----------
+    b: bool
+        Internal boolean value
+    """
+
     def __init__(self, b: bool):
         self.b = b
 
@@ -20,15 +29,50 @@ class Bool(Type):
         return self.b == other.b
 
     def intersect(self, other: "Bool") -> "Bool":
+        """
+        '&'.
+
+        Parameters
+        ----------
+        other: Bool
+            Right boolean object
+        Returns
+        -------
+        intersection: Bool
+            Logical 'AND'
+        """
+
         return Bool(self.b and other.b)
 
     def union(self, other: "Bool") -> "Bool":
+        """
+        '|'.
+
+        Parameters
+        ----------
+        other: Bool
+            Right boolean object
+        Returns
+        -------
+        intersection: Bool
+            Logical 'OR'
+        """
+
         return Bool(self.b or other.b)
 
     def concatenate(self, other):
         raise NotImplementedException("Bool does not support '.' operation.")
 
     def inverse(self) -> "Bool":
+        """
+        'NOT'.
+
+        Returns
+        -------
+        complement: Bool
+            Logical 'NOT'
+        """
+
         return Bool(not self.b)
 
     def kleene(self):

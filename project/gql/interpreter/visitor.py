@@ -187,7 +187,7 @@ class Visitor(gqlVisitor):
 
         if len(anfunc.parameters) != param_count:
             raise TypingError(
-                f"Anfunc parameters mismatch: expected {len(anfunc.parameters)} != got {param_count}."
+                f"Anfunc parameters mismatch: expected {len(anfunc.parameters)}, got {param_count}."
             )
 
         new_iterable = set()

@@ -5,7 +5,7 @@ from project.gql.interpreter.types.type import Type
 
 class Automaton(Type, ABC):
     """
-    Base class for Automatons.
+    Base class for Automatons (FiniteAutomaton, ContextFreeGrammar).
     """
 
     @abstractmethod
