@@ -1,5 +1,8 @@
 from project.gql.interpreter.interpreter import read_program, interpreter
-from project.gql.interpreter.core.exceptions import ProgramPathException, ProgramExtensionException
+from project.gql.interpreter.core.exceptions import (
+    ProgramPathException,
+    ProgramExtensionException,
+)
 
 from pathlib import Path
 
@@ -22,7 +25,7 @@ def test_invalid_file_extension():
         "tests/data/gqls/labels_intersection.gql",
         "tests/data/gqls/labels_filter.gql",
         "tests/data/gqls/regex_intersection.gql",
-        "tests/data/gqls/regular_path_querying.gql"
+        "tests/data/gqls/regular_path_querying.gql",
     ],
 )
 def test_correct_script(program):

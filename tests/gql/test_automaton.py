@@ -13,7 +13,7 @@ import pytest
     ],
 )
 def test_intersection(left, operation, right, expected):
-    expr = left + ' ' + operation + ' ' + right
+    expr = left + " " + operation + " " + right
 
     actual = interpret(expr, "expr")
     expected = get_min_dfa_from_regex_str(expected)
