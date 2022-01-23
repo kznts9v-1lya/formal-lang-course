@@ -21,9 +21,8 @@ from pyformlang.regular_expression import MisformedRegexError
 
 
 class FiniteAutomaton(Automaton):
-    def __init__(self, nfa: NondeterministicFiniteAutomaton, reachable: set = None):
+    def __init__(self, nfa: NondeterministicFiniteAutomaton):
         self.nfa = nfa
-        self.reachable = reachable or self._get_reachable(nfa)
 
     def __str__(self):
         return str(self.nfa.minimize().to_regex())
@@ -76,7 +75,7 @@ class FiniteAutomaton(Automaton):
 
         intersection = left_bm.intersect(right_bm)
 
-        return FiniteAutomaton(intersection.to_nfa(), get_reachable(intersection))
+        return FiniteAutomaton(intersection.to_nfa())
 
     def _intersect_cfg(self, other: "ContextFreeGrammar") -> "ContextFreeGrammar":
         intersection = other.intersect(self)
@@ -127,4 +126,4 @@ class FiniteAutomaton(Automaton):
         return get_reachable(bm)
 
     def get_reachable(self):
-        return Set(self.reachable)
+        return Set(FiniteAutomaton._get_reachable(self.nfa))

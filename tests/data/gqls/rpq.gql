@@ -1,0 +1,5 @@
+g = LOAD "skos";
+q = "l1"* | "l3";
+intersection = g & q;
+reachable = SELECT REACHABLE VERTICES FROM intersection;
+PRINT reachable;

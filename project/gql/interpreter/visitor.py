@@ -145,6 +145,9 @@ class Visitor(gqlVisitor):
         pass
 
     def visitAnfunc(self, ctx: gqlParser.AnfuncContext) -> Anfunc:
+        if ctx.anfunc():
+            return self.visitAnfunc(ctx.anfunc())
+
         parameters = self.visitVariables(ctx.variables())
         body = ctx.expr()
 
@@ -179,13 +182,37 @@ class Visitor(gqlVisitor):
         if len(iterable) == 0:
             return iterable
 
-        raise NotImplementedException("TODO")
+        first_elem = next(iter(iterable.set))
+        param_count = len(first_elem.set) if isinstance(first_elem, Set) else 1
+
+        if len(anfunc.parameters) != param_count:
+            raise TypingError(
+                f"Anfunc parameters mismatch: expected {len(anfunc.parameters)} != got {param_count}."
+            )
+
+        new_iterable = set()
+
+        for elem in iterable.set:
+            if len(anfunc.parameters) == 1 and next(iter(anfunc.parameters)) == "_":
+                result = self.apply_anfunc(anfunc)
+            else:
+                result = self.apply_anfunc(anfunc, elem)
+
+            if func == "map":
+                new_iterable.add(result)
+            elif func == "filter":
+                if result:
+                    new_iterable.add(elem)
+            else:
+                raise NotImplementedException(f"Unknown iterable function {func}.")
+
+        return Set(new_iterable)
 
     def visitMapping(self, ctx: gqlParser.MappingContext):
-        self.iter_func(ctx, "map")
+        return self.iter_func(ctx, "map")
 
     def visitFiltering(self, ctx: gqlParser.FilteringContext):
-        self.iter_func(ctx, "filter")
+        return self.iter_func(ctx, "filter")
 
     def visitGraph(self, ctx: gqlParser.GraphContext) -> Automaton:
         return self.visitChildren(ctx)
