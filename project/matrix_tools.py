@@ -1,10 +1,12 @@
 from typing import Set, Dict, Union
 
+from project.rsm_tools import RSMBox, RSM
+
 from pyformlang.finite_automaton import NondeterministicFiniteAutomaton, Symbol, State
+from pyformlang.cfg import Variable
+from scipy.sparse import dok_matrix, kron, csr_matrix
 
 __all__ = ["BooleanAdjacencies"]
-
-from scipy.sparse import dok_matrix, kron, csr_matrix
 
 
 class BooleanAdjacencies:
@@ -51,6 +53,8 @@ class BooleanAdjacencies:
         self.final_states = set()
 
         self.boolean_adjacencies = dict()
+
+        self.states_box_variables = dict()
 
         if nfa is not None:
             self.states_num = len(nfa.states)
@@ -227,3 +231,111 @@ class BooleanAdjacencies:
             nfa.add_final_state(final_state)
 
         return nfa
+
+    @classmethod
+    def from_rsm(cls, rsm: RSM) -> "BooleanAdjacencies":
+        """
+        Create an instance of RSMMatrix from rsm.
+
+        Attributes
+        ----------
+        rsm: RSM
+            Recursive State Machine
+        """
+
+        boolean_adjacencies = cls()
+
+        boolean_adjacencies.states_num = sum(len(box.dfa.states) for box in rsm.boxes)
+        boolean_adjacencies.shape = (
+            boolean_adjacencies.states_num,
+            boolean_adjacencies.states_num,
+        )
+
+        box_idx = 0
+
+        for box in rsm.boxes:
+            for idx, state in enumerate(box.dfa.states):
+                new_name = boolean_adjacencies._rename_rsm_box_state(
+                    state, box.variable
+                )
+                boolean_adjacencies.states_nums[new_name] = idx + box_idx
+
+                if state in box.dfa.start_states:
+                    boolean_adjacencies.start_states.add(
+                        boolean_adjacencies.states_nums[new_name]
+                    )
+
+                if state in box.dfa.final_states:
+                    boolean_adjacencies.final_states.add(
+                        boolean_adjacencies.states_nums[new_name]
+                    )
+
+            boolean_adjacencies.states_box_variables.update(
+                {
+                    (
+                        boolean_adjacencies.states_nums[
+                            boolean_adjacencies._rename_rsm_box_state(
+                                box.dfa.start_state, box.variable
+                            )
+                        ],
+                        boolean_adjacencies.states_nums[
+                            boolean_adjacencies._rename_rsm_box_state(
+                                state, box.variable
+                            )
+                        ],
+                    ): box.variable.value
+                    for state in box.dfa.final_states
+                }
+            )
+
+            boolean_adjacencies.boolean_adjacencies.update(
+                boolean_adjacencies._create_box_bool_matrices(box)
+            )
+            box_idx += len(box.dfa.states)
+
+        return boolean_adjacencies
+
+    @staticmethod
+    def _rename_rsm_box_state(state: State, box_variable: Variable) -> State:
+        return State(f"{state.value}#{box_variable.value}")
+
+    def _create_box_bool_matrices(self, box: RSMBox) -> dict:
+        """
+        Create bool matrices for RSM box.
+
+        Attributes
+        ----------
+        box: RSMBox
+            Box of RSM
+
+        Returns
+        -------
+        boolean_adjacencies: dict
+            Boolean Matrices dict
+        """
+
+        boolean_adjacencies = dict()
+
+        for s_from, trans in box.dfa.to_dict().items():
+            for label, states_to in trans.items():
+                if not isinstance(states_to, set):
+                    states_to = {states_to}
+
+                for s_to in states_to:
+                    idx_from = self.states_nums[
+                        self._rename_rsm_box_state(s_from, box.variable)
+                    ]
+                    idx_to = self.states_nums[
+                        self._rename_rsm_box_state(s_to, box.variable)
+                    ]
+
+                    if label in self.boolean_adjacencies:
+                        self.boolean_adjacencies[label][idx_from, idx_to] = True
+                        continue
+
+                    if label not in boolean_adjacencies:
+                        boolean_adjacencies[label] = dok_matrix(self.shape, dtype=bool)
+
+                    boolean_adjacencies[label][idx_from, idx_to] = True
+
+        return boolean_adjacencies

@@ -1,6 +1,6 @@
 from project.gql.interpreter.types.automaton import Automaton
 from project.gql.interpreter.types.set import Set
-from project.gql.interpreter.types.recursive_state_machine import RecursiveStateMachine
+from project.gql.interpreter.types.context_free_grammar import ContextFreeGrammar
 
 from project.matrix_tools import BooleanAdjacencies
 from project.path_querying_tools import get_reachable
@@ -15,7 +15,6 @@ from networkx import MultiDiGraph
 from pyformlang.finite_automaton import NondeterministicFiniteAutomaton
 
 from project.gql.interpreter.core.exceptions import (
-    NotImplementedException,
     CastingException,
 )
 from pyformlang.regular_expression import MisformedRegexError
@@ -79,19 +78,18 @@ class FiniteAutomaton(Automaton):
 
         return FiniteAutomaton(intersection.to_nfa(), get_reachable(intersection))
 
-    def _intersect_rsm(self, other: "RecursiveStateMachine") -> "RecursiveStateMachine":
-        left_bm = BooleanAdjacencies(self.nfa)
-        right_bm = BooleanAdjacencies(other.rsm)
+    def _intersect_cfg(self, other: "ContextFreeGrammar") -> "ContextFreeGrammar":
+        intersection = other.intersect(self)
 
-        intersection = left_bm.intersect(right_bm)
+        return intersection
 
     def intersect(self, other):
         if isinstance(other, FiniteAutomaton):
             return self._intersect_fa(other)
-        elif isinstance(other, RecursiveStateMachine):
-            return self._intersect_rsm(other)
-        else:
-            raise CastingException("FiniteAutomaton", str(type(other)))
+        elif isinstance(other, ContextFreeGrammar):
+            return self._intersect_cfg(other)
+
+        raise CastingException("FiniteAutomaton", str(type(other)))
 
     def union(self, other: "FiniteAutomaton") -> "FiniteAutomaton":
         return FiniteAutomaton(self.nfa.union(other.nfa).to_deterministic())

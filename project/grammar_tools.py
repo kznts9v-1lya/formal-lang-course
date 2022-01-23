@@ -1,6 +1,12 @@
 import os
 from typing import AbstractSet, Iterable, Tuple, Set
 
+from pyformlang.regular_expression import Regex
+from scipy.sparse import identity, dok_matrix
+
+from project import automaton_tools
+from project.matrix_tools import BooleanAdjacencies
+
 import networkx as nx
 from pyformlang.cfg import CFG, Variable, Production, Epsilon
 
@@ -21,12 +27,6 @@ __all__ = [
     "matrix_cfpq",
     "tensor_cfpq",
 ]
-
-from pyformlang.regular_expression import Regex
-from scipy.sparse import identity, dok_matrix
-
-from project import automaton_tools
-from project.matrix_tools import BooleanAdjacencies
 
 
 def _check_path(path: str) -> None:

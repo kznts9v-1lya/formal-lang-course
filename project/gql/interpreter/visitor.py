@@ -6,7 +6,7 @@ from project.gql.interpreter.types.automaton import Automaton
 from project.gql.interpreter.types.finite_automaton import FiniteAutomaton
 from project.gql.interpreter.types.bool import Bool
 from project.gql.interpreter.types.set import Set
-from project.gql.interpreter.types.recursive_state_machine import RecursiveStateMachine
+from project.gql.interpreter.types.context_free_grammar import ContextFreeGrammar
 
 from project.gql.interpreter.memory.memory import Memory
 
@@ -117,10 +117,10 @@ class Visitor(gqlVisitor):
     def visitEdges(self, ctx: gqlParser.EdgesContext):
         return self.visitChildren(ctx)
 
-    def visitCfg(self, ctx: gqlParser.CfgContext) -> RecursiveStateMachine:
+    def visitCfg(self, ctx: gqlParser.CfgContext) -> ContextFreeGrammar:
         cfg_text = ctx.CFG().getText().strip('"""')
 
-        return RecursiveStateMachine.from_text(cfg_text)
+        return ContextFreeGrammar.from_text(cfg_text)
 
     def visitEdges_set(self, ctx: gqlParser.Edges_setContext):
         edges_set = set()
