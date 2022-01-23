@@ -20,13 +20,16 @@ def test_invalid_file_extension():
 
 
 @pytest.mark.parametrize(
-    "program",
+    "prog",
     [
         "tests/data/gqls/labels_intersection.gql",
         "tests/data/gqls/labels_filter.gql",
         "tests/data/gqls/regex_intersection.gql",
         "tests/data/gqls/regular_path_querying.gql",
+        "tests/data/gqls/start_vertices.gql",
+        "tests/data/gqls/final_vertices.gql",
+        "tests/data/gqls/context_free_path_querying.gql",
     ],
 )
-def test_correct_script(program):
-    assert interpreter([Path(program)]) == 0
+def test_correct_program(prog):
+    assert interpreter([Path(prog)]) == 0

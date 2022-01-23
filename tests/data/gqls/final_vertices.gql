@@ -1,0 +1,7 @@
+graph1 = LOAD "core";
+
+graph2 = SET FINAL OF graph1 TO {30 : 40};
+
+graph3 = ADD FINAL OF graph1 TO {41, 42, 43, 44, 45, 46, 47, 48, 49, 50};
+
+PRINT SELECT FINAL VERTICES FROM graph3;

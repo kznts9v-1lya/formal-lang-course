@@ -1,0 +1,7 @@
+graph1 = LOAD "core";
+
+graph2 = SET START OF graph1 TO {1 : 10};
+
+graph3 = ADD START OF graph1 TO {5 : 15};
+
+PRINT SELECT START VERTICES FROM graph3;

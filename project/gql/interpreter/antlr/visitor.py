@@ -81,8 +81,14 @@ class Visitor(gqlVisitor):
 
         return self.memory.find_variable(name)
 
+    def visitVal(self, ctx: gqlParser.ValContext):
+        return self.visitChildren(ctx)
+
     def visitVertex(self, ctx: gqlParser.VertexContext):
         return int(ctx.INT().getText())
+
+    def visitVertices(self, ctx: gqlParser.VerticesContext):
+        return self.visitChildren(ctx)
 
     def visitVertices_range(self, ctx: gqlParser.Vertices_rangeContext):
         start = int(ctx.INT(0).getText())
@@ -98,6 +104,9 @@ class Visitor(gqlVisitor):
 
     def visitLabel(self, ctx: gqlParser.LabelContext):
         return FiniteAutomaton.from_string(self.visit(ctx.string()))
+
+    def visitLabels(self, ctx: gqlParser.LabelsContext):
+        return self.visitChildren(ctx)
 
     def visitLabels_set(self, ctx: gqlParser.Labels_setContext):
         labels_set = set()

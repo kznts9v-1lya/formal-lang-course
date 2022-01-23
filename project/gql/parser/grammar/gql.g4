@@ -82,8 +82,8 @@ filtering : FILTER anfunc expr ;
 select_edges : SELECT EDGES FROM (graph | var) ;
 select_labels : SELECT LABELS FROM (graph | var) ;
 select_reachable : SELECT REACHABLE VERTICES FROM (graph | var) ;
-select_final : SELECT FINAL VERTICES FROM (graph | var) ;
 select_start : SELECT START VERTICES FROM (graph | var) ;
+select_final : SELECT FINAL VERTICES FROM (graph | var) ;
 select_vertices : SELECT VERTICES FROM (graph | var) ;
 vertices_range : LCB INT COLON INT RCB ;
 
