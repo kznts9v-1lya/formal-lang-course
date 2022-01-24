@@ -15,3 +15,6 @@ from project.path_querying_tools import *
 
 import project.grammar_tools
 from project.grammar_tools import *
+
+import project.rsm_tools
+from project.rsm_tools import *

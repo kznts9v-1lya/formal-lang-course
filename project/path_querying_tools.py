@@ -9,12 +9,57 @@ from project.automaton_tools import get_min_dfa_from_regex, get_nfa_from_graph
 from project.matrix_tools import BooleanAdjacencies
 
 __all__ = [
+    "get_reachable",
     "regular_path_querying",
     "regular_str_path_querying",
     "hellings_context_free_path_querying",
     "matrix_context_free_path_querying",
     "tensor_context_free_path_querying",
 ]
+
+
+def get_reachable(
+    intersection: BooleanAdjacencies, query: BooleanAdjacencies = None
+) -> Set[Tuple[int, int]]:
+    """
+    Parameters
+    ----------
+    intersection: BooleanAdjacencies
+        Boolean matrix object
+    query: default = None
+        Boolean matrix object
+
+    Returns
+    -------
+    reachable_state_nums: Set[Tuple[int, int]]
+        All reachable nodes, according to start and final states
+    """
+    transitive_closure = intersection.get_transitive_closure()
+
+    reachable_state_nums = set()
+
+    for state_from_num, state_to_num in zip(*transitive_closure.nonzero()):
+        state_from = intersection.nums_states[state_from_num]
+        state_to = intersection.nums_states[state_to_num]
+
+        if (
+            state_from in intersection.start_states
+            and state_to in intersection.final_states
+        ):
+            reachable_state_from_num = (
+                state_from_num // query.states_num
+                if query is not None
+                else intersection.states_num
+            )
+            reachable_state_to_num = (
+                state_to_num // query.states_num
+                if query is not None
+                else intersection.states_num
+            )
+
+            reachable_state_nums.add((reachable_state_from_num, reachable_state_to_num))
+
+    return reachable_state_nums
 
 
 def regular_str_path_querying(
@@ -53,7 +98,7 @@ def regular_str_path_querying(
     ValueError
         If non-existent in the specified graph node number is used
     MisformedRegexError
-        If specified regex_str has an irregular format
+        If specified query_str has an irregular format
     """
 
     return regular_path_querying(
@@ -105,24 +150,8 @@ def regular_path_querying(
     query = BooleanAdjacencies(get_min_dfa_from_regex(query_regex))
 
     intersection = graph.intersect(query)
-    transitive_closure = intersection.get_transitive_closure()
 
-    reachable_state_nums = set()
-
-    for state_from_num, state_to_num in zip(*transitive_closure.nonzero()):
-        state_from = intersection.nums_states[state_from_num]
-        state_to = intersection.nums_states[state_to_num]
-
-        if (
-            state_from in intersection.start_states
-            and state_to in intersection.final_states
-        ):
-            reachable_state_from_num = state_from_num // query.states_num
-            reachable_state_to_num = state_to_num // query.states_num
-
-            reachable_state_nums.add((reachable_state_from_num, reachable_state_to_num))
-
-    return reachable_state_nums
+    return get_reachable(intersection, query)
 
 
 def _context_free_path_querying(

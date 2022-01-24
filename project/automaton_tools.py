@@ -1,7 +1,6 @@
-from typing import Set, Iterable
+from typing import Set
 
 import networkx as nx
-from pyformlang.cfg import Variable
 from pyformlang.finite_automaton import (
     DeterministicFiniteAutomaton,
     NondeterministicFiniteAutomaton,
@@ -13,19 +12,15 @@ __all__ = [
     "get_min_dfa_from_regex_str",
     "get_min_dfa_from_regex",
     "get_nfa_from_graph",
-    "RSMBox",
-    "RSM",
-    "get_rsm_from_ecfg",
-    "minimize_rsm",
     "check_regex_equality",
+    "set_nfa_states",
+    "add_nfa_states",
 ]
-
-from project.grammar_tools import ECFG
 
 
 def get_min_dfa_from_regex_str(regex_str: str) -> DeterministicFiniteAutomaton:
     """
-    Based on a regular expression given as a Regex string, builds an Deterministic Finite Automaton.
+    Based on a regular expression given as a Regex string, builds a Deterministic Finite Automaton.
 
     Parameters
     ----------
@@ -43,7 +38,7 @@ def get_min_dfa_from_regex_str(regex_str: str) -> DeterministicFiniteAutomaton:
 
 def get_min_dfa_from_regex(regex: Regex) -> DeterministicFiniteAutomaton:
     """
-    Based on a regular expression given as Regex, builds an Deterministic Finite Automaton.
+    Based on a regular expression given as Regex, builds a Deterministic Finite Automaton.
 
     Parameters
     ----------
@@ -148,143 +143,43 @@ def get_nfa_from_graph(
     return nfa
 
 
-class RSMBox:
-    """
-    A class encapsulates a box with DFA by RSM variable for Recursive State Machine.
+def set_nfa_states(
+    nfa: NondeterministicFiniteAutomaton,
+    start_states: Set[State] = None,
+    final_states: Set[State] = None,
+) -> NondeterministicFiniteAutomaton:
+    new_nfa = nfa.copy()
 
-    Parameters
-    ----------
-    variable: Variable
-       Variable of RSM
-    dfa: DeterministicFiniteAutomaton
-        DFA by RSM variable
-    """
+    new_nfa._start_state = set()
+    new_nfa._final_states = set()
 
-    def __init__(
-        self, variable: Variable = None, dfa: DeterministicFiniteAutomaton = None
-    ):
-        self._dfa = dfa
-        self._variable = variable
-        self.minimize()
+    if start_states:
+        for state in start_states:
+            new_nfa.add_start_state(state)
 
-    @property
-    def dfa(self) -> DeterministicFiniteAutomaton:
-        return self._dfa
+    if final_states:
+        for state in final_states:
+            new_nfa.add_final_state(state)
 
-    @property
-    def variable(self) -> Variable:
-        return self._variable
-
-    def minimize(self) -> None:
-        """
-        Minimize Deterministic Finite Automaton in the RSMBox.
-
-        Returns
-        -------
-        None
-        """
-
-        self._dfa = self._dfa.minimize()
-
-    def __eq__(self, other: "RSMBox") -> bool:
-        return self._variable == other._variable and self._dfa.is_equivalent_to(
-            other._dfa
-        )
+    return new_nfa
 
 
-class RSM:
-    """
-    A class encapsulates a Recursive State Machine.
+def add_nfa_states(
+    nfa: NondeterministicFiniteAutomaton,
+    start_states: Set[State] = None,
+    final_states: Set[State] = None,
+) -> NondeterministicFiniteAutomaton:
+    new_nfa = nfa.copy()
 
-    Parameters
-    ----------
-    start_symbol: Variable
-        A start symbol for RSM
-    boxes: Iterable[RSMBox]
-        A collection of RSMBox with DFA by RSM variable
-    """
+    if start_states:
+        for state in start_states:
+            new_nfa.add_start_state(state)
 
-    def __init__(
-        self,
-        start_symbol: Variable,
-        boxes: Iterable[RSMBox],
-    ):
-        self._start_symbol = start_symbol
-        self._boxes = boxes
-        self.minimize()
+    if final_states:
+        for state in final_states:
+            new_nfa.add_final_state(state)
 
-    @property
-    def start_symbol(self):
-        return self._start_symbol
-
-    @property
-    def boxes(self):
-        return self._boxes
-
-    @start_symbol.setter
-    def start_symbol(self, start_symbol: Variable):
-        self._start_symbol = start_symbol
-
-    def minimize(self) -> "RSM":
-        """
-        Minimize Recursive State Machine means minimize each
-        Deterministic Finite Automaton in boxes.
-
-        Returns
-        -------
-        RSM:
-            Minimal RSM
-        """
-
-        for box in self._boxes:
-            box.minimize()
-
-        return self
-
-    @classmethod
-    def from_ecfg(cls, ecfg: ECFG) -> "RSM":
-        """
-        Converts an Extended Context Free Grammar to a Recursive State Machine.
-
-        Returns
-        -------
-        RSM:
-            RSM from ECFG
-        """
-
-        boxes = [
-            RSMBox(production.head, get_min_dfa_from_regex(production.body))
-            for production in ecfg.productions
-        ]
-
-        return cls(start_symbol=ecfg.start_symbol, boxes=boxes)
-
-
-def minimize_rsm(rsm: RSM) -> RSM:
-    """
-    Minimize Recursive State Machine means minimize each
-    Deterministic Finite Automaton in boxes.
-
-    Returns
-    -------
-    RSM:
-        Minimal RSM
-    """
-
-    return rsm.minimize()
-
-
-def get_rsm_from_ecfg(ecfg: ECFG) -> RSM:
-    """
-    Converts an Extended Context Free Grammar to a Recursive State Machine.
-
-    Returns
-    -------
-    RSM:
-        RSM from ECFG
-    """
-
-    return RSM.from_ecfg(ecfg)
+    return new_nfa
 
 
 def check_regex_equality(regex1: Regex, regex2: Regex) -> bool:

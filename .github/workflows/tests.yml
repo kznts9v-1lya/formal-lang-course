@@ -10,8 +10,8 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
 
-  # This workflow contains a single job called "style"
-  style:
+  # This workflow contains a single job called "tests"
+  tests:
 
     # The type of runner that the job will run on
     runs-on: ${{ matrix.os }}
@@ -62,11 +62,14 @@ jobs:
         shell: bash
         run: |
           if [ "$RUNNER_OS" == "Linux" ]; then
-              antlr4 -Dlanguage=Python3 ./project/gql/antlr/gql.g4
+              cd project/gql/parser/grammar
+              antlr4 -Dlanguage=Python3 -visitor ./gql.g4 -o ../antlr
           elif [ "$RUNNER_OS" == "Windows" ]; then
-              antlr4 -Dlanguage=Python3 ./project/gql/antlr/gql.g4
+              cd project/gql/parser/grammar
+              antlr4 -Dlanguage=Python3 -visitor ./gql.g4 -o ../antlr
           else
-              antlr -Dlanguage=Python3 ./project/gql/antlr/gql.g4
+              cd project/gql/parser/grammar
+              antlr -Dlanguage=Python3 -visitor ./gql.g4 -o ../antlr
           fi
 
       # Run unit tests using pytest

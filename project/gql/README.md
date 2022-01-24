@@ -230,15 +230,20 @@ expr -> LP expr RP
       | var
       | val
       | NOT expr
+      | expr KLEENE
       | expr IN expr
       | expr AND expr
       | expr DOT expr
       | expr OR expr
-      | expr KLEENE
+
+val -> boolean
+     | graph
+     | edges
+     | labels
+     | vertices
 
 graph -> load_graph
        | cfg
-       | string
        | set_start
        | set_final
        | add_start
@@ -250,6 +255,8 @@ set_start -> SET START OF (graph | var) TO (vertices | var)
 set_final -> SET FINAL OF (graph | var) TO (vertices | var)
 add_start -> ADD START OF (graph | var) TO (vertices | var)
 add_final -> ADD FINAL OF (graph | var) TO (vertices | var)
+
+cfg -> CFG
 
 vertices -> vertex
           | vertices_range
@@ -289,7 +296,6 @@ select_start -> SELECT START VERTICES FROM (graph | var)
 select_vertices -> SELECT VERTICES FROM (graph | var)
 vertices_range -> LCB INT COLON INT RCB
 
-cfg -> CFG
 string -> STRING
 path -> PATH
 
@@ -299,7 +305,8 @@ vertices_set -> LCB (INT COMMA)* (INT)? RCB
 labels_set -> LCB (STRING COMMA)* (STRING)? RCB
 
 edges_set -> LCB (edge COMMA)* (edge)? RCB
-var -> VAR
+
+var -> ID
 
 var_edge -> LP var COMMA var RP
           | LP var COMMA var COMMA var RP
@@ -307,13 +314,7 @@ var_edge -> LP var COMMA var RP
 
 variables -> (var COMMA)* var? | var_edge
 
-val -> boolean
-     | graph
-     | edges
-     | labels
-     | vertices
-
-boolean -> BOOL
+boolean -> TRUE | FALSE
 
 FUN -> 'FUN'
 LOAD -> 'LOAD'
@@ -332,7 +333,7 @@ FROM -> 'FROM'
 FILTER -> 'FILTER'
 MAP -> 'MAP'
 PRINT -> 'PRINT'
-BOOL -> TRUE | FALSE
+
 TRUE -> 'TRUE'
 FALSE -> 'FALSE'
 
@@ -350,21 +351,23 @@ RCB -> '}'
 LP -> '('
 RP -> ')'
 QUOT -> '"'
-TRIPLE_QUOT -> '"""'
 COLON -> ':'
 DOUBLE_ARROW -> '=>'
-ARROW -> '->'
 
-VAR -> ('_' | CHAR) ID_CHAR*    // '_' в значении wildcard
+ARROW -> '->'
+TRIPLE_QUOT -> '"""'
+CFG -> TRIPLE_QUOT (CHAR | DIGIT | ' ' | '\n' | ARROW)* TRIPLE_QUOT
+
+ID -> ('_' | CHAR) ID_CHAR*    // '_' в значении wildcard
 
 INT -> NONZERO_DIGIT DIGIT* | '0'
-CFG -> TRIPLE_QUOT (CHAR | DIGIT | ' ' | '\n' | ARROW)* TRIPLE_QUOT
 STRING -> QUOT (CHAR | DIGIT | '_' | ' ')* QUOT
-PATH -> QUOT (CHAR | DIGIT | '_' | ' ' | '/' | '\' | COLON | DOT)* QUOT
+PATH -> QUOT (CHAR | DIGIT | '_' | ' ' | '/' | '\\' | COLON | DOT)* QUOT
 ID_CHAR -> (CHAR | DIGIT | '_')
 CHAR -> [a-z] | [A-Z]
 NONZERO_DIGIT -> [1-9]
 DIGIT -> [0-9]
+
 WS -> [ \t\r]+
 EOL -> [\n]+
 ```

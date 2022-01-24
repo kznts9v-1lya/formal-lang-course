@@ -1,6 +1,12 @@
 import os
 from typing import AbstractSet, Iterable, Tuple, Set
 
+from pyformlang.regular_expression import Regex
+from scipy.sparse import identity, dok_matrix
+
+from project import automaton_tools
+from project.matrix_tools import BooleanAdjacencies
+
 import networkx as nx
 from pyformlang.cfg import CFG, Variable, Production, Epsilon
 
@@ -21,12 +27,6 @@ __all__ = [
     "matrix_cfpq",
     "tensor_cfpq",
 ]
-
-from pyformlang.regular_expression import Regex
-from scipy.sparse import identity, dok_matrix
-
-from project import automaton_tools
-from project.matrix_tools import BooleanAdjacencies
 
 
 def _check_path(path: str) -> None:
@@ -546,7 +546,7 @@ class ECFG:
         ValueError:
            If file text is not satisfied to the rules
         MisformedRegexError
-           If specified regex_str has an irregular format
+           If specified file text has an irregular format
         """
 
         with open(path) as file:
@@ -575,7 +575,7 @@ class ECFG:
         ValueError:
             If cfg_text not satisfied to the rules
         MisformedRegexError
-            If specified regex_str has an irregular format
+            If specified text has an irregular format
         """
 
         variables = set()

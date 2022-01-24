@@ -1,12 +1,7 @@
-import sys
-
 import pytest
 import os
 
-if sys.platform.startswith("win"):
-    pytest.skip("Windows is unsupported", allow_module_level=True)
-else:
-    from project.gql.parser import generate_dot
+from project.gql.parser.parser import generate_dot
 
 from antlr4.error.Errors import ParseCancellationException
 

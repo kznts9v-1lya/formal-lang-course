@@ -1,0 +1,9 @@
+g1 = LOAD "skos";
+g2 = LOAD "wine";
+
+g1_labels = SELECT LABELS FROM g1;
+g2_labels = SELECT LABELS FROM g2;
+
+intersection_labels = g1_labels & g2_labels;
+
+PRINT intersection_labels;

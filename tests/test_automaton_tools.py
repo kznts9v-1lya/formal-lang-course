@@ -11,12 +11,10 @@ from pyformlang.finite_automaton import (
 from pyformlang.regular_expression import MisformedRegexError, Regex
 
 from project.automaton_tools import (
-    RSMBox,
     get_min_dfa_from_regex,
     get_nfa_from_graph,
-    get_rsm_from_ecfg,
-    minimize_rsm,
 )
+from project.rsm_tools import RSMBox, minimize_rsm, get_rsm_from_ecfg
 from project.grammar_tools import ECFG, get_ecfg_from_cfg
 from project.graph_tools import get_two_cycles, Graph
 

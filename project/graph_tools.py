@@ -118,7 +118,7 @@ def get_from_dataset(name: str, verbose: bool = False) -> Graph:
 
     if not dataset_graph:
         raise NameError(
-            f'Wrong dataset graph name "{name}", please specify it by real dataset name'
+            f'Invalid dataset graph "{name}". Please specify it by real dataset name.'
         )
 
     graph = Graph(dataset_graph)

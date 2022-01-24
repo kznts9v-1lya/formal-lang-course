@@ -13,16 +13,22 @@ expr : LP expr RP
      | var
      | val
      | NOT expr
+     | expr KLEENE
      | expr IN expr
      | expr AND expr
      | expr DOT expr
      | expr OR expr
-     | expr KLEENE
      ;
+
+val : boolean
+    | graph
+    | edges
+    | labels
+    | vertices
+    ;
 
 graph : load_graph
       | cfg
-      | string
       | set_start
       | set_final
       | add_start
@@ -35,6 +41,8 @@ set_start : SET START OF (graph | var) TO (vertices | var) ;
 set_final : SET FINAL OF (graph | var) TO (vertices | var) ;
 add_start : ADD START OF (graph | var) TO (vertices | var) ;
 add_final : ADD FINAL OF (graph | var) TO (vertices | var) ;
+
+cfg: CFG ;
 
 vertices : vertex
        | vertices_range
@@ -74,12 +82,11 @@ filtering : FILTER anfunc expr ;
 select_edges : SELECT EDGES FROM (graph | var) ;
 select_labels : SELECT LABELS FROM (graph | var) ;
 select_reachable : SELECT REACHABLE VERTICES FROM (graph | var) ;
-select_final : SELECT FINAL VERTICES FROM (graph | var) ;
 select_start : SELECT START VERTICES FROM (graph | var) ;
+select_final : SELECT FINAL VERTICES FROM (graph | var) ;
 select_vertices : SELECT VERTICES FROM (graph | var) ;
 vertices_range : LCB INT COLON INT RCB ;
 
-cfg : CFG ;
 string : STRING ;
 path : PATH ;
 
@@ -90,7 +97,8 @@ vertices_set : LCB (INT COMMA)* (INT)? RCB
 labels_set : LCB (STRING COMMA)* (STRING)? RCB ;
 
 edges_set : LCB (edge COMMA)* (edge)? RCB ;
-var : VAR ;
+
+var : ID ;
 
 var_edge : LP var COMMA var RP
          | LP var COMMA var COMMA var RP
@@ -101,14 +109,7 @@ variables : (var COMMA)* var?
      | var_edge
      ;
 
-val : boolean
-    | graph
-    | edges
-    | labels
-    | vertices
-    ;
-
-boolean : BOOL ;
+boolean : TRUE | FALSE ;
 
 FUN : WS? 'FUN' WS? ;
 LOAD : WS? 'LOAD' WS? ;
@@ -126,39 +127,41 @@ FINAL : WS? 'FINAL' WS? ;
 FROM : WS? 'FROM' WS? ;
 FILTER : WS? 'FILTER' WS? ;
 MAP : WS? 'MAP' WS? ;
-PRINT : WS? 'PRINT' WS?;
-BOOL : TRUE | FALSE;
+PRINT : WS? 'PRINT' WS? ;
+
 TRUE : 'TRUE' ;
 FALSE : 'FALSE' ;
 
 ASSIGN : WS? '=' WS? ;
-AND : WS? '&' WS?;
+AND : WS? '&' WS? ;
 OR : WS? '|' WS? ;
 NOT : WS? 'NOT' WS? ;
-IN : WS? 'IN' WS?;
-KLEENE : WS? '*' WS?;
+IN : WS? 'IN' WS? ;
+KLEENE : WS? '*' WS? ;
 DOT : WS? '.' WS? ;
-COMMA : WS? ',' WS?;
-SEMICOLON : ';' WS?;
-LCB : WS? '{' WS?;
-RCB : WS? '}' WS?;
-LP : WS? '(' WS?;
-RP : WS? ')' WS?;
+COMMA : WS? ',' WS? ;
+SEMICOLON : ';' WS? ;
+LCB : WS? '{' WS? ;
+RCB : WS? '}' WS? ;
+LP : WS? '(' WS? ;
+RP : WS? ')' WS? ;
 QUOT : '"' ;
-TRIPLE_QUOT : '"""' ;
 COLON : WS? ':' WS? ;
 DOUBLE_ARROW : WS? '=>' WS? ;
-ARROW : '->' ;
 
-VAR : ('_' | CHAR) ID_CHAR* ;
+ARROW : '->' ;
+TRIPLE_QUOT : '"""' ;
+CFG : TRIPLE_QUOT (CHAR | DIGIT | ' ' | '\n' | ARROW)* TRIPLE_QUOT ;
+
+ID : ('_' | CHAR) ID_CHAR* ;
 
 INT : NONZERO_DIGIT DIGIT* | '0' ;
-CFG : TRIPLE_QUOT (CHAR | DIGIT | ' ' | '\n' | ARROW)* TRIPLE_QUOT ;
 STRING : QUOT (CHAR | DIGIT | '_' | ' ')* QUOT ;
 PATH : QUOT (CHAR | DIGIT | '_' | ' ' | '/' | '\\' | COLON | DOT)* QUOT ;
 ID_CHAR : (CHAR | DIGIT | '_') ;
 CHAR : [a-z] | [A-Z] ;
 NONZERO_DIGIT : [1-9] ;
 DIGIT : [0-9] ;
+
 WS : [ \t\r]+ -> skip ;
 EOL : [\n]+ ;

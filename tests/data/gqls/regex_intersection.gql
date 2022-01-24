@@ -1,0 +1,10 @@
+r1 = "l1" | "l2"*;
+r2 = "l1"* | "l2" . "l4";
+
+r12_intersection = r1 & r2;
+
+PRINT r12_intersection;
+
+r3 = r1 | r2;
+
+PRINT r12_intersection & r3;
